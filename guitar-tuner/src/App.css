@@ -28,9 +28,9 @@ h1 {
   font-family: inherit;
   background-color: #700b0b;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .tuning-button:hover {
-  border-color: #646cff;
+  background-color: #500e0e;
 }

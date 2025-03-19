@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Tuner from "./components/Tuner";
 import './App.css'
 
 function App() {
@@ -80,6 +79,9 @@ function App() {
       </button>
 
       <p>Audio Level: {audioLevel.toFixed(0)}</p>
+      <div>
+      <Tuner />
+      </div>
     </div>
   )
 }
