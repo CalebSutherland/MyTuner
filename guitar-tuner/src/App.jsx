@@ -27,6 +27,8 @@ function App() {
 
       // Function to update audio level
       const updateAudioLevel = () => {
+        if (!isListening) return;
+
         analyserRef.current.getByteFrequencyData(dataArray);
         const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
         setAudioLevel(average); // Update state with average frequency data
@@ -34,16 +36,13 @@ function App() {
       };
 
       updateAudioLevel();
-    } else {
-      // Clean up when stopping listening
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
     }
 
     return () => {
       if (audioContextRef.current) {
         audioContextRef.current.close();
+        analyserRef.current = null;
+        audioContextRef.current = null;
       }
     };
   }, [micStream, isListening]);
@@ -69,24 +68,18 @@ function App() {
       setMicStream(null);
     }
     setIsListening(false);
+    setAudioLevel(0);
     console.log("Microphone is stopped");
   };
 
   return (
     <div className="App">
       <h1>MyTuner</h1>
-      <button onClick={isListening ? stopListening : startListening}>
+      <button className="tuning-button" onClick={isListening ? stopListening : startListening}>
         {isListening ? 'Stop Listening' : 'Start Listening'}
       </button>
 
-      <div
-        style={{
-        width: `${Math.min(audioLevel, 255)}px`,  // scale the width based on audio level
-        height: '10px',
-        backgroundColor: 'green',
-        transition: 'width 0.1s ease-out'
-        }}
-      />
+      <p>Audio Level: {audioLevel.toFixed(0)}</p>
     </div>
   )
 }
