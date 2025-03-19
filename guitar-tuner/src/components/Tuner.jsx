@@ -92,9 +92,20 @@ function Tuner() {
             maxIndex = index;
           }
         });
+
+        // Quadratic Interpolation for better accuracy
+        const interpolatePeak = (index) => {
+          if (index <= 0 || index >= dataArrayRef.current.length - 1) return index;
+          let alpha = dataArrayRef.current[index - 1];
+          let beta = dataArrayRef.current[index];
+          let gamma = dataArrayRef.current[index + 1];
+          let peakIndex = index + 0.5 * (alpha - gamma) / (alpha - 2 * beta + gamma);
+          return peakIndex;
+        };
     
         const sampleRate = audioContextRef.current.sampleRate;
-        const frequency = (maxIndex * sampleRate) / analyserRef.current.fftSize;
+        const interpolatedIndex = interpolatePeak(maxIndex);
+        const frequency = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
 
         const threshhold = -60;
         if (maxAmplitude > threshhold) {
