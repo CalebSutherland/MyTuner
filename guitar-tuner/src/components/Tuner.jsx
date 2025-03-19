@@ -23,26 +23,36 @@ function Tuner() {
     const [note, setNote] = useState(null);
     const [status, setStatus] = useState(""); // Status text (In Tune, Flat, Sharp)
     const [isListening, setIsListening] = useState(false);
+    const [volume, setVolume] = useState(0);
     
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
+    const volumeAnalyserRef = useRef(null);
     const filterRef = useRef(null);
     const dataArrayRef = useRef(null);
+    const volumeDataArrayRef = useRef(null);
     const micStreamRef = useRef(null);
 
     const startListening = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const analyser = audioContext.createAnalyser();
+        const volumeAnalyser = audioContext.createAnalyser();
         const filter = audioContext.createBiquadFilter();
     
         const source = audioContext.createMediaStreamSource(stream);
         source.connect(filter);
         source.connect(analyser);
+        source.connect(volumeAnalyser);
     
         analyser.fftSize = 16384;
+        volumeAnalyser.fftSize = 256;
+
         const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Float32Array(bufferLength);
+        const volumeBufferLength = volumeAnalyser.frequencyBinCount;
+
+        dataArrayRef.current = new Float32Array(bufferLength);
+        volumeDataArrayRef.current = new Uint8Array(volumeBufferLength);
 
         filter.type = "bandpass";  // Use band-pass filter
         filter.frequency.setValueAtTime(196, audioContext.currentTime);  // Center frequency, can adjust to target pitch
@@ -50,8 +60,8 @@ function Tuner() {
 
         audioContextRef.current = audioContext;
         analyserRef.current = analyser;
+        volumeAnalyserRef.current = volumeAnalyser;
         filterRef.current = filter;
-        dataArrayRef.current = dataArray;
         micStreamRef.current = stream;
 
         setIsListening(true);
@@ -69,6 +79,7 @@ function Tuner() {
         setFrequency(0);
         setNote(null);
         setStatus("");
+        setVolume(0);
     
         // Clear refs
         micStreamRef.current = null;
@@ -78,7 +89,7 @@ function Tuner() {
       };
 
       const detectPitch = () => {
-        if (!analyserRef.current) return;
+        if (!analyserRef.current || !volumeAnalyserRef.current) return;
         requestAnimationFrame(detectPitch);
     
         analyserRef.current.getFloatFrequencyData(dataArrayRef.current);
@@ -92,6 +103,10 @@ function Tuner() {
             maxIndex = index;
           }
         });
+
+        volumeAnalyserRef.current.getByteFrequencyData(volumeDataArrayRef.current);
+        const volumeAvg = volumeDataArrayRef.current.reduce((a, b) => a + b) / volumeDataArrayRef.current.length;
+        setVolume(volumeAvg.toFixed(0));
 
         // Quadratic Interpolation for better accuracy
         const interpolatePeak = (index) => {
@@ -138,18 +153,20 @@ function Tuner() {
           setFrequency(0);
           setNote(null);
           setStatus("");
+          setVolume(0);
         }
       };
     
       return (
         <div>
-          <h1>Guitar Tuner</h1>
+          <h2>Genral Tuner</h2>
           <button className="tuning-button" onClick={isListening ? stopListening : startListening}>
             {isListening ? "Stop Tuning" : "Start Tuning"}
           </button>
           <p>Detected Frequency: {frequency} Hz</p>
           <p>Closest Note: {note}</p>
           <p>Status: {status}</p>
+          <p>Volume: {volume}</p>
         </div>
       );
     }
