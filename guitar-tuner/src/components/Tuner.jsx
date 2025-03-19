@@ -5,8 +5,12 @@ const CONCERT_PITCH = 440; // A4 frequency
 
 // Function to find the closest note based on detected frequency
 const findClosestNote = (pitch) => {
+  if (pitch === 0) return { note: "No sound", frequency: "0" };
+
+  const roundedPitch = parseFloat(pitch.toFixed(2));
+
   // Calculate the pitch index relative to the concert pitch (A4)
-  const i = Math.round(Math.log2(pitch / CONCERT_PITCH) * 12);
+  const i = Math.round(Math.log2(roundedPitch / CONCERT_PITCH) * 12);
   const validIndex = ((i % 12) + 12) % 12;
   const closestNote = ALL_NOTES[validIndex];
   const octave = 4 + Math.floor((i + 9) / 12); // Calculate octave
@@ -36,7 +40,7 @@ function Tuner() {
         source.connect(filter);
         source.connect(analyser);
     
-        analyser.fftSize = 2048;
+        analyser.fftSize = 8192;
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
@@ -92,7 +96,7 @@ function Tuner() {
         const sampleRate = audioContextRef.current.sampleRate;
         const frequency = (maxIndex * sampleRate) / analyserRef.current.fftSize;
 
-        const threshhold = -111;
+        const threshhold = -60;
         if (maxAmplitude > threshhold) {
           setFrequency(frequency.toFixed(2));
 
