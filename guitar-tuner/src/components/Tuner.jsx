@@ -45,7 +45,7 @@ function Tuner() {
         const dataArray = new Float32Array(bufferLength);
 
         filter.type = "bandpass";  // Use band-pass filter
-        filter.frequency.setValueAtTime(220, audioContext.currentTime);  // Center frequency, can adjust to target pitch
+        filter.frequency.setValueAtTime(196, audioContext.currentTime);  // Center frequency, can adjust to target pitch
         filter.Q.setValueAtTime(10, audioContext.currentTime);
 
         audioContextRef.current = audioContext;
@@ -105,31 +105,31 @@ function Tuner() {
     
         const sampleRate = audioContextRef.current.sampleRate;
         const interpolatedIndex = interpolatePeak(maxIndex);
-        let frequency = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
+        let detectedFreq = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
 
         let halfIndex = Math.round(maxIndex / 2);
         let halfFreq = (halfIndex * sampleRate) / analyserRef.current.fftSize;
         let halfAmplitude = dataArrayRef.current[halfIndex];
 
-        if (halfAmplitude > maxAmplitude - 15) {  
+        if (halfAmplitude > maxAmplitude - 20) {  
           // If the half-frequency is almost as strong as the detected peak,
           // assume the fundamental is being overpowered by a harmonic
-          frequency = halfFreq;
+          detectedFreq = halfFreq;
         }
 
-        const threshhold = -75;
+        const threshhold = -70;
         if (maxAmplitude > threshhold) {
-          setFrequency(frequency.toFixed(2));
+          setFrequency(detectedFreq.toFixed(2));
 
           // Find the closest note based on detected frequency
-          const { note, frequency: closestPitch } = findClosestNote(frequency);
+          const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
           setNote(note);
 
           // Set the tuning status (Sharp, Flat, In Tune)
-          const diff = Math.abs(frequency - closestPitch);
+          const diff = Math.abs(detectedFreq - closestPitch);
           if (diff < 1) {
             setStatus("In Tune");
-          } else if (frequency > closestPitch) {
+          } else if (detectedFreq > closestPitch) {
             setStatus("Sharp");
           } else {
             setStatus("Flat");
