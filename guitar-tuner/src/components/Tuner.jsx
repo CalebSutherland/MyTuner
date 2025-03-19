@@ -40,12 +40,12 @@ function Tuner() {
         source.connect(filter);
         source.connect(analyser);
     
-        analyser.fftSize = 8192;
+        analyser.fftSize = 16384;
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
         filter.type = "bandpass";  // Use band-pass filter
-        filter.frequency.setValueAtTime(440, audioContext.currentTime);  // Center frequency, can adjust to target pitch
+        filter.frequency.setValueAtTime(220, audioContext.currentTime);  // Center frequency, can adjust to target pitch
         filter.Q.setValueAtTime(10, audioContext.currentTime);
 
         audioContextRef.current = audioContext;
@@ -105,9 +105,19 @@ function Tuner() {
     
         const sampleRate = audioContextRef.current.sampleRate;
         const interpolatedIndex = interpolatePeak(maxIndex);
-        const frequency = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
+        let frequency = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
 
-        const threshhold = -60;
+        let halfIndex = Math.round(maxIndex / 2);
+        let halfFreq = (halfIndex * sampleRate) / analyserRef.current.fftSize;
+        let halfAmplitude = dataArrayRef.current[halfIndex];
+
+        if (halfAmplitude > maxAmplitude - 15) {  
+          // If the half-frequency is almost as strong as the detected peak,
+          // assume the fundamental is being overpowered by a harmonic
+          frequency = halfFreq;
+        }
+
+        const threshhold = -75;
         if (maxAmplitude > threshhold) {
           setFrequency(frequency.toFixed(2));
 
