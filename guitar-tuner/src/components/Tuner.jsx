@@ -24,6 +24,8 @@ function Tuner() {
   const [status, setStatus] = useState(""); // Status text (In Tune, Flat, Sharp)
   const [isListening, setIsListening] = useState(false);
   const [volume, setVolume] = useState(0);
+  const [target, setTarget] = useState(196.0);
+  const [targetDiff, setTargetDiff] = useState(0);
   
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -83,6 +85,7 @@ function Tuner() {
     setNote(null);
     setStatus("");
     setVolume(0);
+    setTargetDiff(0);
 
     // Clear refs
     micStreamRef.current = null;
@@ -142,6 +145,7 @@ function Tuner() {
     if (maxAmplitude > threshhold) {
       changeVolume();
       setFrequency(detectedFreq.toFixed(2));
+      setTargetDiff((detectedFreq.toFixed(2) - target).toFixed(0));
       const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
       setNote(note);
 
@@ -159,6 +163,7 @@ function Tuner() {
       setNote(null);
       setStatus("");
       setVolume(0);
+      setTargetDiff(0);
     }
   };
   
@@ -172,6 +177,7 @@ function Tuner() {
       <p>Closest Note: {note}</p>
       <p>Status: {status}</p>
       <p>Volume: {volume}</p>
+      <p>Target: {target} Target Difference: {frequency - target < 0 ? "-" : "+"} {Math.abs(targetDiff)}</p>
     </div>
   );
 }
