@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Target from "./Target.jsx"
 
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const CONCERT_PITCH = 440; // A4 frequency
@@ -24,7 +25,7 @@ function Tuner() {
   const [status, setStatus] = useState(""); // Status text (In Tune, Flat, Sharp)
   const [isListening, setIsListening] = useState(false);
   const [volume, setVolume] = useState(0);
-  const [target, setTarget] = useState(196.0);
+  const [target, setTarget] = useState(0);
   const [targetDiff, setTargetDiff] = useState(0);
   
   const audioContextRef = useRef(null);
@@ -146,6 +147,7 @@ function Tuner() {
       changeVolume();
       setFrequency(detectedFreq.toFixed(2));
       setTargetDiff((detectedFreq.toFixed(2) - target).toFixed(0));
+      console.log(target);
       const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
       setNote(note);
 
@@ -177,7 +179,13 @@ function Tuner() {
       <p>Closest Note: {note}</p>
       <p>Status: {status}</p>
       <p>Volume: {volume}</p>
-      <p>Target: {target} Target Difference: {frequency - target < 0 ? "-" : "+"} {Math.abs(targetDiff)}</p>
+      <p>Target: {target} Target Difference: {frequency - target < 0 ? "-" : "+"} {Math.abs(frequency - target).toFixed(0)}</p>
+      <Target value={82.41} updateTarget={setTarget}/>
+      <Target value={110} updateTarget={setTarget}/>
+      <Target value={146.83} updateTarget={setTarget}/>
+      <Target value={196} updateTarget={setTarget}/>
+      <Target value={246.94} updateTarget={setTarget}/>
+      <Target value={329.63} updateTarget={setTarget}/>
     </div>
   );
 }
