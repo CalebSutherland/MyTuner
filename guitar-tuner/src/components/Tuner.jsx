@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Target from "./Target.jsx"
+import Tuning from "./Tuning.jsx"
 
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const CONCERT_PITCH = 440; // A4 frequency
@@ -147,7 +148,6 @@ function Tuner() {
       changeVolume();
       setFrequency(detectedFreq.toFixed(2));
       setTargetDiff((detectedFreq.toFixed(2) - target).toFixed(0));
-      console.log(target);
       const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
       setNote(note);
 
@@ -179,13 +179,14 @@ function Tuner() {
       <p>Closest Note: {note}</p>
       <p>Status: {status}</p>
       <p>Volume: {volume}</p>
-      <p>Target: {target} Target Difference: {frequency - target < 0 ? "-" : "+"} {Math.abs(frequency - target).toFixed(0)}</p>
-      <Target value={82.41} updateTarget={setTarget}/>
-      <Target value={110} updateTarget={setTarget}/>
-      <Target value={146.83} updateTarget={setTarget}/>
-      <Target value={196} updateTarget={setTarget}/>
-      <Target value={246.94} updateTarget={setTarget}/>
-      <Target value={329.63} updateTarget={setTarget}/>
+      <p>Target: {target} Target Difference: 
+        {frequency - target < 0 ? "-" : "+"} {frequency === 0 ? 0 : Math.abs(frequency - target).toFixed(0)}
+      </p>
+      <Tuning name={"Standard"} notes={["E2", "A2", "D3", "G3", "B3", "E4"]} values={[82.41, 110, 146.83, 196, 246.94, 329.63]} changeTarget={setTarget}/>
+      <Tuning name={"Drop D"} notes={["D2", "A2", "D3", "G3", "B3", "D4"]} values={[73.42, 110, 146.83, 185, 220, 329.63]} changeTarget={setTarget}/>
+      <Tuning name={"Open D"} notes={["D2", "A2", "D3", "F#3", "A3", "D4"]} values={[73.42, 110, 146.83, 196, 246.94, 293.66]} changeTarget={setTarget}/>
+      <Tuning name={"Drop C"} notes={["C2", "G2", "C3", "F3", "A3", "D4"]} values={[65.41, 98, 130.81, 174.61, 220, 293.66]} changeTarget={setTarget}/>
+      <Tuning name={"Open G"} notes={["D2", "G2", "D3", "G3", "B3", "D4"]} values={[73.42, 98, 146.83, 196, 246.94, 293.66]} changeTarget={setTarget}/>
     </div>
   );
 }
