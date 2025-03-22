@@ -1,4 +1,4 @@
-import Target from "./Target.jsx"
+import Target from "./Target.jsx";
 
 function Tuning({ name, notes, values, changeTarget }) {
   return (
