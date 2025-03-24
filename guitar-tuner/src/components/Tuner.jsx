@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import Target from "./Target.jsx";
-import Tuning from "./Tuning.jsx";
 import TuningList from "./TuningList.jsx";
+import Visual from "./Visual"
 
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const CONCERT_PITCH = 440; // A4 frequency
@@ -88,6 +87,7 @@ function Tuner() {
     setNote(null);
     setStatus("");
     setVolume(0);
+    setTarget(0);
     setTargetDiff(0);
 
     // Clear refs
@@ -172,18 +172,21 @@ function Tuner() {
   
   return (
     <div>
-      <h2>General Tuner</h2>
-      <button className="tuning-button" onClick={isListening ? stopListening : startListening}>
+      <button className="start-button" onClick={isListening ? stopListening : startListening}>
         {isListening ? "Stop Tuning" : "Start Tuning"}
       </button>
+      <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
+      <TuningList setTarget={setTarget}/>
       <p>Detected Frequency: {frequency} Hz</p>
       <p>Closest Note: {note}</p>
       <p>Status: {status}</p>
       <p>Volume: {volume}</p>
       <p>Target: {target} Target Difference: 
-        {frequency - target < 0 ? "-" : "+"} {frequency === 0 ? 0 : Math.abs(frequency - target).toFixed(0)}
+        {frequency - target < 0 ? "-" : "+"} 
+        {frequency === 0 || target === 0 ? 0 : Math.abs(frequency - target).toFixed(0)}
       </p>
-      <TuningList setTarget={setTarget}/>
+      
+      
     </div>
   );
 }

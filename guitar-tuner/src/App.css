@@ -19,7 +19,7 @@ h1 {
   font-size: 3.2em;
 }
 
-.tuning-button {
+.start-button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -31,6 +31,55 @@ h1 {
   transition: background-color 0.3s ease-in-out;
 }
 
+.tuning-button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  margin-left: 5px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #700b0b;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
 .tuning-button:hover {
   background-color: #500e0e;
+}
+
+.container {
+  width: 600px;
+  height: 200px;
+  border: 1px solid black;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.line {
+  width: 5px;
+  height: 150px;
+  background-color: #700b0b;
+  position: absolute;
+  left: 50%;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.value-label {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #700b0b;
+  padding: 2px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
 }

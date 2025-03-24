@@ -1,4 +1,4 @@
-import Tuner from "./components/Tuner";
+import Tuner from "./components/Tuner"
 import './App.css'
 
 function App() {
