@@ -9,7 +9,7 @@ const tunings = [
   { name: "Open G", notes: ["D2", "G2", "D3", "G3", "B3", "D4"], values: [73.42, 98, 146.83, 196, 246.94, 293.66] } 
 ]
 
-function TuningList({ setTarget }) {
+function TuningList({ setTarget, detctedF, target }) {
   const [selectedTuning, setSelectedTuning] = useState(tunings[0]);
 
   return (
@@ -24,11 +24,14 @@ function TuningList({ setTarget }) {
         ))}
       </select>
 
-      <Tuning 
+      <Tuning
+        key={selectedTuning.name} 
         name={selectedTuning.name} 
         notes={selectedTuning.notes} 
         values={selectedTuning.values} 
-        changeTarget={setTarget} 
+        changeTarget={setTarget}
+        detectedFreq={detctedF}
+        target={target}
       />
     </div>
   )

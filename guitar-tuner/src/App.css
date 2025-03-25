@@ -44,6 +44,14 @@ h1 {
   transition: background-color 0.3s ease-in-out;
 }
 
+.off-tune {
+  background-color: #700b0b;
+}
+
+.in-tune {
+  background-color: #1c9738;
+}
+
 .tuning-button:hover {
   background-color: #500e0e;
 }

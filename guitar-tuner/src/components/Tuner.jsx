@@ -176,7 +176,7 @@ function Tuner() {
         {isListening ? "Stop Tuning" : "Start Tuning"}
       </button>
       <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
-      <TuningList setTarget={setTarget}/>
+      <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
       <p>Detected Frequency: {frequency} Hz</p>
       <p>Closest Note: {note}</p>
       <p>Status: {status}</p>
