@@ -27,7 +27,6 @@ function Tuner() {
   const [isListening, setIsListening] = useState(false);
   const [volume, setVolume] = useState(0);
   const [target, setTarget] = useState(0);
-  const [targetDiff, setTargetDiff] = useState(0);
   
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -88,7 +87,6 @@ function Tuner() {
     setStatus("");
     setVolume(0);
     setTarget(0);
-    setTargetDiff(0);
 
     // Clear refs
     micStreamRef.current = null;
@@ -148,7 +146,6 @@ function Tuner() {
     if (maxAmplitude > threshhold) {
       changeVolume();
       setFrequency(detectedFreq.toFixed(2));
-      setTargetDiff((detectedFreq.toFixed(2) - target).toFixed(0));
       const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
       setNote(note);
 
@@ -166,28 +163,35 @@ function Tuner() {
       setNote(null);
       setStatus("");
       setVolume(0);
-      setTargetDiff(0);
     }
   };
   
   return (
-    <div>
-      <button className="start-button" onClick={isListening ? stopListening : startListening}>
-        {isListening ? "Stop Tuning" : "Start Tuning"}
-      </button>
-      <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
-      <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
-      <p>Detected Frequency: {frequency} Hz</p>
-      <p>Closest Note: {note}</p>
-      <p>Status: {status}</p>
-      <p>Volume: {volume}</p>
-      <p>Target: {target} Target Difference: 
-        {frequency - target < 0 ? "-" : "+"} 
-        {frequency === 0 || target === 0 ? 0 : Math.abs(frequency - target).toFixed(0)}
-      </p>
-      
-      
-    </div>
+    <>
+      <div>
+        <button className="start-button" onClick={isListening ? stopListening : startListening}>
+          {isListening ? "Stop Tuning" : "Start Tuning"}
+        </button>
+      </div>
+      <div className="container">
+        <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
+      </div>
+
+      <div>
+        <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
+      </div>
+
+      <div className="stats-container">
+        <p>Detected Frequency: {frequency} Hz</p>
+        <p>Closest Note: {note}</p>
+        <p>Status: {status}</p>
+        <p>Volume: {volume}</p>
+        <p>Target: {target} Target Difference: 
+          {frequency - target < 0 ? "-" : "+"} 
+          {frequency === 0 || target === 0 ? 0 : Math.abs(frequency - target).toFixed(0)}
+        </p>
+      </div>
+    </>
   );
 }
     
