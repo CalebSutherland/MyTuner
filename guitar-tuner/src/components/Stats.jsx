@@ -8,6 +8,10 @@ function Stats({ frequency, note, status, volume, target }) {
           <span className="stat-value">{frequency} Hz</span>
         </div>
         <div className="stat-item">
+          <span className="stat-label">Volume:</span>
+          <span className="stat-value">{volume}</span>
+        </div>
+        <div className="stat-item">
           <span className="stat-label">Closest Note:</span>
           <span className="stat-value">{note}</span>
         </div>
@@ -16,10 +20,6 @@ function Stats({ frequency, note, status, volume, target }) {
           <span className={`stat-value ${status === "In Tune" ? "in-tune-stat" : ""}`}>
             {status}
           </span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-label">Volume:</span>
-          <span className="stat-value">{volume}</span>
         </div>
         <div className="stat-item">
           <span className="stat-label">Target:</span>

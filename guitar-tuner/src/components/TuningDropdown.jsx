@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TuningDropdown = ({ tunings, selectedTuning, onTuningChange }) => {
+function TuningDropdown({ tunings, selectedTuning, onTuningChange }) {
     return (
       <div>
         <label htmlFor="tuning-select">Select Tuning: </label>
