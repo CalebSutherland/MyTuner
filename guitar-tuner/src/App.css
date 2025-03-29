@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+:root {
+  --main--red: #700b0b;
+  --hover--red: #500e0e;
+  --main--green: #1c9738;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -26,17 +32,17 @@ h1 {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #700b0b;
+  background-color: var(--main--red);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
 .button:hover {
-  background-color: #500e0e;
+  background-color: var(--hover--red);
 }
 
 .listening {
-  background-color: #1c9738;
+  background-color: var(--main--green);
 }
 
 .listening:hover {
@@ -44,7 +50,7 @@ h1 {
 }
 
 .start-button:not(.listening):hover {
-  background-color: #500e0e;
+  background-color: var(--hover--red);
 }
 
 .tuning-buttons-container {
@@ -64,15 +70,15 @@ h1 {
 }
 
 .in-tune {
-  background-color: #1c9738;
+  background-color: var(--main--green);
 }
 
 .tuning-button:not(.in-tune):hover {
-  background-color: #500e0e;
+  background-color: var(--hover--red);
 }
 
 .container {
-  background: #700b0b;
+  background: var(--main--red);
   width: 600px;
   height: 200px;
   border-radius: 10px;
@@ -103,7 +109,7 @@ h1 {
   font-size: 16px;
   font-weight: bold;
   background-color: white;
-  color: #700b0b;
+  color: var(--main--red);
   padding: 2px 5px;
   border-radius: 4px;
   white-space: nowrap;
@@ -126,7 +132,7 @@ h1 {
 }
 
 .stats-container {
-  background: #700b0b;
+  background: var(--main--red);
   color: white;
   border-radius: 10px;
   padding: 15px;
@@ -166,7 +172,7 @@ h1 {
 }
 
 .in-tune-stat {
-  color: #1c9738;
+  color: var(--main--green);
 }
 
 .off-tune {
@@ -181,7 +187,7 @@ label {
 
 /* Style the dropdown */
 #tuning-select {
-  background-color: #700b0b; /* Red background */
+  background-color: var(--main--red); /* Red background */
   color: white; /* White text */
   border: 1px solid transparent;
   border-radius: 8px;
@@ -196,16 +202,16 @@ label {
 
 /* Hover effect for dropdown */
 #tuning-select:hover {
-  background-color: #500e0e; /* Darker red */
+  background-color: var(--hover--red); /* Darker red */
 }
 
 /* Style the options in the dropdown */
 #tuning-select option {
-  background-color: #700b0b; /* Match the red background */
+  background-color: var(--main--red); /* Match the red background */
   color: white;
 }
 
 /* Option hover effect */
 #tuning-select option:hover {
-  background-color: #500e0e; /* Darker red on hover */
+  background-color: var(--hover--red); /* Darker red on hover */
 }
