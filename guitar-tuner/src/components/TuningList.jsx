@@ -1,5 +1,4 @@
 import React from 'react';
-import Tuning from './TuningButtons';
 import TuningButtons from './TuningButtons';
 
 function TuningList({ selectedTuning, setTarget, detctedF, target }) {
