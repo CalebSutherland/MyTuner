@@ -1,9 +1,9 @@
 import Target from "./Target.jsx";
 
-function Tuning({ name, notes, values, target, changeTarget, detectedFreq }) {
+function TuningButtons({ name, notes, values, target, changeTarget, detectedFreq }) {
   return (
     <div>
-      <p>{name}</p>
+      <p style={{ fontWeight: 500 }}>{name}</p>
       <div className="tuning-buttons-container">
         {notes.map((note, index) => (
           <Target 
@@ -20,4 +20,4 @@ function Tuning({ name, notes, values, target, changeTarget, detectedFreq }) {
   )
 }
 
-export default Tuning;
+export default TuningButtons;

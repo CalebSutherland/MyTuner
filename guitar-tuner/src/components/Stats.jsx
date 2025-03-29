@@ -13,7 +13,7 @@ function Stats({ frequency, note, status, volume, target }) {
         </div>
         <div className="stat-item">
           <span className="stat-label">Status:</span>
-          <span className={`stat-value ${status === "In Tune" ? "in-tune-stat" : "off-tune"}`}>
+          <span className={`stat-value ${status === "In Tune" ? "in-tune-stat" : ""}`}>
             {status}
           </span>
         </div>

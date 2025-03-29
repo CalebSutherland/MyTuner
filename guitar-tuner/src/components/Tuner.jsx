@@ -2,9 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import TuningList from "./TuningList.jsx";
 import Visual from "./Visual"
 import Stats from "./Stats.jsx";
+import TuningDropdown from "./TuningDropdown.jsx";
 
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const CONCERT_PITCH = 440; // A4 frequency
+
+const tunings = [
+  { name: 'Standard', notes: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'], values: [82.41, 110, 146.83, 196, 246.94, 329.63] },
+  { name: 'Drop D', notes: ['D2', 'A2', 'D3', 'G3', 'B3', 'E4'], values: [73.42, 110, 146.83, 185, 220, 329.63] },
+  { name: 'Open D', notes: ['D2', 'A2', 'D3', 'F#3', 'A3', 'D4'], values: [73.42, 110, 146.83, 196, 246.94, 293.66] },
+  { name: 'Drop C', notes: ['C2', 'G2', 'C3', 'F3', 'A3', 'D4'], values: [65.41, 98, 130.81, 174.61, 220, 293.66] },
+  { name: 'Open G', notes: ['D2', 'G2', 'D3', 'G3', 'B3', 'D4'], values: [73.42, 98, 146.83, 196, 246.94, 293.66] },
+];
 
 // Function to find the closest note based on detected frequency
 const findClosestNote = (pitch) => {
@@ -28,7 +37,7 @@ function Tuner() {
   const [isListening, setIsListening] = useState(false);
   const [volume, setVolume] = useState(0);
   const [target, setTarget] = useState(0);
-  const [showStats, setShowStats] = useState(true);
+  const [selectedTuning, setSelectedTuning] = useState(tunings[0]);
   
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -167,15 +176,45 @@ function Tuner() {
       setVolume(0);
     }
   };
+
+  const handleTuningChange = (tuningName) => {
+    setSelectedTuning(tunings.find((t) => t.name === tuningName));
+  };
   
   return (
     <>
-      <button className={`start-button ${isListening ? "listening" : ""}`} onClick={isListening ? stopListening : startListening}>
+      <TuningDropdown
+        tunings={tunings}
+        selectedTuning={selectedTuning}
+        onTuningChange={handleTuningChange}
+      />
+      
+      <button 
+        className={`start-button ${isListening ? "listening" : ""}`} 
+        onClick={isListening ? stopListening : startListening}
+      >
         {isListening ? "Stop Tuning" : "Start Tuning"}
       </button>
-      <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
-      <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
-      <Stats frequency={frequency} note={note} status={status} volume={volume} target={target}/>
+
+      <Visual 
+        target={target} 
+        targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}
+      />
+
+      <TuningList
+        selectedTuning={selectedTuning} 
+        setTarget={setTarget} 
+        detctedF={frequency} 
+        target={target}
+      />
+
+      <Stats 
+        frequency={frequency} 
+        note={note} 
+        status={status} 
+        volume={volume} 
+        target={target}
+      />
     </>
   );
 }
