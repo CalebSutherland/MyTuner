@@ -72,9 +72,10 @@ h1 {
 }
 
 .container {
+  background: #700b0b;
   width: 600px;
   height: 200px;
-  border: 1px solid black;
+  border-radius: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -87,7 +88,7 @@ h1 {
 .line {
   width: 5px;
   height: 150px;
-  background-color: #700b0b;
+  background-color: white;
   position: absolute;
   left: 50%;
   transition: transform 0.2s ease-in-out;
@@ -101,7 +102,8 @@ h1 {
   top: 0px;
   font-size: 16px;
   font-weight: bold;
-  background-color: #700b0b;
+  background-color: white;
+  color: #700b0b;
   padding: 2px 5px;
   border-radius: 4px;
   white-space: nowrap;
@@ -169,4 +171,41 @@ h1 {
 
 .off-tune {
   color: #d32f2f;
+}
+
+label {
+  font-size: 1em;
+  color: white;
+  margin-right: 10px;
+}
+
+/* Style the dropdown */
+#tuning-select {
+  background-color: #700b0b; /* Red background */
+  color: white; /* White text */
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.4em 0.8em;
+  font-size: 1em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  width: 120px; /* Adjust the width of the dropdown */
+  box-sizing: border-box;
+}
+
+/* Hover effect for dropdown */
+#tuning-select:hover {
+  background-color: #500e0e; /* Darker red */
+}
+
+/* Style the options in the dropdown */
+#tuning-select option {
+  background-color: #700b0b; /* Match the red background */
+  color: white;
+}
+
+/* Option hover effect */
+#tuning-select option:hover {
+  background-color: #500e0e; /* Darker red on hover */
 }

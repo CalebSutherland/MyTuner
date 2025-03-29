@@ -170,28 +170,12 @@ function Tuner() {
   
   return (
     <>
-      <div>
-        <button className={`start-button ${isListening ? "listening" : ""}`} onClick={isListening ? stopListening : startListening}>
-          {isListening ? "Stop Tuning" : "Start Tuning"}
-        </button>
-      </div>
-      <div>
-        <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
-      </div>
-
-      <div>
-        <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
-      </div>
-
-      <div>
-        <button className="button" onClick={() => setShowStats(!showStats)}>
-          {showStats ? "Hide Stats" : "Show Stats"}
-        </button>
-      </div>
-
-      {showStats && (
-        <Stats frequency={frequency} note={note} status={status} volume={volume} target={target}/>
-      )}
+      <button className={`start-button ${isListening ? "listening" : ""}`} onClick={isListening ? stopListening : startListening}>
+        {isListening ? "Stop Tuning" : "Start Tuning"}
+      </button>
+      <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
+      <TuningList setTarget={setTarget} detctedF={frequency} target={target}/>
+      <Stats frequency={frequency} note={note} status={status} volume={volume} target={target}/>
     </>
   );
 }
