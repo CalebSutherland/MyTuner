@@ -31,6 +31,18 @@ h1 {
   transition: background-color 0.3s ease-in-out;
 }
 
+.listening {
+  background-color: #1c9738;
+}
+
+.listening:hover {
+  background-color: #0f4e1e;;
+}
+
+.start-button:not(.listening):hover {
+  background-color: #500e0e;
+}
+
 .tuning-buttons-container {
   display: flex;
   flex-wrap: wrap;
@@ -54,18 +66,13 @@ h1 {
   background-color: #700b0b;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  min-width: 80px;
-}
-
-.off-tune {
-  background-color: #700b0b;
 }
 
 .in-tune {
   background-color: #1c9738;
 }
 
-.tuning-button:hover {
+.tuning-button:not(.in-tune):hover {
   background-color: #500e0e;
 }
 
@@ -102,6 +109,22 @@ h1 {
   padding: 2px 5px;
   border-radius: 4px;
   white-space: nowrap;
+}
+
+.flat-icon, .sharp-icon {
+  position: absolute;
+  bottom: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.flat-icon {
+  left: 10px;
+}
+
+.sharp-icon {
+  right: 10px;
 }
 
 .stats-container {

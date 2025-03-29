@@ -169,11 +169,11 @@ function Tuner() {
   return (
     <>
       <div>
-        <button className="start-button" onClick={isListening ? stopListening : startListening}>
+        <button className={`start-button ${isListening ? "listening" : ""}`} onClick={isListening ? stopListening : startListening}>
           {isListening ? "Stop Tuning" : "Start Tuning"}
         </button>
       </div>
-      <div className="container">
+      <div>
         <Visual target={target} targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}/>
       </div>
 
