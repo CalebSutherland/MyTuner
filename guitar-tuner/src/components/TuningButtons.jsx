@@ -11,7 +11,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
       <div className="tuning-buttons-container">
         {tuning.notes.map((note, index) => (
           <Target 
-            key={`${tuning.name}-${note}`}
+            key={`${tuning.name}-${note}-${index}`}
             value={tuning.values[index]} 
             note={note} 
             target={target} 

@@ -121,7 +121,7 @@ h1 {
 
 .flat-icon, .sharp-icon {
   position: absolute;
-  bottom: 5px;
+  top: 5px;
   font-size: 24px;
   font-weight: bold;
   color: white;
@@ -194,18 +194,18 @@ label {
 }
 
 /* Style the dropdown */
-.custom-select {
+.custom-select, .tuning-select {
   background-color: var(--main--red); /* Red background */
   color: white; /* White text */
   border: 1px solid transparent;
   border-radius: 8px;
-  padding: 0.4em 0.8em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  width: 120px; /* Adjust the width of the dropdown */
+  width: 140px; /* Adjust the width of the dropdown */
+  height: 40px;
   box-sizing: border-box;
 }
 
@@ -217,7 +217,6 @@ label {
 /* Style the options in the dropdown */
 .custom-select option {
   background-color: var(--main--red); /* Match the red background */
-  font-weight: 400;
   color: white;
 }
 
