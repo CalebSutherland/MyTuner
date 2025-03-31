@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import TuningList from "./TuningList.jsx";
+import TuningButtons from "./TuningButtons.jsx";
 import Visual from "./Visual"
 import Stats from "./Stats.jsx";
 import TuningDropdown from "./TuningDropdown.jsx";
@@ -194,10 +194,13 @@ function Tuner() {
         targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}
       />
 
-      <TuningList
-        selectedTuning={selectedTuning} 
-        setTarget={setTarget} 
-        detctedF={frequency} 
+      <TuningButtons
+        key={selectedTuning.name}
+        name={selectedTuning.name}
+        notes={selectedTuning.notes}
+        values={selectedTuning.values}
+        changeTarget={setTarget}
+        detectedFreq={frequency}
         target={target}
       />
 
