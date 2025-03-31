@@ -1,8 +1,34 @@
 import React from 'react';
+import { useState, useRef } from "react";
 import Target from "./Target.jsx";
 import guitarImage from '../assets/guitar_3.png'
 
 function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
+  const currentPlaying = useRef(null);
+
+  const playSound = (note, audioRefs) => {
+    // Stop the currently playing sound (if any)
+    if (currentPlaying.current) {
+      currentPlaying.current.pause();
+      currentPlaying.current.currentTime = 0;
+    }
+
+    if (audioRefs.current[note]) {
+      const audio = audioRefs.current[note];
+      currentPlaying.current = audio;
+      audio.currentTime = 0;
+      audio.play();
+
+      setTimeout(() => {
+        if (audio.currentTime > 0) {
+          audio.pause();
+          audio.currentTime = 0;
+          currentPlaying.current = null;
+        }
+      }, 2000);
+    }
+  };
+
   if (!tuning) {
     return null; // or return <div>No tuning selected</div>
   }
@@ -23,6 +49,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
               target={target}
               detectedFrequency={detectedFreq}
               updateTarget={changeTarget}
+              playSound={playSound} // Pass playSound down
             />
           ))}
         </div>
@@ -36,6 +63,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
               target={target}
               detectedFrequency={detectedFreq}
               updateTarget={changeTarget}
+              playSound={playSound} // Pass playSound down
             />
           ))}
         </div>

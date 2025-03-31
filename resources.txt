@@ -5,3 +5,5 @@ https://hackernoon.com/guitar-tuner-pitch-detection-for-dummies-ok8e35o9
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
 
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Visualizations_with_Web_Audio_API
+
+https://www.pickupmusic.com/tools/guitar-tuner
