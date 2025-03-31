@@ -6,7 +6,7 @@ import guitarImage from '../assets/guitar_3.png'
 function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
   const currentPlaying = useRef(null);
 
-  const playSound = (note, audioRefs) => {
+  const playSound = async (note, audioRefs, getAudioUrl) => { // Added getAudioUrl as a parameter
     // Stop the currently playing sound (if any)
     if (currentPlaying.current) {
       currentPlaying.current.pause();
@@ -26,6 +26,21 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
           currentPlaying.current = null;
         }
       }, 2000);
+    } else {
+      const url = await getAudioUrl(note); // Get the URL from the Target component
+      if (url) {
+        audioRefs.current[note] = new Audio(url);
+        currentPlaying.current = audioRefs.current[note];
+        audioRefs.current[note].play();
+
+        setTimeout(() => {
+          if (audioRefs.current[note].currentTime > 0) {
+            audioRefs.current[note].pause();
+            audioRefs.current[note].currentTime = 0;
+            currentPlaying.current = null;
+          }
+        }, 2000);
+      }
     }
   };
 
