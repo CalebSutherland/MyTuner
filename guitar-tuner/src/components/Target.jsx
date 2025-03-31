@@ -15,7 +15,7 @@ function Target({ note, value, updateTarget, detectedFrequency, target }) {
       className={`tuning-button ${isInTune ? "in-tune" : ""}`}
       onClick={() => updateTarget(value)}
     >
-      {note} {value}
+      {note}
     </button>
   )
 }

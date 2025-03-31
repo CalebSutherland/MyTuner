@@ -15,17 +15,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;  /* Ensure everything is at the top */
+  justify-content: flex-start;
   height: 100vh;
   text-align: center;
 }
 
 h1 {
-  margin-top: 0px; /* Space between title and top of the page */
+  margin-top: 0px; 
   font-size: 3.2em;
 }
 
-.button, .start-button, .tuning-button {
+.button, .start-button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -35,6 +35,43 @@ h1 {
   background-color: var(--main--red);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+}
+
+.tuning-button {
+  margin: 18px 0;
+  border-radius: 40px;
+  border: 1px solid transparent;
+  width: 50px;
+  height: 50px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--main--red);
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tuning-button:not(.in-tune):hover {
+  background-color: var(--hover--red);
+}
+
+.in-tune {
+  background-color: var(--main--green);
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin: 50px 0; 
+}
+
+.guitar-image {
+  max-width: 300px;
+  margin: 0 20px;
 }
 
 .start-button {
@@ -57,28 +94,14 @@ h1 {
   background-color: var(--hover--red);
 }
 
-.tuning-buttons-container {
+.tuning-layout-container {
+  text-align: center; 
+}
+
+.tuning-content {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  min-height: 60px; /* Adjust based on your button height */
-  margin: 10px 0;
-  width: 100%;
-}
-
-.tuning-button {
-  margin: 5px;
-  width: 120px;
-  height: 40px;
-  box-sizing: border-box;
-}
-
-.in-tune {
-  background-color: var(--main--green);
-}
-
-.tuning-button:not(.in-tune):hover {
-  background-color: var(--hover--red);
+  align-items: flex-start;
+  justify-content: center; 
 }
 
 .container {
@@ -193,10 +216,10 @@ label {
   gap: 25px; 
 }
 
-/* Style the dropdown */
+
 .custom-select, .tuning-select {
-  background-color: var(--main--red); /* Red background */
-  color: white; /* White text */
+  background-color: var(--main--red); 
+  color: white; 
   border: 1px solid transparent;
   border-radius: 8px;
   font-size: 1em;
@@ -204,23 +227,20 @@ label {
   font-family: inherit;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  width: 140px; /* Adjust the width of the dropdown */
+  width: 140px;
   height: 40px;
   box-sizing: border-box;
 }
 
-/* Hover effect for dropdown */
 .custom-select:hover {
-  background-color: var(--hover--red); /* Darker red */
+  background-color: var(--hover--red);
 }
 
-/* Style the options in the dropdown */
 .custom-select option {
-  background-color: var(--main--red); /* Match the red background */
+  background-color: var(--main--red);
   color: white;
 }
 
-/* Option hover effect */
 .custom-select option:hover {
-  background-color: var(--hover--red); /* Darker red on hover */
+  background-color: var(--hover--red);
 }
