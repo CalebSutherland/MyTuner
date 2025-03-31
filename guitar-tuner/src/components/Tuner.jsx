@@ -155,11 +155,11 @@ function Tuner() {
 
       const diff = Math.abs(detectedFreq - closestPitch);
       if (diff < 1) {
-        setStatus("In Tune");
+        setStatus("");
       } else if (detectedFreq > closestPitch) {
-        setStatus("Sharp");
+        setStatus("♯");
       } else {
-        setStatus("Flat");
+        setStatus("♭");
       }
 
     } else {
