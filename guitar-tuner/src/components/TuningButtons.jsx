@@ -1,14 +1,18 @@
 import Target from "./Target.jsx";
 
-function TuningButtons({ name, notes, values, target, changeTarget, detectedFreq }) {
+function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
+  if (!tuning) {
+    return null; // or return <div>No tuning selected</div>
+  }
+
   return (
     <div>
-      <p style={{ fontWeight: 500 }}>{name}</p>
+      <p style={{ fontWeight: 500 }}>{tuning.name}</p>
       <div className="tuning-buttons-container">
-        {notes.map((note, index) => (
+        {tuning.notes.map((note, index) => (
           <Target 
-            key={`${name}-${note}`}
-            value={values[index]} 
+            key={`${tuning.name}-${note}`}
+            value={tuning.values[index]} 
             note={note} 
             target={target} 
             detectedFrequency={detectedFreq} 

@@ -30,7 +30,8 @@ function Tuner() {
   const [isListening, setIsListening] = useState(false);
   const [volume, setVolume] = useState(0);
   const [target, setTarget] = useState(0);
-  const [selectedTuning, setSelectedTuning] = useState(tunings[0]);
+  const [selectedTuning, setSelectedTuning] = useState(tunings["Standard"][0]);
+  const [selectedCategory, setSelectedCategory] = useState("Standard");
   
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -171,7 +172,19 @@ function Tuner() {
   };
 
   const handleTuningChange = (tuningName) => {
-    setSelectedTuning(tunings.find((t) => t.name === tuningName));
+    const selectedTuningObject = tunings[selectedCategory].find(
+      (t) => t.name === tuningName
+    );
+    setSelectedTuning(selectedTuningObject); // or setSelectedTuning(selectedTuningObject) if you want the object
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    if (tunings[category] && tunings[category].length > 0) {
+      setSelectedTuning(tunings[category][0]); // Update with the tuning *object*
+    } else {
+      setSelectedTuning(null); // or set to default if no tunings in category
+    }
   };
   
   return (
@@ -180,6 +193,8 @@ function Tuner() {
         tunings={tunings}
         selectedTuning={selectedTuning}
         onTuningChange={handleTuningChange}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryChange}
       />
 
       <button 
@@ -195,10 +210,7 @@ function Tuner() {
       />
 
       <TuningButtons
-        key={selectedTuning.name}
-        name={selectedTuning.name}
-        notes={selectedTuning.notes}
-        values={selectedTuning.values}
+        tuning={selectedTuning}
         changeTarget={setTarget}
         detectedFreq={frequency}
         target={target}

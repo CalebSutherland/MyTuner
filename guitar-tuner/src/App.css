@@ -186,8 +186,15 @@ label {
   margin-right: 10px;
 }
 
+.select-container {
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 25px; 
+}
+
 /* Style the dropdown */
-#tuning-select {
+.custom-select {
   background-color: var(--main--red); /* Red background */
   color: white; /* White text */
   border: 1px solid transparent;
@@ -203,18 +210,18 @@ label {
 }
 
 /* Hover effect for dropdown */
-#tuning-select:hover {
+.custom-select:hover {
   background-color: var(--hover--red); /* Darker red */
 }
 
 /* Style the options in the dropdown */
-#tuning-select option {
+.custom-select option {
   background-color: var(--main--red); /* Match the red background */
   font-weight: 400;
   color: white;
 }
 
 /* Option hover effect */
-#tuning-select option:hover {
+.custom-select option:hover {
   background-color: var(--hover--red); /* Darker red on hover */
 }
