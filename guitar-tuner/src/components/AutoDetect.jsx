@@ -11,7 +11,7 @@ function AutoDetect({ isAutoDetect, toggleAutoDetect }) {
           <div className="switch-thumb"></div>
         </div>
       </div>
-      <span className="switch-label">{isAutoDetect ? 'Auto (On)' : 'Auto (Off)'}</span>
+      <span className="switch-label">Auto Detect</span>
     </div>
   );
 }

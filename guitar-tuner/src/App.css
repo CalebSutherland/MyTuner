@@ -61,6 +61,10 @@ h1 {
   background-color: var(--main--green);
 }
 
+.is-target {
+  border: 3px solid var(--main--green);
+}
+
 .left-buttons,
 .right-buttons {
   display: flex;
@@ -218,6 +222,7 @@ h1 {
 
 .switch-label {
   margin-left: 10px;
+  font-weight: 500;
 }
 
 .stats-container {

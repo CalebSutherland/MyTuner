@@ -23,7 +23,7 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
 
   return (
     <button 
-      className={`tuning-button ${isInTune ? "in-tune" : ""}`}
+      className={`tuning-button ${isInTune ? "in-tune" : ""} ${value === target ? "is-target" : ""}`}
       onClick={() => {
         updateTarget(value)
         playSound(note, audioRefs, getAudioUrl);
