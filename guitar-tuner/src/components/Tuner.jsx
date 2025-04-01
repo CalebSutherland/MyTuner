@@ -17,6 +17,7 @@ function Tuner() {
   const handleTuningChange = (tuningName) => {
     const selectedTuningObject = tunings[selectedCategory].find((t) => t.name === tuningName);
     setSelectedTuning(selectedTuningObject);
+    setTarget(0);
   };
 
   const handleCategoryChange = (category) => {
@@ -26,6 +27,7 @@ function Tuner() {
     } else {
       setSelectedTuning(null);
     }
+    setTarget(0);
   };
 
   const toggleAutoDetect = () => {
