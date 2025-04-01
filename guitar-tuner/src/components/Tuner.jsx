@@ -207,6 +207,7 @@ function Tuner() {
       <Visual 
         target={target} 
         targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}
+        volume={volume}
       />
 
       <TuningButtons

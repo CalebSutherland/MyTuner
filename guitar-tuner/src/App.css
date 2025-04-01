@@ -158,6 +158,26 @@ h1 {
   right: 10px;
 }
 
+.recording-icon {
+  position: absolute;
+  right: 15px;
+  bottom: -40px;
+  width: 12px; /* Adjust size as needed */
+  height: 12px;
+  border-radius: 50%;
+  background-color: red;
+  transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px red;
+  }
+  100% {
+    box-shadow: 0 0 15px red;
+  }
+}
+
 .stats-container {
   background: var(--main--red);
   color: white;

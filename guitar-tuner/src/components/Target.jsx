@@ -4,7 +4,7 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
   const [isInTune, setIsInTune] = useState(false);
   const audioRefs = useRef({}); // Initialize as an empty object
 
-  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { as: 'url', import: 'default' });
+  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { query: '?url', import: 'default' });
 
   const getAudioUrl = async (note) => {
     const translatedNote = note.replace('♯', 'S');
