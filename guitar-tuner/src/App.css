@@ -178,6 +178,48 @@ h1 {
   }
 }
 
+.auto-detect-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch-container {
+    cursor: pointer;
+}
+
+.switch-track {
+  width: 50px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.switch-track.active {
+  background-color: #4caf50;
+}
+
+.switch-thumb {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+.switch-track.active .switch-thumb {
+  transform: translateX(20px);
+}
+
+.switch-label {
+  margin-left: 10px;
+}
+
 .stats-container {
   background: var(--main--red);
   color: white;

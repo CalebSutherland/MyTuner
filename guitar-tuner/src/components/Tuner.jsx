@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import TuningButtons from "./TuningButtons.jsx";
 import Visual from "./Visual"
 import Stats from "./Stats.jsx";
 import TuningDropdown from "./TuningDropdown.jsx";
+import AutoDetect from './AutoDetect.jsx';
 import tunings from "../data/all_tunings.js"
 
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
@@ -32,6 +33,7 @@ function Tuner() {
   const [target, setTarget] = useState(0);
   const [selectedTuning, setSelectedTuning] = useState(tunings["Standard"][0]);
   const [selectedCategory, setSelectedCategory] = useState("Standard");
+  const [isAutoDetect, setIsAutoDetect] = useState(false);
   
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -186,6 +188,34 @@ function Tuner() {
       setSelectedTuning(null); // or set to default if no tunings in category
     }
   };
+
+  const toggleAutoDetect = () => {
+    setIsAutoDetect(!isAutoDetect);
+  };
+
+  const detectClosestNote = (freq) => {
+    if (!selectedTuning) return 0;
+
+    let closestNote = selectedTuning.values[0];
+    let minDiff = Math.abs(freq - selectedTuning.values[0]);
+
+    selectedTuning.values.forEach((val) => {
+      const diff = Math.abs(freq - val);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestNote = val;
+      }
+    });
+
+    return closestNote;
+  };
+
+  useEffect(() => {
+    if (isAutoDetect && frequency > 0) {
+      const closestTarget = detectClosestNote(frequency);
+      setTarget(closestTarget);
+    }
+  }, [isAutoDetect, frequency, selectedTuning]);
   
   return (
     <>
@@ -208,6 +238,11 @@ function Tuner() {
         target={target} 
         targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)}
         volume={volume}
+      />
+
+      <AutoDetect 
+        isAutoDetect={isAutoDetect} 
+        toggleAutoDetect={toggleAutoDetect} 
       />
 
       <TuningButtons
