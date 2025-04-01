@@ -62,7 +62,7 @@ h1 {
 }
 
 .is-target {
-  border: 3px solid var(--main--green);
+  border: 3px solid white;
 }
 
 .left-buttons,
