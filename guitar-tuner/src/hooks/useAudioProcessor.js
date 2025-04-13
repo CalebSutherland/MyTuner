@@ -25,7 +25,6 @@ function useAudioProcessor() {
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
   const volumeAnalyserRef = useRef(null);
-  const filterRef = useRef(null);
   const dataArrayRef = useRef(null);
   const volumeDataArrayRef = useRef(null);
   const micStreamRef = useRef(null);
@@ -35,10 +34,8 @@ function useAudioProcessor() {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
     const volumeAnalyser = audioContext.createAnalyser();
-    const filter = audioContext.createBiquadFilter();
 
     const source = audioContext.createMediaStreamSource(stream);
-    source.connect(filter);
     source.connect(analyser);
     source.connect(volumeAnalyser);
 
@@ -54,14 +51,9 @@ function useAudioProcessor() {
     dataArrayRef.current = new Float32Array(bufferLength);
     volumeDataArrayRef.current = new Uint8Array(volumeBufferLength);
 
-    filter.type = "bandpass";
-    filter.frequency.setValueAtTime(196, audioContext.currentTime);
-    filter.Q.setValueAtTime(10, audioContext.currentTime);
-
     audioContextRef.current = audioContext;
     analyserRef.current = analyser;
     volumeAnalyserRef.current = volumeAnalyser;
-    filterRef.current = filter;
     micStreamRef.current = stream;
 
     setIsListening(true);
@@ -120,14 +112,6 @@ function useAudioProcessor() {
     const sampleRate = audioContextRef.current.sampleRate;
     const interpolatedIndex = interpolatePeak(maxIndex);
     let detectedFreq = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
-
-    let halfIndex = Math.round(maxIndex / 2);
-    let halfFreq = (halfIndex * sampleRate) / analyserRef.current.fftSize;
-    let halfAmplitude = dataArrayRef.current[halfIndex];
-
-    if (halfAmplitude > maxAmplitude - 20) {
-      detectedFreq = halfFreq;
-    }
 
     const threshhold = -70;
     if (maxAmplitude > threshhold) {
