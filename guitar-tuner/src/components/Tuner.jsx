@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import TuningButtons from "./TuningButtons.jsx";
 import Visual from "./Visual"
 import Stats from "./Stats.jsx";

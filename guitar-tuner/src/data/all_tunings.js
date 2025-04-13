@@ -1,3 +1,5 @@
+// Don't have audio files for notes below E2
+
 const freq = {
   "A1": 55.00,  "A#1": 58.27,  "B1": 61.74,  "C2": 65.41,
   "C#2": 69.30, "D2": 73.42,  "D#2": 77.78,  "E2": 82.41,
