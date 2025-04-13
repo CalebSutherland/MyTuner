@@ -15,6 +15,62 @@ const findClosestNote = (pitch) => {
   return { note: `${closestNote}${octave}`, frequency: closestPitch.toFixed(2) };
 };
 
+const autoCorrelate = (buf, sampleRate) => {
+  const SIZE = buf.length;
+  const sensitivity = 0.01; // tweak this as needed
+  let rms = 0;
+
+  for (let i = 0; i < SIZE; i++) {
+    let val = buf[i];
+    rms += val * val;
+  }
+  rms = Math.sqrt(rms / SIZE);
+  if (rms < sensitivity) return -1;
+
+  let r1 = 0, r2 = SIZE - 1, thres = 0.2;
+  for (let i = 0; i < SIZE / 2; i++) {
+    if (Math.abs(buf[i]) < thres) {
+      r1 = i;
+      break;
+    }
+  }
+  for (let i = 1; i < SIZE / 2; i++) {
+    if (Math.abs(buf[SIZE - i]) < thres) {
+      r2 = SIZE - i;
+      break;
+    }
+  }
+
+  buf = buf.slice(r1, r2);
+  const newSize = buf.length;
+
+  const c = new Array(newSize).fill(0);
+  for (let i = 0; i < newSize; i++) {
+    for (let j = 0; j < newSize - i; j++) {
+      c[i] += buf[j] * buf[j + i];
+    }
+  }
+
+  let d = 0;
+  while (c[d] > c[d + 1]) d++;
+
+  let maxval = -1, maxpos = -1;
+  for (let i = d; i < newSize; i++) {
+    if (c[i] > maxval) {
+      maxval = c[i];
+      maxpos = i;
+    }
+  }
+
+  let T0 = maxpos;
+  const x1 = c[T0 - 1], x2 = c[T0], x3 = c[T0 + 1];
+  const a = (x1 + x3 - 2 * x2) / 2;
+  const b = (x3 - x1) / 2;
+  if (a) T0 = T0 - b / (2 * a);
+
+  return sampleRate / T0;
+};
+
 function useAudioProcessor() {
   const [frequency, setFrequency] = useState(0);
   const [note, setNote] = useState(null);
@@ -39,16 +95,15 @@ function useAudioProcessor() {
     source.connect(analyser);
     source.connect(volumeAnalyser);
 
-    analyser.fftSize = 16384;
+    analyser.fftSize = 2048;
     volumeAnalyser.fftSize = 512;
     volumeAnalyser.minDecibels = -127;
     volumeAnalyser.maxDecibels = 0;
     volumeAnalyser.smoothingTimeConstant = 0.4;
 
-    const bufferLength = analyser.frequencyBinCount;
     const volumeBufferLength = volumeAnalyser.frequencyBinCount;
 
-    dataArrayRef.current = new Float32Array(bufferLength);
+    dataArrayRef.current = new Float32Array(analyser.fftSize);
     volumeDataArrayRef.current = new Uint8Array(volumeBufferLength);
 
     audioContextRef.current = audioContext;
@@ -96,34 +151,21 @@ function useAudioProcessor() {
   const detectPitch = () => {
     if (!analyserRef.current || !volumeAnalyserRef.current) return;
     requestAnimationFrame(detectPitch);
-
-    analyserRef.current.getFloatFrequencyData(dataArrayRef.current);
-
-    let maxIndex = 0;
-    let maxAmplitude = -Infinity;
-
-    dataArrayRef.current.forEach((value, index) => {
-      if (value > maxAmplitude) {
-        maxAmplitude = value;
-        maxIndex = index;
-      }
-    });
-
+  
+    analyserRef.current.getFloatTimeDomainData(dataArrayRef.current);
     const sampleRate = audioContextRef.current.sampleRate;
-    const interpolatedIndex = interpolatePeak(maxIndex);
-    let detectedFreq = (interpolatedIndex * sampleRate) / analyserRef.current.fftSize;
-
-    const threshhold = -70;
-    if (maxAmplitude > threshhold) {
+    const pitch = autoCorrelate(dataArrayRef.current, sampleRate);
+  
+    if (pitch !== -1) {
       changeVolume();
-      setFrequency(detectedFreq.toFixed(2));
-      const { note, frequency: closestPitch } = findClosestNote(detectedFreq);
+      setFrequency(pitch.toFixed(2));
+      const { note, frequency: closestPitch } = findClosestNote(pitch);
       setNote(note);
-
-      const diff = Math.abs(detectedFreq - closestPitch);
+  
+      const diff = Math.abs(pitch - closestPitch);
       if (diff < 1) {
         setStatus("");
-      } else if (detectedFreq > closestPitch) {
+      } else if (pitch > closestPitch) {
         setStatus("♯");
       } else {
         setStatus("♭");
