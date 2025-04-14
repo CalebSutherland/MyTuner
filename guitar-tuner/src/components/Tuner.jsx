@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import TuningButtons from "./TuningButtons.jsx";
 import Visual from "./Visual"
 import Stats from "./Stats.jsx";
@@ -13,6 +13,9 @@ function Tuner() {
   const [selectedTuning, setSelectedTuning] = useState(tunings["Standard"][0]);
   const [selectedCategory, setSelectedCategory] = useState("Standard");
   const [isAutoDetect, setIsAutoDetect] = useState(false);
+
+  const lastDetectedNoteRef = useRef(null);
+  const debounceTimerRef = useRef(null);
 
   const handleTuningChange = (tuningName) => {
     const selectedTuningObject = tunings[selectedCategory].find((t) => t.name === tuningName);
@@ -52,9 +55,16 @@ function Tuner() {
   };
 
   useEffect(() => {
-    if (isAutoDetect && frequency > 0) {
-      const closestTarget = detectClosestNote(frequency);
-      setTarget(closestTarget);
+    if (!isAutoDetect || frequency <= 0) return; 
+    const closestTarget = detectClosestNote(frequency);
+
+    if(closestTarget !== lastDetectedNoteRef.current) {
+      lastDetectedNoteRef.current = closestTarget;
+      clearTimeout(debounceTimerRef.current);
+
+      debounceTimerRef.current = setTimeout(() => {
+        setTarget(closestTarget);
+      }, 1000);
     }
   }, [isAutoDetect, frequency, selectedTuning]);
 
