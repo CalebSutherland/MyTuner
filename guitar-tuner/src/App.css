@@ -116,7 +116,7 @@ h1 {
 }
 
 .container {
-  background: var(--main--red);
+  background: #413e3e;
   width: 600px;
   height: 200px;
   border-radius: 10px;
@@ -143,11 +143,10 @@ h1 {
 .value-label {
   position: absolute;
   left: 10px;
-  top: 0px;
-  font-size: 16px;
+  top: -12px;
+  font-size: 25px;
   font-weight: bold;
-  background-color: white;
-  color: var(--main--red);
+  color: white;
   padding: 2px 5px;
   border-radius: 4px;
   white-space: nowrap;
@@ -156,7 +155,7 @@ h1 {
 .flat-icon, .sharp-icon {
   position: absolute;
   top: 5px;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   color: white;
 }
