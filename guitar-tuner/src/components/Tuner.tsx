@@ -5,8 +5,8 @@ import Visual from "./Visual"
 import Stats from "./Stats";
 import TuningDropdown from "./TuningDropdown";
 import AutoDetect from "./AutoDetect";
-import tunings from "../data/all_tunings.js"
-import useAudioProcessor from "../hooks/useAudioProcessor.js"
+import tunings from "../data/all_tunings"
+import useAudioProcessor from "../hooks/useAudioProcessor"
 
 type Tuning = {
   name: string;

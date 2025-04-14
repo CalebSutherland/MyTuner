@@ -3,7 +3,12 @@ import { useState, useRef } from "react";
 const ALL_NOTES = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 const CONCERT_PITCH = 440;
 
-const findClosestNote = (pitch) => {
+interface NoteInfo {
+  note: string;
+  frequency: string;
+}
+
+const findClosestNote = (pitch: number): NoteInfo => {
   if (pitch === 0) return { note: "No sound", frequency: "0" };
 
   const roundedPitch = parseFloat(pitch.toFixed(2));
@@ -15,23 +20,33 @@ const findClosestNote = (pitch) => {
   return { note: `${closestNote}${octave}`, frequency: closestPitch.toFixed(2) };
 };
 
-function useAudioProcessor() {
-  const [frequency, setFrequency] = useState(0);
-  const [note, setNote] = useState(null);
-  const [status, setStatus] = useState("");
-  const [isListening, setIsListening] = useState(false);
-  const [volume, setVolume] = useState(0);
+interface AudioProcessorHook {
+  frequency: number;
+  note: string | null;
+  status: string;
+  isListening: boolean;
+  volume: number;
+  startListening: () => Promise<void>;
+  stopListening: () => void;
+}
 
-  const audioContextRef = useRef(null);
-  const analyserRef = useRef(null);
-  const volumeAnalyserRef = useRef(null);
-  const dataArrayRef = useRef(null);
-  const volumeDataArrayRef = useRef(null);
-  const micStreamRef = useRef(null);
+function useAudioProcessor() {
+  const [frequency, setFrequency] = useState<number>(0);
+  const [note, setNote] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>("");
+  const [isListening, setIsListening] = useState<boolean>(false);
+  const [volume, setVolume] = useState<number>(0);
+
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const volumeAnalyserRef = useRef<AnalyserNode | null>(null);
+  const dataArrayRef = useRef<Float32Array | null>(null);
+  const volumeDataArrayRef = useRef<Uint8Array | null>(null);
+  const micStreamRef = useRef<MediaStream | null>(null);
 
   const startListening = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
     const volumeAnalyser = audioContext.createAnalyser();
 
@@ -73,34 +88,44 @@ function useAudioProcessor() {
     audioContextRef.current = null;
     analyserRef.current = null;
     dataArrayRef.current = null;
+    volumeDataArrayRef.current = null;
   };
 
   const changeVolume = () => {
-    volumeAnalyserRef.current.getByteFrequencyData(volumeDataArrayRef.current);
+    const volumeAnalyser = volumeAnalyserRef.current;
+    const volumeData = volumeDataArrayRef.current;
+    if (!volumeAnalyser || !volumeData) return;
+
+    volumeAnalyser.getByteFrequencyData(volumeData);
     let volumeSum = 0;
-    for (const volume of volumeDataArrayRef.current) volumeSum += volume;
-    const averageVolume = volumeSum / volumeDataArrayRef.current.length;
-    setVolume(averageVolume.toFixed(0));
+    for (const value of volumeData) volumeSum += value;
+    const averageVolume = volumeSum / volumeData.length;
+    setVolume(Math.round(averageVolume));
   };
 
   const detectPitch = () => {
-    if (!analyserRef.current || !volumeAnalyserRef.current) return;
+    const analyser = analyserRef.current;
+    const volumeAnalyser = volumeAnalyserRef.current;
+    const dataArray = dataArrayRef.current;
+    const audioContext = audioContextRef.current;
+
+    if (!analyser || !volumeAnalyser || !dataArray || !audioContext) return;
+
     requestAnimationFrame(detectPitch);
-  
-    analyserRef.current.getFloatTimeDomainData(dataArrayRef.current);
-    const sampleRate = audioContextRef.current.sampleRate;
-    const pitch = autoCorrelate(dataArrayRef.current, sampleRate);
+    analyser.getFloatTimeDomainData(dataArray);
+    const pitch = autoCorrelate(dataArray, audioContext.sampleRate);
   
     if (pitch !== -1) {
       changeVolume();
-      setFrequency(pitch.toFixed(2));
+      const roundedPitch = parseFloat(pitch.toFixed(2));
+      setFrequency(roundedPitch);
       const { note, frequency: closestPitch } = findClosestNote(pitch);
       setNote(note);
   
-      const diff = Math.abs(pitch - closestPitch);
+      const diff = Math.abs(pitch - parseFloat(closestPitch));
       if (diff < 1) {
         setStatus("");
-      } else if (pitch > closestPitch) {
+      } else if (pitch > parseFloat(closestPitch)) {
         setStatus("♯");
       } else {
         setStatus("♭");
@@ -113,7 +138,7 @@ function useAudioProcessor() {
     }
   };
 
-  const autoCorrelate = (buf, sampleRate) => {
+  const autoCorrelate = (buf: Float32Array, sampleRate: number): number => {
     const SIZE = buf.length;
     const sensitivity = 0.01; // tweak this as needed
     let rms = 0;
