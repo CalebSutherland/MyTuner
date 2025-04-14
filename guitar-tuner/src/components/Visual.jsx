@@ -3,34 +3,51 @@ function Visual({ target, targetDiffernce, volume }) {
   const clampedValue = Math.max(-maxOffset, Math.min(targetDiffernce, maxOffset));
   const isAudioDetected = volume > 0;
 
-  const diff = Math.abs(targetDiffernce);
   let lineColor = "white";
 
   if (!isAudioDetected || target === 0) {
     lineColor = "white";
   } else {
-    // Normalize diff from 0 (perfect) to 20+ (very off)
-    const clampedDiff = Math.min(diff, 20);
-
-    let hue = 0;
-    let lightness = 50;
-
-    if (clampedDiff <= 5) {
-      // Green to Yellow (120 → 60)
-      const t = clampedDiff / 5;
-      hue = 120 - t * 60;
-    } else if (clampedDiff <= 10) {
-      // Yellow to Red (60 → 0)
-      const t = (clampedDiff - 5) / 5;
-      hue = 60 - t * 60;
+    const diff = Math.abs(targetDiffernce);
+  
+    if (diff <= 3) {
+      // Green → Yellow (0–3)
+      const t = diff / 3;  // Normalize from 0 → 1
+      const r = Math.round(t * 255);  // 0 → 255
+      const g = 255;
+      const b = 0;
+      lineColor = `rgb(${r}, ${g}, ${b})`;
+    } else if (diff <= 10) {
+      // Yellow → Yellow-Yellow-Orange (3–10)
+      const t = (diff - 3) / 7;  // Normalize from 0 → 1
+      const r = 255;
+      const g = Math.round(255 - t * 100);  // 255 → 155
+      const b = 0;
+      lineColor = `rgb(${r}, ${g}, ${b})`;
+    } else if (diff <= 15) {
+      // Yellow → Yellow-Orange (10–15)
+      const t = (diff - 10) / 5;  // Normalize from 0 → 1
+      const r = 255;
+      const g = Math.round(155 - t * 70);  // 155 → 85
+      const b = 0;
+      lineColor = `rgb(${r}, ${g}, ${b})`;
+    } else if (diff <= 20) {
+      // Orange → Red (15–20)
+      const t = (diff - 15) / 5;  // Normalize from 0 → 1
+      const r = 255;
+      const g = Math.round(85 - t * 85);  // 85 → 0
+      const b = 0;
+      lineColor = `rgb(${r}, ${g}, ${b})`;
+    } else if (diff <= 40) {
+      // Red → Dark Red (20–40)
+      const t = (diff - 20) / 20;  // Normalize 0 → 1
+      const r = Math.round(255 - t * (255 - 90));  // 255 → 90
+      const g = 0;
+      const b = 0;
+      lineColor = `rgb(${r}, ${g}, ${b})`;
     } else {
-      // Stay at red (hue = 0), darken from lightness 50 → 30
-      hue = 0;
-      const t = (clampedDiff - 10) / 10;
-      lightness = 50 - t * 20; // goes from 50 → 30
+      lineColor = "rgb(90, 0, 0)"; // Darkest red past 40
     }
-
-    lineColor = `hsl(${hue}, 100%, 50%)`;
   }
 
   return (
