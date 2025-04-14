@@ -9,6 +9,7 @@
   --main--red: #700b0b;
   --hover--red: #500e0e;
   --main--green: #1c9738;
+  --main--yellow: #f9f61f;
 }
 
 .App {
@@ -55,12 +56,16 @@ h1 {
   justify-content: center;
 }
 
-.tuning-button:not(.in-tune):hover {
-  background-color: var(--hover--red);
+.tuning-button.close {
+  background-color: var(--main--yellow);
 }
 
-.in-tune {
+.tuning-button.in {
   background-color: var(--main--green);
+}
+
+.tuning-button.out {
+  background-color: var(--main--red);
 }
 
 .is-target {
