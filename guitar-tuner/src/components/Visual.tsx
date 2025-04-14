@@ -1,4 +1,12 @@
-function Visual({ target, targetDiffernce, volume }) {
+import React from "react";
+
+interface VisualProps {
+  target: number;
+  targetDiffernce: number;
+  volume: number;
+}
+
+const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
   const maxOffset = 25;
   const clampedValue = Math.max(-maxOffset, Math.min(targetDiffernce, maxOffset));
   const isAudioDetected = volume > 0;

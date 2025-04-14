@@ -1,6 +1,12 @@
 import React from 'react';
 
-function AutoDetect({ isAutoDetect, toggleAutoDetect }) {
+type AutoDetectProps = {
+  isAutoDetect: boolean;
+  toggleAutoDetect: () => void;
+};
+
+
+function AutoDetect({ isAutoDetect, toggleAutoDetect }: AutoDetectProps) {
   return (
     <div className="auto-detect-switch">
       <div

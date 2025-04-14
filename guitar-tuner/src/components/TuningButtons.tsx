@@ -1,12 +1,30 @@
 import React from 'react';
-import { useState, useRef } from "react";
-import Target from "./Target.jsx";
+import { useRef } from "react";
+import Target from "./Target";
 import guitarImage from '../assets/guitar_3.png'
 
-function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
-  const currentPlaying = useRef(null);
+type Tuning = {
+  name: string;
+  notes: string[];
+  values: number[];
+};
 
-  const playSound = async (note, audioRefs, getAudioUrl) => { // Added getAudioUrl as a parameter
+type TuningButtonsProps = {
+  tuning: Tuning | null;
+  target: number;
+  changeTarget: (index: number) => void;
+  detectedFreq: number;
+};
+
+function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningButtonsProps) {
+  const currentPlaying = useRef<HTMLAudioElement | null>(null);
+  const audioRefs = useRef<{ [note: string]: HTMLAudioElement }>({});
+
+  const playSound = async (
+    note: string,
+    audioRefs: React.RefObject<{ [note: string]: HTMLAudioElement }>,
+    getAudioUrl: (note: string) => Promise<string | null>
+  ) => { 
     // Stop the currently playing sound (if any)
     if (currentPlaying.current) {
       currentPlaying.current.pause();
@@ -29,14 +47,15 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }) {
     } else {
       const url = await getAudioUrl(note); // Get the URL from the Target component
       if (url) {
-        audioRefs.current[note] = new Audio(url);
-        currentPlaying.current = audioRefs.current[note];
-        audioRefs.current[note].play();
+        const newAudio = new Audio(url);
+        audioRefs.current[note] = newAudio;
+        currentPlaying.current = newAudio;
+        newAudio.play();
 
         setTimeout(() => {
-          if (audioRefs.current[note].currentTime > 0) {
-            audioRefs.current[note].pause();
-            audioRefs.current[note].currentTime = 0;
+          if (newAudio.currentTime > 0) {
+            newAudio.pause();
+            newAudio.currentTime = 0;
             currentPlaying.current = null;
           }
         }, 2000);

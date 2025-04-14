@@ -1,8 +1,26 @@
 import React from 'react';
 
-function TuningDropdown({ tunings, selectedTuning, onTuningChange, selectedCategory, onCategoryChange }) {
+interface Tuning {
+  name: string;
+}
+
+interface TuningDropdownProps {
+  tunings: { [category: string]: Tuning[] };
+  selectedTuning: Tuning;
+  onTuningChange: (tuningName: string) => void;
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+const TuningDropdown: React.FC<TuningDropdownProps> = ({
+  tunings,
+  selectedTuning,
+  onTuningChange,
+  selectedCategory,
+  onCategoryChange,
+}) => {
   return (
-    <div className="select-container"> {/* Add the wrapper div */}
+    <div className="select-container">
       <div>
         <label htmlFor="category-select">Select Category: </label>
         <select

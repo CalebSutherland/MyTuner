@@ -1,35 +1,58 @@
+import React from "react";
 import { useState, useRef, useEffect } from "react";
-import TuningButtons from "./TuningButtons.jsx";
+import TuningButtons from "./TuningButtons";
 import Visual from "./Visual"
-import Stats from "./Stats.jsx";
-import TuningDropdown from "./TuningDropdown.jsx";
-import AutoDetect from './AutoDetect.jsx';
+import Stats from "./Stats";
+import TuningDropdown from "./TuningDropdown";
+import AutoDetect from "./AutoDetect";
 import tunings from "../data/all_tunings.js"
 import useAudioProcessor from "../hooks/useAudioProcessor.js"
 
+type Tuning = {
+  name: string;
+  notes: string[];
+  values: number[];
+};
+
+type Tunings = {
+  [category: string]: Tuning[];
+};
+
 function Tuner() {
-  const { frequency, note, status, isListening, volume, startListening, stopListening } = useAudioProcessor();
-  const [target, setTarget] = useState(0);
-  const [selectedTuning, setSelectedTuning] = useState(tunings["Standard"][0]);
-  const [selectedCategory, setSelectedCategory] = useState("Standard");
-  const [isAutoDetect, setIsAutoDetect] = useState(false);
+  const {
+    frequency,
+    note,
+    status,
+    isListening,
+    volume,
+    startListening,
+    stopListening,
+  } = useAudioProcessor();
 
-  const lastDetectedNoteRef = useRef(null);
-  const debounceTimerRef = useRef(null);
+  const [target, setTarget] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
+  const [selectedTuning, setSelectedTuning] = useState<Tuning>(tunings["Standard"][0])
+  const [isAutoDetect, setIsAutoDetect] = useState<boolean>(false);
+  const lastDetectedNoteRef = useRef<number | null>(null);
+  const debounceTimerRef = useRef<number | null>(null);
 
-  const handleTuningChange = (tuningName) => {
-    const selectedTuningObject = tunings[selectedCategory].find((t) => t.name === tuningName);
-    setSelectedTuning(selectedTuningObject);
-    setTarget(0);
+  const handleTuningChange = (tuningName: string) => {
+    const selectedTuningObject = (tunings as Tunings)[selectedCategory].find(
+      (t) => t.name === tuningName
+    );
+    
+    if (selectedTuningObject) {
+      setSelectedTuning(selectedTuningObject);
+      setTarget(0);
+    } else {
+      console.warn(`Tuning '${tuningName}' not found in category '${selectedCategory}'`);
+    }
   };
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
-    if (tunings[category] && tunings[category].length > 0) {
-      setSelectedTuning(tunings[category][0]);
-    } else {
-      setSelectedTuning(null);
-    }
+    const firstTuning = (tunings as Tunings)[category]?.[0] || null;
+    setSelectedTuning(firstTuning);
     setTarget(0);
   };
 
@@ -37,7 +60,7 @@ function Tuner() {
     setIsAutoDetect(!isAutoDetect);
   };
 
-  const detectClosestNote = (freq) => {
+  const detectClosestNote = (freq: number): number => {
     if (!selectedTuning) return 0;
 
     let closestNote = selectedTuning.values[0];
@@ -55,12 +78,13 @@ function Tuner() {
   };
 
   useEffect(() => {
-    if (!isAutoDetect || frequency <= 0) return; 
+    if (!isAutoDetect || frequency <= 0) return;
+
     const closestTarget = detectClosestNote(frequency);
 
     if(closestTarget !== lastDetectedNoteRef.current) {
       lastDetectedNoteRef.current = closestTarget;
-      clearTimeout(debounceTimerRef.current);
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
       debounceTimerRef.current = setTimeout(() => {
         setTarget(closestTarget);
@@ -86,7 +110,7 @@ function Tuner() {
 
       <Visual 
         target={target} 
-        targetDiffernce={frequency === 0 ? 0 : (frequency - target).toFixed(0)} 
+        targetDiffernce={frequency === 0 ? 0 : Number((frequency - target).toFixed(0))} 
         volume={volume} 
       />
 

@@ -1,4 +1,14 @@
-function Stats({ frequency, note, status, volume, target }) {
+import React from "react";
+
+type StatsProps = {
+  frequency: number;
+  note: string | null;
+  status: string;
+  volume: number;
+  target: number;
+};
+
+function Stats({ frequency, note, status, volume, target }: StatsProps) {
   return (
     <div className="stats-container">
       <h3 className="stats-title">Tuning Stats</h3>

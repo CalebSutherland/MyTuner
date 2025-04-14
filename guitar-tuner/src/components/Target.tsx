@@ -1,18 +1,35 @@
+import React from 'react';
 import { useState, useEffect, useRef } from "react";
 
-function Target({ note, value, updateTarget, detectedFrequency, target, playSound }) {
-  const [tuningStatus, setTuningStatus] = useState("out");
-  const inRangeSinceRef = useRef(null);
-  const lastDesiredStatusRef = useRef(null);
-  const audioRefs = useRef({}); // Initialize as an empty object
+interface TargetProps {
+  note: string;
+  value: number;
+  updateTarget: (value: number) => void;
+  detectedFrequency: number;
+  target: number;
+  playSound: (note: string, audioRefs: React.RefObject<Record<string, HTMLAudioElement>>, getAudioUrl: (note: string) => Promise<null | string>) => void;
+}
 
-  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { query: '?url', import: 'default' });
+function Target({ note, value, updateTarget, detectedFrequency, target, playSound }: TargetProps) {
+  const [tuningStatus, setTuningStatus] = useState<string>("out");
+  const inRangeSinceRef = useRef<number | null>(null);
+  const lastDesiredStatusRef = useRef<string | null>(null);
+  const audioRefs = useRef<Record<string, HTMLAudioElement>>({}); // Initialize as an empty object
 
-  const getAudioUrl = async (note) => {
+  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
+
+  const getAudioUrl = async (note: string): Promise<null | string> => {
     const translatedNote = note.replace('♯', 'S');
-    if (audioFiles[`../data/guitar_sounds/${translatedNote}.mp3`]) {
-      return await audioFiles[`../data/guitar_sounds/${translatedNote}.mp3`]();
+    const audioFileKey = `../data/guitar_sounds/${translatedNote}.mp3`;
+
+    if (audioFiles[audioFileKey]) {
+      const audioModule = await audioFiles[audioFileKey]();
+      console.log("Available audio keys:", Object.keys(audioFiles));
+      console.log("Looking for key:", audioFileKey);
+      console.log("Audio URL loaded:", audioModule);
+      return audioModule; // Return the URL of the audio file
     }
+    console.warn("Missing audio file:", audioFileKey);
     return null;
   };
 
@@ -57,13 +74,13 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
     <button 
       className={`tuning-button ${tuningStatus} ${value === target ? "is-target" : ""}`}
       onClick={() => {
-        updateTarget(value)
+        updateTarget(value);
         playSound(note, audioRefs, getAudioUrl);
       }}
     >
       {note}
     </button>
-  )
+  );
 }
 
 export default Target;
