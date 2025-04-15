@@ -44,6 +44,15 @@ label {
   gap: 20px; 
 }
 
+.select-container > div {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  /* Ensure each div is the same size */
+  height: 32px;
+  width: 215px;
+}
+
 .custom-select, .tuning-select {
   background-color: var(--main--red); 
   color: white; 
@@ -88,6 +97,8 @@ Start Button
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   color: white;
+  height: 32px;
+  width: 105px;
 }
 
 .button:hover {
