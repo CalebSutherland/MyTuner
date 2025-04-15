@@ -67,7 +67,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningBut
     return null; // or return <div>No tuning selected</div>
   }
 
-  const leftButtons = tuning.notes.slice(0, 3);
+  const leftButtons = tuning.notes.slice(0, 3).reverse();
   const rightButtons = tuning.notes.slice(3);
 
   return (
@@ -75,17 +75,20 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningBut
       <p style={{ fontWeight: 500 }}>{tuning.name}</p>
       <div className="tuning-content">
         <div className="left-buttons">
-          {leftButtons.map((note, index) => (
+        {leftButtons.map((note) => {
+          const noteIndex = tuning.notes.indexOf(note);
+          return (
             <Target
-              key={`${tuning.name}-${note}-${index}`}
-              value={tuning.values[index]}
+              key={`${tuning.name}-${note}-${noteIndex}`}
+              value={tuning.values[noteIndex]}
               note={note}
               target={target}
               detectedFrequency={detectedFreq}
               updateTarget={changeTarget}
-              playSound={playSound} // Pass playSound down
+              playSound={playSound}
             />
-          ))}
+          );
+        })}
         </div>
         <img src={guitarImage} alt="Guitar" className="guitar-image" />
         <div className="right-buttons">
