@@ -7,7 +7,7 @@ interface VisualProps {
 }
 
 const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
-  const maxOffset = 25;
+  const maxOffset = 20;
   const clampedValue = Math.max(-maxOffset, Math.min(targetDiffernce, maxOffset));
   const isAudioDetected = volume > 0;
 
