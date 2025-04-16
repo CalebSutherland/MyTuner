@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import Tuner from "./components/Tuner"
 import './App.css'
 
+const apiUrl = "https://guitar-tuner-backend.onrender.com"
+
 function App() {
   useEffect(() => {
-    fetch('http://localhost:3001/api/ping')
+    fetch(`${apiUrl}/api/ping`)
       .then(res => res.json())
       .then(data => console.log(data.message))
       .catch(err => console.error('Error fetching from backend:', err));
