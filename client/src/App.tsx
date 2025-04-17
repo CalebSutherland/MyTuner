@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Tuner from "./components/Tuner"
 import './App.css'
 
-const apiUrl = "https://guitar-tuner-backend.onrender.com"
+const apiUrl = "https://mytuner.onrender.com"
 
 function App() {
   useEffect(() => {
