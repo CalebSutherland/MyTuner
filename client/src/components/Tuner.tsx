@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
+import StartTuning from "./StartTuning"
 import TuningButtons from "./TuningButtons";
 import Visual from "./Visual"
 import Stats from "./Stats";
@@ -36,6 +37,8 @@ function Tuner() {
   const lastDetectedNoteRef = useRef<number | null>(null);
   const debounceTimerRef = useRef<number | null>(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL
+
   const handleTuningChange = (tuningName: string) => {
     const selectedTuningObject = (tunings as Tunings)[selectedCategory].find(
       (t) => t.name === tuningName
@@ -60,6 +63,7 @@ function Tuner() {
     setIsAutoDetect(!isAutoDetect);
   };
 
+
   const detectClosestNote = (freq: number): number => {
     if (!selectedTuning) return 0;
 
@@ -73,9 +77,9 @@ function Tuner() {
         closestNote = val;
       }
     });
-
     return closestNote;
   };
+
 
   useEffect(() => {
     if (!isAutoDetect || frequency <= 0) return;
@@ -92,6 +96,28 @@ function Tuner() {
     }
   }, [isAutoDetect, frequency, selectedTuning]);
 
+
+  const sendTuningData = async () => {
+    const data = {
+      tuningName: selectedTuning.name,
+    };
+  
+    try {
+      const res = await fetch(`${apiUrl}/api/log`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await res.json();
+      console.log("Backend response:", result.message);
+    } catch (err) {
+      console.error("Error sending data to backend:", err);
+    }
+  };
+
   return (
     <>
       <TuningDropdown
@@ -102,11 +128,15 @@ function Tuner() {
         onCategoryChange={handleCategoryChange}
       />
 
-      <button className={`start-button ${isListening ? "listening" : ""}`} 
-        onClick={isListening ? stopListening : startListening}
-      >
-        {isListening ? "Stop Tuning" : "Start Tuning"}
-      </button>
+      {/*<button onClick={sendTuningData}>Save Tuning</button>*/}
+
+      <StartTuning
+        isListening={isListening}
+        startListening={startListening}
+        stopListening={stopListening}
+      />
+
+      
 
       <Visual 
         target={target} 

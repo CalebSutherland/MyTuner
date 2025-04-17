@@ -7,7 +7,10 @@ interface TargetProps {
   updateTarget: (value: number) => void;
   detectedFrequency: number;
   target: number;
-  playSound: (note: string, audioRefs: React.RefObject<Record<string, HTMLAudioElement>>, getAudioUrl: (note: string) => Promise<null | string>) => void;
+  playSound: (
+    note: string, audioRefs: React.RefObject<Record<string, HTMLAudioElement>>,
+    getAudioUrl: (note: string) => Promise<null | string>
+  ) => void;
 }
 
 function Target({ note, value, updateTarget, detectedFrequency, target, playSound }: TargetProps) {
@@ -34,40 +37,37 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
   };
 
   useEffect(() => {
-    if (value !== target) return;
-  
-    const diff = Math.abs(detectedFrequency - value);
-    console.log("Frequency difference:", diff);
-    const now = Date.now();
-
-    let desiredStatus = "out";
-    if (diff <= 1) {
-      desiredStatus = "in";
-    } else if (diff <= 5) {
-      desiredStatus = "close";
-    }
-
-    console.log(`Desired status: ${desiredStatus}`);
-
-    if (tuningStatus !== "in" && desiredStatus !== "out") {
-      if (!inRangeSinceRef.current) {
-        inRangeSinceRef.current = now;
-      }
+      if (value !== target) return;
     
-      // Only reset the timer if the desiredStatus actually changed
-      if (desiredStatus !== lastDesiredStatusRef.current) {
-        inRangeSinceRef.current = now;
-        lastDesiredStatusRef.current = desiredStatus;
+      const diff = Math.abs(detectedFrequency - value);
+      const now = Date.now();
+
+      let desiredStatus = "out";
+      if (diff <= 1) {
+        desiredStatus = "in";
+      } else if (diff <= 5) {
+        desiredStatus = "close";
       }
-    
-      if (now - inRangeSinceRef.current >= 500) {
-        setTuningStatus(desiredStatus);
-        console.log(`Upgrading status to: ${desiredStatus}`);
+
+      if (tuningStatus !== "in" && desiredStatus !== "out") {
+        if (!inRangeSinceRef.current) {
+          inRangeSinceRef.current = now;
+        }
+      
+        // Only reset the timer if the desiredStatus actually changed
+        if (desiredStatus !== lastDesiredStatusRef.current) {
+          inRangeSinceRef.current = now;
+          lastDesiredStatusRef.current = desiredStatus;
+        }
+      
+        if (now - inRangeSinceRef.current >= 500) {
+          setTuningStatus(desiredStatus);
+          console.log(`Upgrading status to: ${desiredStatus}`);
+        }
+      } else {
+        inRangeSinceRef.current = null;
+        lastDesiredStatusRef.current = null;
       }
-    } else {
-      inRangeSinceRef.current = null;
-      lastDesiredStatusRef.current = null;
-    }
   }, [detectedFrequency, value, target, tuningStatus]);
 
   return (

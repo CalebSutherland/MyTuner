@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Tuner from "./components/Tuner"
 import './App.css'
 
-const apiUrl = "https://mytuner.onrender.com"
+const apiUrl = import.meta.env.VITE_API_URL
 
 function App() {
   useEffect(() => {

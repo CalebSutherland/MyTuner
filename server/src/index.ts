@@ -14,3 +14,9 @@ app.listen(PORT, () => {
 app.get('/api/ping', (_req, res) => {
   res.send({ message: 'pong from the backend' });
 });
+
+app.post('/api/log', (req, res) => {
+  const { tuningName } = req.body;
+  console.log(`Received tuning: ${tuningName}`);
+  res.status(200).json({ message: 'Data received' });
+});
