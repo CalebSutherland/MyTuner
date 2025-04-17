@@ -1,13 +1,18 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import StartTuning from "./StartTuning"
-import TuningButtons from "./TuningButtons";
-import Visual from "./Visual"
-import Stats from "./Stats";
-import TuningDropdown from "./TuningDropdown";
-import AutoDetect from "./AutoDetect";
-import tunings from "../data/all_tunings"
-import useAudioProcessor from "../hooks/useAudioProcessor"
+import StartTuning from "../StartTuning/StartTuning"
+import TuningButtons from "../TuningButtons";
+import Visual from "../Visual/Visual"
+import Stats from "../Stats/Stats";
+import TuningDropdown from "../TuningDropdown";
+import AutoDetect from "../AutoDetect/AutoDetect";
+import tunings from "../../data/all_tunings"
+import useAudioProcessor from "../../hooks/useAudioProcessor"
+import './Tuner.css'
+import '../Visual/Visual.css'
+import '../Stats/Stats.css'
+import '../AutoDetect/AutoDetect.css'
+import '../StartTuning/StartTuning.css'
 
 type Tuning = {
   name: string;
@@ -135,8 +140,6 @@ function Tuner() {
         startListening={startListening}
         stopListening={stopListening}
       />
-
-      
 
       <Visual 
         target={target} 

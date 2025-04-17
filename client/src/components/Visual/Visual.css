@@ -1,0 +1,76 @@
+/*###########
+Tuning Visual
+###########*/
+
+.container {
+  background: #413e3e;
+  width: 480px;
+  height: 160px;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 16px auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.line {
+  width: 4px;
+  height: 120px;
+  background-color: white;
+  position: absolute;
+  left: 50%;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.value-label {
+  position: absolute;
+  left: 8px;
+  top: -9.6px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 1.6px 4px;
+  border-radius: 3.2px;
+  white-space: nowrap;
+}
+
+.flat-icon, .sharp-icon {
+  position: absolute;
+  top: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.flat-icon {
+  left: 8px;
+}
+
+.sharp-icon {
+  right: 8px;
+}
+
+.recording-icon {
+  position: absolute;
+  right: 12px;
+  bottom: -32px;
+  width: 9.6px;
+  height: 9.6px;
+  border-radius: 50%;
+  background-color: red;
+  transition: opacity 0.3s ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 4px red;
+  }
+  100% {
+    box-shadow: 0 0 12px red;
+  }
+}

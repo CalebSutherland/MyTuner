@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect } from "react";
-import Tuner from "./components/Tuner"
+import Tuner from "./components/Tuner/Tuner"
 import './App.css'
 
 const apiUrl = import.meta.env.VITE_API_URL

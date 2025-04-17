@@ -1,0 +1,47 @@
+/*##########
+Tuning Stats
+##########*/
+
+.stats-container {
+  background: var(--main--red);
+  color: white;
+  border-radius: 8px;
+  padding: 12px;
+  max-width: 480px;
+  margin: 16px auto;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.stats-title {
+  font-size: 1.2em;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6.4px;
+  border-radius: 4.8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+}
+
+.stat-label {
+  font-weight: 500;
+}
+
+.stat-value {
+  font-weight: 500;
+}
+
+.in-tune-stat {
+  color: var(--main--green);
+}

@@ -1,0 +1,115 @@
+/*##############
+Dropdown buttons
+##############*/
+
+label {
+  font-size: 0.8em;
+  font-weight: 500;
+  color: white;
+  margin-right: 8px;
+}
+
+.select-container {
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 20px; 
+}
+
+.select-container > div {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  /* Ensure each div is the same size */
+  height: 32px;
+  width: 215px;
+}
+
+.custom-select, .tuning-select {
+  background-color: var(--main--red); 
+  color: white; 
+  border: 1px solid transparent;
+  border-radius: 6.4px;
+  font-size: 0.8em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  width: 112px;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.custom-select:hover {
+  background-color: var(--hover--red);
+}
+
+.custom-select option {
+  background-color: var(--main--red);
+  color: white;
+}
+
+.custom-select option:hover {
+  background-color: var(--hover--red);
+}
+
+
+/*############
+Tuning Buttons
+############*/
+
+.tuning-layout-container {
+  text-align: center; 
+}
+
+.tuning-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center; 
+}
+
+.tuning-button {
+  margin: 15.2px 0;
+  border-radius: 32px;
+  border: 1px solid transparent;
+  width: 40px;
+  height: 40px;
+  font-size: 0.8em;
+  font-weight: 500;
+  font-family: inherit;
+  color: white;
+  background-color: var(--main--red);
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tuning-button.close {
+  background-color: var(--main--yellow);
+}
+
+.tuning-button.in {
+  background-color: var(--main--green);
+}
+
+.tuning-button.out {
+  background-color: var(--main--red);
+}
+
+.is-target {
+  border: 2.4px solid white;
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin: 39.2px 0;
+}
+
+.guitar-image {
+  max-width: 240px;
+  margin: 0 16px;
+}

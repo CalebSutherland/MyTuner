@@ -1,0 +1,46 @@
+/*################
+Auto Detect Button
+################*/
+
+.auto-detect-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch-container {
+  cursor: pointer;
+}
+
+.switch-track {
+  width: 40px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 12px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.switch-track.active {
+  background-color: #4caf50;
+}
+
+.switch-thumb {
+  width: 19.2px;
+  height: 19.2px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2.4px;
+  left: 2.4px;
+  transition: transform 0.3s ease;
+}
+
+.switch-track.active .switch-thumb {
+  transform: translateX(16px);
+}
+
+.switch-label {
+  margin-left: 8px;
+  font-weight: 500;
+}
