@@ -1,11 +1,15 @@
-import React from "react"
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Tuner from "./components/Tuner/Tuner"
+import MenuButton from "./components/MenuButton/MenuButton";
 import './App.css'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 function App() {
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+
+  const toggleMenu = () => setShowMenu(!showMenu);
+
   useEffect(() => {
     fetch(`${apiUrl}/api/ping`)
       .then(res => res.json())
@@ -15,12 +19,15 @@ function App() {
 
   return (
     <div className="App">
-      <h1>MyTuner</h1>
+      <header className="app-header">
+        <MenuButton onToggle={toggleMenu} isOpen={showMenu} />
+        <h1>MyTuner</h1>
+      </header>
       <div>
-      <Tuner />
+        <Tuner />
       </div>
     </div>
-  )
+  );
 }
 
 export default App
