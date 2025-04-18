@@ -26,6 +26,9 @@ function App() {
         <h1>MyTuner</h1>
         <div className="spacer" />
       </header>
+
+      {showMenu && <div className="overlay" onClick={toggleMenu}></div>}
+
       <div className="App">
         <div>
           <Tuner />

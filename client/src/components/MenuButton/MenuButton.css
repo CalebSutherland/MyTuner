@@ -1,38 +1,43 @@
 .menu-button {
   position: absolute;
-  left: 2%;
-  font-size: 3rem;
-  padding: 0%;
+  left: 1rem;
+  top: 1rem;
+  font-size: 2rem;
   background: none;
   border: none;
   cursor: pointer;
   color: white;
+  z-index: 200;
 }
 
-.dropdown-menu {
-  position: absolute;
-  top: 4rem;
-  left: 0rem;
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  width: 250px;
+  height: 100dvh;
   background-color: var(--main--red);
-  border: 1px solid #ccc;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-  padding: 0.5rem;
-  z-index: 100;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 150;
+  padding-top: 4rem;
 }
 
-.dropdown-menu ul {
+.side-menu.open {
+  left: 0; /* Slide into view */
+}
+
+.side-menu ul {
   list-style: none;
   padding: 0;
-  margin: 0; 
+  margin: 0;
 }
 
-.dropdown-menu li {
-  padding: 0.5rem 1rem;
-  text-align: left;
-  cursor: pointer;
+.side-menu li {
+  padding: 1rem;
   font-weight: 600;
-  font-size: 90%;
   color: white;
-  margin-top: 2.5%;
-  margin-bottom: 2.5%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }

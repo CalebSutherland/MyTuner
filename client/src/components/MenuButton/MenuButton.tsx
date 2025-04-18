@@ -10,17 +10,15 @@ const MenuButton: React.FC<MenuButtonProps> = ({ onToggle, isOpen }) => {
   return (
     <>
       <button className="menu-button" onClick={onToggle}>☰</button>
-      {isOpen && (
-        <div className="dropdown-menu">
-          <ul>
-            <li>Placeholder 1</li>
-            <li>Placeholder 2</li>
-            <li>Placeholder 3</li>
-            <li>Placeholder 4</li>
-            <li>Placeholder 5</li>
-          </ul>
-        </div>
-      )}
+      <div className={`side-menu ${isOpen ? "open" : ""}`}>
+        <ul>
+          <li>Placeholder 1</li>
+          <li>Placeholder 2</li>
+          <li>Placeholder 3</li>
+          <li>Placeholder 4</li>
+          <li>Placeholder 5</li>
+        </ul>
+      </div>
     </>
   );
 };
