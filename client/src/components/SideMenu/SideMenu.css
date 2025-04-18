@@ -58,3 +58,18 @@
 .menu-icon {
   font-size: 1.2em;
 }
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+}
+
+.menu-link:hover {
+  color: inherit;
+  text-decoration: none;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import "./SideMenu.css";
-import { FaHome } from "react-icons/fa"
+import { FaHome, FaGithub} from "react-icons/fa"
+import { MdConstruction } from "react-icons/md";
 
 interface SideMenuProps {
   onToggle: () => void;
@@ -15,11 +16,21 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
       </button>
       <ul>
         <li><FaHome className="menu-icon" /> Home </li>
-        <li><FaHome className="menu-icon" /> Coming Soon 2</li>
-        <li><FaHome className="menu-icon" /> Coming Soon 3</li>
-        <li><FaHome className="menu-icon" /> Coming Soon 4</li>
-        <li><FaHome className="menu-icon" /> Coming Soon 5</li>
-        <li><FaHome className="menu-icon" /> Coming Soon 6</li>
+        <li><MdConstruction className="menu-icon" /> Coming Soon 1</li>
+        <li><MdConstruction className="menu-icon" /> Coming Soon 2</li>
+        <li><MdConstruction className="menu-icon" /> Coming Soon 3</li>
+        <li><MdConstruction className="menu-icon" /> Coming Soon 4</li>
+        <li>
+          <a 
+            href="https://github.com/CalebSutherland/MyTuner"
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="menu-link"
+          >
+            <FaGithub className="menu-icon" />
+            Github Repo
+          </a>
+        </li>
       </ul>
     </div>
   );
