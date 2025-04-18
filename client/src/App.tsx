@@ -18,15 +18,20 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <>
       <header className="app-header">
-        <MenuButton onToggle={toggleMenu} isOpen={showMenu} />
+        <div className="menu-button-container">
+          <MenuButton onToggle={toggleMenu} isOpen={showMenu} />
+        </div>
         <h1>MyTuner</h1>
+        <div className="spacer" />
       </header>
-      <div>
-        <Tuner />
+      <div className="App">
+        <div>
+          <Tuner />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

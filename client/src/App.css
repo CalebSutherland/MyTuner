@@ -23,14 +23,26 @@
 
 h1 {
   font-size: 2.56em;
-  margin-bottom: 1%;
+  margin: 0;
+  text-align: center;
+  flex: 1;
 }
 
 .app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  position: relative;
+  margin-bottom: 2rem;
+}
+
+.menu-button-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.spacer {
+  flex: 1;
 }
