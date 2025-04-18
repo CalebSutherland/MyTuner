@@ -88,13 +88,22 @@ Tuning Buttons
 .tuning-button.close {
   background-color: var(--main--yellow);
 }
+.tuning-button.close:hover {
+  background-color: var(--hover--yellow);
+}
 
 .tuning-button.in {
   background-color: var(--main--green);
 }
+.tuning-button.in:hover {
+  background-color: var(--hover--green);
+}
 
 .tuning-button.out {
   background-color: var(--main--red);
+}
+.tuning-button.out:hover {
+  background-color: var(--hover--red);
 }
 
 .is-target {

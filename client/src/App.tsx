@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Tuner from "./components/Tuner/Tuner"
+import SideMenu from "./components/SideMenu/SideMenu";
 import MenuButton from "./components/MenuButton/MenuButton";
 import './App.css'
 
@@ -21,11 +22,19 @@ function App() {
     <>
       <header className="app-header">
         <div className="menu-button-container">
-          <MenuButton onToggle={toggleMenu} isOpen={showMenu} />
+          <MenuButton 
+            onToggle={toggleMenu} 
+            isOpen={showMenu} 
+          />
         </div>
         <h1>MyTuner</h1>
         <div className="spacer" />
       </header>
+
+      <SideMenu 
+        onToggle={toggleMenu} 
+        isOpen={showMenu}
+      />
 
       {showMenu && <div className="overlay" onClick={toggleMenu}></div>}
 

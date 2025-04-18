@@ -1,15 +1,16 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1.6rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 :root {
   --main--red: #700b0b;
-  --hover--red: #500e0e;
+  --hover--red: #620a0a;
   --main--green: #1c9738;
+  --hover--green: #1b8132;
   --main--yellow: #f9f61f;
+  --hover--yellow: #efeb1f;
 }
 
 body {
@@ -36,11 +37,18 @@ h1 {
 }
 
 .app-header {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  color: white;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
 .menu-button-container {
@@ -48,7 +56,6 @@ h1 {
   align-items: center;
   justify-content: flex-start;
   flex: 1;
-  padding: 0;
 }
 
 .spacer {

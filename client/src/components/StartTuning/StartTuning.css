@@ -27,7 +27,7 @@ Start Button
 }
 
 .listening:hover {
-  background-color: #0f4e1e;
+  background-color: var(--hover--green);
 }
 
 .start-button:not(.listening):hover {
