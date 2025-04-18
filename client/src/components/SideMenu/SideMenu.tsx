@@ -1,5 +1,6 @@
 import React from "react";
 import "./SideMenu.css";
+import { FaHome } from "react-icons/fa"
 
 interface SideMenuProps {
   onToggle: () => void;
@@ -13,11 +14,12 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
         ✖
       </button>
       <ul>
-        <li>Placeholder 1</li>
-        <li>Placeholder 2</li>
-        <li>Placeholder 3</li>
-        <li>Placeholder 4</li>
-        <li>Placeholder 5</li>
+        <li><FaHome className="menu-icon" /> Home </li>
+        <li><FaHome className="menu-icon" /> Coming Soon 2</li>
+        <li><FaHome className="menu-icon" /> Coming Soon 3</li>
+        <li><FaHome className="menu-icon" /> Coming Soon 4</li>
+        <li><FaHome className="menu-icon" /> Coming Soon 5</li>
+        <li><FaHome className="menu-icon" /> Coming Soon 6</li>
       </ul>
     </div>
   );

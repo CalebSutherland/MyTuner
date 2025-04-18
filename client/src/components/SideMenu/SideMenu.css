@@ -23,6 +23,9 @@
 }
 
 .side-menu li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 1rem;
   font-weight: 600;
   color: white;
@@ -50,4 +53,8 @@
   cursor: pointer;
   z-index: 200;
   padding: 0;
+}
+
+.menu-icon {
+  font-size: 1.2em;
 }
