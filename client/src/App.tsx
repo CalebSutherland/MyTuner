@@ -8,6 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 
 function App() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [display, setDisplay] = useState<string>("Home")
 
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -31,7 +32,8 @@ function App() {
         <div className="spacer" />
       </header>
 
-      <SideMenu 
+      <SideMenu
+        setDisplay={setDisplay}
         onToggle={toggleMenu} 
         isOpen={showMenu}
       />
@@ -40,7 +42,9 @@ function App() {
 
       <div className="App">
         <div>
-          <Tuner />
+          {display == "Home" && (
+            <Tuner />
+          )}
         </div>
       </div>
     </>

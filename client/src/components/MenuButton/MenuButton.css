@@ -5,7 +5,7 @@
   cursor: pointer;
   color: white;
   z-index: 200;
-  padding: 0;
+  padding: 0 0 0 2rem;
 }
 
 .menu-button.hidden {

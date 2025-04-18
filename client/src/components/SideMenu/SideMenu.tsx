@@ -5,21 +5,32 @@ import { MdConstruction } from "react-icons/md";
 
 interface SideMenuProps {
   onToggle: () => void;
+  setDisplay: (dislpay: string) => void;
   isOpen: boolean;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
+const SideMenu: React.FC<SideMenuProps> = ({ onToggle, setDisplay, isOpen }) => {
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`}>
       <button className="close-button" onClick={onToggle}>
         ✖
       </button>
       <ul>
-        <li><FaHome className="menu-icon" /> Home </li>
-        <li><MdConstruction className="menu-icon" /> Coming Soon 1</li>
-        <li><MdConstruction className="menu-icon" /> Coming Soon 2</li>
-        <li><MdConstruction className="menu-icon" /> Coming Soon 3</li>
-        <li><MdConstruction className="menu-icon" /> Coming Soon 4</li>
+        <li onClick={() => (setDisplay("Home"), onToggle())}>
+          <FaHome className="menu-icon" /> Home 
+        </li>
+        <li onClick={() => (setDisplay("Test"), onToggle())}>
+          <MdConstruction className="menu-icon" /> Coming Soon 1
+        </li>
+        <li onClick={() => (setDisplay("Test"), onToggle())}>
+          <MdConstruction className="menu-icon" /> Coming Soon 2
+        </li>
+        <li onClick={() => (setDisplay("Test"), onToggle())}>
+          <MdConstruction className="menu-icon" /> Coming Soon 3
+        </li>
+        <li onClick={() => (setDisplay("Test"), onToggle())}>
+          <MdConstruction className="menu-icon" /> Coming Soon 4
+        </li>
         <li>
           <a 
             href="https://github.com/CalebSutherland/MyTuner"
@@ -27,8 +38,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
             rel="noopener noreferrer"
             className="menu-link"
           >
-            <FaGithub className="menu-icon" />
-            Github Repo
+            <FaGithub className="menu-icon" /> Github Repo
           </a>
         </li>
       </ul>
