@@ -1,5 +1,5 @@
 import React from "react";
-import "./MenuButton.css"; // Optional, or just keep styles in App.css
+import "./MenuButton.css";
 
 interface MenuButtonProps {
   onToggle: () => void;
@@ -9,8 +9,14 @@ interface MenuButtonProps {
 const MenuButton: React.FC<MenuButtonProps> = ({ onToggle, isOpen }) => {
   return (
     <>
-      <button className="menu-button" onClick={onToggle}>☰</button>
+      {!isOpen && (
+        <button className="menu-button" onClick={onToggle}>☰</button> // Menu button when the menu is closed
+      )}
+      
       <div className={`side-menu ${isOpen ? "open" : ""}`}>
+        <button className="close-button" onClick={onToggle}>
+          ✖
+        </button>
         <ul>
           <li>Placeholder 1</li>
           <li>Placeholder 2</li>
