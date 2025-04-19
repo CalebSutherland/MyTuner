@@ -1,6 +1,6 @@
 #root {
   width: 90%;
-  min-width: 500px;
+  min-width: 320px;
   margin: 0 auto;
   padding: 1.6rem;
   text-align: center;
@@ -21,6 +21,22 @@ body {
   /* overflow-x: hidden; */
 }
 
+html {
+  font-size: 12px; /* Default = 16px */
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 11px; /* = 14.4px */
+  }
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 10px; /* = 12.8px */
+  }
+}
+
 
 .App {
   display: flex;
@@ -29,6 +45,7 @@ body {
   justify-content: flex-start;
   height: 100vh;
   text-align: center;
+  margin: 1em;
 }
 
 h1 {

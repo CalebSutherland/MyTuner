@@ -22,7 +22,7 @@ const TuningDropdown: React.FC<TuningDropdownProps> = ({
   return (
     <div className="select-container">
       <div>
-        <label htmlFor="category-select">Select Category: </label>
+        <label htmlFor="category-select">Category: </label>
         <select
           id="category-select"
           className="custom-select"
@@ -38,7 +38,7 @@ const TuningDropdown: React.FC<TuningDropdownProps> = ({
       </div>
 
       <div>
-        <label htmlFor="tuning-select">Select Tuning: </label>
+        <label htmlFor="tuning-select">Tuning: </label>
         <select
           id="tuning-select"
           className="custom-select"

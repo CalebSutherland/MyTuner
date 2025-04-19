@@ -8,12 +8,14 @@ interface StartButtonProps {
 
 const StartButton: React.FC<StartButtonProps> = ({ isListening, startListening, stopListening }) => {
   return (
-    <button
+    <div className="start-button-container">
+      <button
       className={`start-button ${isListening ? 'listening' : ''}`}
       onClick={isListening ? stopListening : startListening}
     >
       {isListening ? 'Stop Tuning' : 'Start Tuning'}
     </button>
+    </div>
   );
 };
 

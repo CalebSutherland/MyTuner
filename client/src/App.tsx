@@ -41,11 +41,9 @@ function App() {
       {showMenu && <div className="overlay" onClick={toggleMenu}></div>}
 
       <div className="App">
-        <div>
           {display == "Home" && (
             <Tuner />
           )}
-        </div>
       </div>
     </>
   );
