@@ -11,7 +11,7 @@ Tuning Stats
   background: var(--main--red);
   color: white;
   border-radius: 8px;
-  padding: clamp(0.75em, 2vw, 1.5em);
+  padding: clamp(0.75em, 2vw, 1em);
   width: 95%;
   max-width: 480px;
   aspect-ratio: 3 / 1;
@@ -22,8 +22,8 @@ Tuning Stats
 
 .stats-title {
   font-size: 1.4em;
-  margin-bottom: clamp(12px, 2vw, 16px);
-  margin-top: clamp(6px, 1vw, 8px);
+  margin-bottom: clamp(8px, 2vw, 12px);
+  margin-top: clamp(2px, 1vw, 4px);
 }
 
 .stats-grid {
