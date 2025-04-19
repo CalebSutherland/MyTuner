@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 
 interface VisualProps {
   target: number;
@@ -7,9 +7,26 @@ interface VisualProps {
 }
 
 const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      const resizeObserver = new ResizeObserver(() => {
+        setContainerWidth(containerRef.current!.offsetWidth);
+      });
+      resizeObserver.observe(containerRef.current);
+
+      return () => resizeObserver.disconnect();
+    }
+  }, []);
+  
   const maxOffset = 20;
   const clampedValue = Math.max(-maxOffset, Math.min(targetDiffernce, maxOffset));
   const isAudioDetected = volume > 0;
+
+  const maxMove = (containerWidth * 0.5) * 0.85; // 45% of half width
+  const translateX = target === 0 ? 0 : (clampedValue / maxOffset) * maxMove;
 
   let lineColor = "white";
 
@@ -59,11 +76,11 @@ const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
   }
 
   return (
-    <div className="container">
+    <div className="container" ref={containerRef}>
       <div
         className="line"
         style={{ 
-          transform: `translateX(${target === 0 ? 0 : clampedValue * 10}px)`,
+          transform: `translateX(${translateX}px)`,
           backgroundColor: lineColor,
         }}
       >
