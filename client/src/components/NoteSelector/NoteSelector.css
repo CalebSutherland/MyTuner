@@ -1,0 +1,80 @@
+.note-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.note-selector-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: var(--main--background);
+  border: none;
+  font-size: 4rem;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color, color 0.2s ease;
+}
+
+.arrow-btn:hover:not(:disabled) {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.arrow-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.note-label {
+  font-size: 2rem;
+  min-width: 3rem;
+  text-align: center;
+}
+
+.show-grid-btn {
+  background-color: var(--main--red);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.show-grid-btn:hover {
+  background-color: var(--hover--red);
+}
+
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.note-grid-btn {
+  background-color: var(--main--red);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.note-grid-btn:hover {
+  background-color: var(--hover--red);
+}

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import StartTuning from "../StartTuning/StartTuning"
 import TuningButtons from "../TuningButtons";
 import Visual from "../Visual/Visual"

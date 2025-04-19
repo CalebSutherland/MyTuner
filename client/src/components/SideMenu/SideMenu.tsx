@@ -19,8 +19,8 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, setDisplay, isOpen }) => 
         <li onClick={() => (setDisplay("Home"), onToggle())}>
           <FaHome className="menu-icon" /> Home 
         </li>
-        <li onClick={() => (setDisplay("Test"), onToggle())}>
-          <MdConstruction className="menu-icon" /> Coming Soon 1
+        <li onClick={() => (setDisplay("General"), onToggle())}>
+          <MdConstruction className="menu-icon" /> General
         </li>
         <li onClick={() => (setDisplay("Test"), onToggle())}>
           <MdConstruction className="menu-icon" /> Coming Soon 2

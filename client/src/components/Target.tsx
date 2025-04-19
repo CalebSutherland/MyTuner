@@ -27,9 +27,6 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
 
     if (audioFiles[audioFileKey]) {
       const audioModule = await audioFiles[audioFileKey]();
-      console.log("Available audio keys:", Object.keys(audioFiles));
-      console.log("Looking for key:", audioFileKey);
-      console.log("Audio URL loaded:", audioModule);
       return audioModule; // Return the URL of the audio file
     }
     console.warn("Missing audio file:", audioFileKey);
@@ -62,7 +59,6 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
       
         if (now - inRangeSinceRef.current >= 500) {
           setTuningStatus(desiredStatus);
-          console.log(`Upgrading status to: ${desiredStatus}`);
         }
       } else {
         inRangeSinceRef.current = null;

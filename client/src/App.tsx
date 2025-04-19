@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Tuner from "./components/Tuner/Tuner"
 import SideMenu from "./components/SideMenu/SideMenu";
 import MenuButton from "./components/MenuButton/MenuButton";
+import Tuner from "./components/Tuner/Tuner"
+import GeneralTuner from "./components/GeneralTuner/GeneralTuner";
 import './App.css'
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -43,6 +44,10 @@ function App() {
       <div className="App">
           {display == "Home" && (
             <Tuner />
+          )}
+
+          {display == "General" && (
+            <GeneralTuner />
           )}
       </div>
     </>
