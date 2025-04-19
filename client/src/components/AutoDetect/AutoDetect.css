@@ -13,10 +13,10 @@ Auto Detect Button
 }
 
 .switch-track {
-  width: 40px;
-  height: 24px;
+  width: clamp(32px, 8vw, 40px);
+  height: clamp(18px, 5vw, 24px);
   background-color: #ccc;
-  border-radius: 12px;
+  border-radius: 999px;
   position: relative;
   transition: background-color 0.3s ease;
 }
@@ -26,13 +26,13 @@ Auto Detect Button
 }
 
 .switch-thumb {
-  width: 19.2px;
-  height: 19.2px;
+  width: clamp(14px, 4vw, 19.2px);
+  height: clamp(14px, 4vw, 19.2px);
   background-color: white;
   border-radius: 50%;
   position: absolute;
-  top: 2.4px;
-  left: 2.4px;
+  top: clamp(2px, 0.5vw, 2.4px);
+  left: clamp(2px, 0.5vw, 2.4px);
   transition: transform 0.3s ease;
 }
 
@@ -40,7 +40,25 @@ Auto Detect Button
   transform: translateX(16px);
 }
 
+@media (max-width: 490px) {
+  .switch-track.active .switch-thumb {
+    transform: translateX(14px);
+  }
+}
+
+@media (max-width: 450px) {
+  .switch-track.active .switch-thumb {
+    transform: translateX(12px);
+  }
+}
+
+@media (max-width: 400px) {
+  .switch-track.active .switch-thumb {
+    transform: translateX(13px);
+  }
+}
+
 .switch-label {
-  margin-left: 8px;
+  margin-left: clamp(6px, 2vw, 8px);
   font-weight: 500;
 }

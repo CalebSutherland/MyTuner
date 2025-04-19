@@ -72,25 +72,27 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningBut
 
   return (
     <div className="tuning-layout-container">
-      <p style={{ fontWeight: 500 }}>{tuning.name}</p>
+      <p className="tuning-name-label">{tuning.name}</p>
       <div className="tuning-content">
         <div className="left-buttons">
-        {leftButtons.map((note) => {
-          const noteIndex = tuning.notes.indexOf(note);
-          return (
-            <Target
-              key={`${tuning.name}-${note}-${noteIndex}`}
-              value={tuning.values[noteIndex]}
-              note={note}
-              target={target}
-              detectedFrequency={detectedFreq}
-              updateTarget={changeTarget}
-              playSound={playSound}
-            />
-          );
-        })}
+          {leftButtons.map((note) => {
+            const noteIndex = tuning.notes.indexOf(note);
+            return (
+              <Target
+                key={`${tuning.name}-${note}-${noteIndex}`}
+                value={tuning.values[noteIndex]}
+                note={note}
+                target={target}
+                detectedFrequency={detectedFreq}
+                updateTarget={changeTarget}
+                playSound={playSound}
+              />
+            );
+          })}
         </div>
-        <img src={guitarImage} alt="Guitar" className="guitar-image" />
+        <div className="guitar-image-container">
+          <img src={guitarImage} alt="Guitar" className="guitar-image" />
+        </div>
         <div className="right-buttons">
           {rightButtons.map((note, index) => (
             <Target

@@ -27,13 +27,13 @@ html {
 
 @media (max-width: 600px) {
   html {
-    font-size: 11px; /* = 14.4px */
+    font-size: 11px; 
   }
 }
 
 @media (max-width: 400px) {
   html {
-    font-size: 10px; /* = 12.8px */
+    font-size: 10px;
   }
 }
 

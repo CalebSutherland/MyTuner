@@ -12,6 +12,29 @@
   padding-top:4em;
 }
 
+/* Medium screens */
+@media (max-width: 768px) {
+  .side-menu {
+    width: 250px;
+    left: -250px;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .side-menu {
+    width: 200px;
+    left: -200px;
+  }
+}
+
+@media (max-width: 380px) {
+  .side-menu {
+    width: 160px;
+    left: -160px;
+  }
+}
+
 .side-menu.open {
   left: 0; /* Slide into view */
 }
