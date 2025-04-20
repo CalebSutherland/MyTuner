@@ -6,12 +6,21 @@ import Stats from "../Stats/Stats";
 import TuningDropdown from "../TuningDropdown";
 import AutoDetect from "../AutoDetect/AutoDetect";
 import tunings from "../../data/all_tunings"
-import useAudioProcessor from "../../hooks/useAudioProcessor"
-import './Tuner.css'
-import '../Visual/Visual.css'
-import '../Stats/Stats.css'
-import '../AutoDetect/AutoDetect.css'
-import '../StartTuning/StartTuning.css'
+import './Tuner.css';
+import '../Visual/Visual.css';
+import '../Stats/Stats.css';
+import '../AutoDetect/AutoDetect.css';
+import '../StartTuning/StartTuning.css';
+
+interface TunerProps {
+  frequency: number;
+  note: string | null;
+  status: string;
+  isListening: boolean;
+  volume: number;
+  startListening: () => void;
+  stopListening: () => void;
+}
 
 type Tuning = {
   name: string;
@@ -23,17 +32,7 @@ type Tunings = {
   [category: string]: Tuning[];
 };
 
-function Tuner() {
-  const {
-    frequency,
-    note,
-    status,
-    isListening,
-    volume,
-    startListening,
-    stopListening,
-  } = useAudioProcessor();
-
+function Tuner({ frequency, note, status, isListening, volume, startListening, stopListening}:TunerProps) {
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
   const [selectedTuning, setSelectedTuning] = useState<Tuning>(tunings["Standard"][0])

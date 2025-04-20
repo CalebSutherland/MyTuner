@@ -3,11 +3,22 @@ import SideMenu from "./components/SideMenu/SideMenu";
 import MenuButton from "./components/MenuButton/MenuButton";
 import Tuner from "./components/Tuner/Tuner"
 import GeneralTuner from "./components/GeneralTuner/GeneralTuner";
+import useAudioProcessor from "./hooks/useAudioProcessor";
 import './App.css'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 function App() {
+  const {
+    frequency,
+    note,
+    status,
+    isListening,
+    volume,
+    startListening,
+    stopListening,
+  } = useAudioProcessor();
+
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [display, setDisplay] = useState<string>("Home")
 
@@ -34,6 +45,7 @@ function App() {
       </header>
 
       <SideMenu
+        stopListening={stopListening}
         setDisplay={setDisplay}
         onToggle={toggleMenu} 
         isOpen={showMenu}
@@ -43,11 +55,27 @@ function App() {
 
       <div className="App">
           {display == "Home" && (
-            <Tuner />
+            <Tuner
+              note={note}
+              frequency={frequency}
+              status={status}
+              isListening={isListening}
+              volume={volume}
+              startListening={startListening}
+              stopListening={stopListening}
+            />
           )}
 
           {display == "General" && (
-            <GeneralTuner />
+            <GeneralTuner 
+              note={note}
+              frequency={frequency}
+              status={status}
+              isListening={isListening}
+              volume={volume}
+              startListening={startListening}
+              stopListening={stopListening}
+            />
           )}
       </div>
     </>

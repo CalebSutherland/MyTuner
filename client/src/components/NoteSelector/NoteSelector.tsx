@@ -5,14 +5,14 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 
 interface NoteSelectorProps {
   setTarget: (frequency: number) => void;
+  index: number;
+  setIndex: (index: number) => void;
 }
 
 const noteNames = Object.keys(notes);
 
-export default function NoteSelector({ setTarget }: NoteSelectorProps) {
-  const [index, setIndex] = useState<number>(noteNames.indexOf("E2"));
+export default function NoteSelector({ setTarget, index, setIndex }: NoteSelectorProps) {
   const [showGrid, setShowGrid] = useState<boolean>(false);
-
   const currentNote = noteNames[index];
 
   useEffect(() => {
