@@ -40,17 +40,21 @@ export default function NoteSelector({ setTarget, index, setIndex }: NoteSelecto
         <button onClick={increase} disabled={index === noteNames.length - 1} className="arrow-btn"><IoMdArrowDropright /></button>
       </div>
 
-      <button className="show-grid-btn" onClick={() => setShowGrid(!showGrid)}>
-        {showGrid ? "Hide All Notes" : "Show All Notes"}
-      </button>
+      <div className="show-grid-btn-container">
+        <button className="show-grid-btn" onClick={() => setShowGrid(!showGrid)}>
+          {showGrid ? "Hide All Notes" : "Show All Notes"}
+        </button>
+      </div>
 
       {showGrid && (
-        <div className="note-grid">
-          {noteNames.map(note => (
-            <button key={note} className="note-grid-btn" onClick={() => handleNoteClick(note)}>
-              {note}
-            </button>
-          ))}
+        <div className="note-grid-container">
+          <div className="note-grid">
+            {noteNames.map(note => (
+              <button key={note} className="note-grid-btn" onClick={() => handleNoteClick(note)}>
+                {note}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

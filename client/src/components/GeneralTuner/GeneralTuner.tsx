@@ -75,10 +75,12 @@ function GeneralTuner({frequency, note, status, isListening, volume, startListen
         volume={volume} 
       />
 
-      <AutoDetect 
-        isAutoDetect={isAutoDetect} 
-        toggleAutoDetect={toggleAutoDetect} 
-      />
+      <div className="auto-detect-container">
+        <AutoDetect 
+          isAutoDetect={isAutoDetect} 
+          toggleAutoDetect={toggleAutoDetect} 
+        />
+      </div>
 
       <NoteSelector
         setTarget={setTarget}
