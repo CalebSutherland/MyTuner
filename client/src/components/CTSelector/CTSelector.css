@@ -16,7 +16,7 @@
 
 .note-btn {
   flex: 1;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   color: white;
   padding: 0.6rem 0;
   border-radius: 6px;
@@ -26,7 +26,7 @@
 }
 
 .note-btn:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 .note-grid-container {
@@ -35,7 +35,7 @@
   align-items: center;
   width: 100%;
   max-width: 480px;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   border-radius: 6px;
 }
 
@@ -43,15 +43,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
   width: 95%;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   padding-top: clamp(7.5px, 2vw, 12px);
   padding-bottom: clamp(7.5px, 2vw, 12px);
 }
 
 .note-grid-btn {
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--main--light);
   padding: 1rem 0.6rem;
   border-radius: 0px;
   font-size: 1rem;
@@ -60,5 +60,5 @@
 }
 
 .note-grid-btn:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }

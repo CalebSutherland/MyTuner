@@ -4,7 +4,7 @@
   left: -300px; /* Hidden by default */
   width: 300px;
   height: 100%;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
   transition: left 0.3s ease;
@@ -52,13 +52,13 @@
   padding: 1rem;
   font-weight: 600;
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--main--light);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
 .side-menu li:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 .side-menu li:last-child {

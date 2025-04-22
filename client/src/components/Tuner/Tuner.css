@@ -34,7 +34,7 @@ label {
 }
 
 .custom-select {
-  background-color: var(--main--red); 
+  background-color: var(--main--color); 
   color: white; 
   border: 1px solid transparent;
   border-radius: 0.75em;
@@ -51,16 +51,16 @@ label {
 }
 
 .custom-select:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 .custom-select option {
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   color: white;
 }
 
 .custom-select option:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 
@@ -94,7 +94,7 @@ Tuning Buttons
   font-weight: 500;
   font-family: inherit;
   color: white;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   transition: background-color 0.3s ease-in-out;
   display: flex;
   align-items: center;
@@ -130,10 +130,10 @@ Tuning Buttons
 }
 
 .tuning-button.out {
-  background-color: var(--main--red);
+  background-color: var(--main--color);
 }
 .tuning-button.out:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 .is-target {

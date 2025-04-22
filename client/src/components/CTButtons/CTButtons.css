@@ -19,7 +19,7 @@
   font-weight: 500;
   font-family: inherit;
   color: white;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   transition: background-color 0.3s ease-in-out;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .tuning-button:hover {
-  background-color: var(--hover--red);
+  background-color: var(--hover--color);
 }
 
 .is-target {

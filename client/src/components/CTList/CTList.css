@@ -1,6 +1,6 @@
 .saved-tunings {
   margin: 1rem 0;
-  background-color: var(--main--red);
+  background-color: var(--main--color);
   width: 100%;
   max-width: 480px;
   border-radius: 8px;
@@ -16,8 +16,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: solid 1px var(--main--red);
+  background-color: var(--main--light);
+  border: solid 1px var(--main--color);
 }
 
 .ct-button {
@@ -37,5 +37,5 @@
 }
 
 .saved-tunings li:hover {
-  background-color: var(--main--red);
+  background-color: var(--main--color);
 }

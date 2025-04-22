@@ -8,7 +8,7 @@ Tuning Stats
 }
 
 .stats-container {
-  background: var(--main--red);
+  background: var(--main--color);
   color: white;
   border-radius: 8px;
   padding: clamp(0.75em, 2vw, 1em);
@@ -33,7 +33,7 @@ Tuning Stats
 }
 
 .stat-item {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: var(--main--light);
   padding: clamp(5px, 1.2vw, 8px);
   border-radius: 4.8px;
   display: flex;
