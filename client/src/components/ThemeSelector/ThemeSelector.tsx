@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import './ThemeSelector.css';
+import React, { useState} from "react";
+import './ThemeSelector.css'
 
 function darkenColor(hex: string, percent: number): string {
   const num = parseInt(hex.slice(1), 16);
@@ -26,6 +26,7 @@ function updateMainLight(hex: string) {
   const G = (num >> 8) & 0xff;
   const B = num & 0xff;
 
+  // Count how many components are 240 or higher
   let brightCount = 0;
   if (R >= 225) brightCount++;
   if (G >= 225) brightCount++;
@@ -42,12 +43,12 @@ function updateMainLight(hex: string) {
 }
 
 function ThemeSelector() {
+  //const [themeColor, setThemeColor] = useState("#700b0b");
   const [customColors, setCustomColors] = useState<string[]>(["#700b0b", "#3502C0", "#B302C0"]);
-  const [selectedColor, setSelectedColor] = useState("#00FFC8");
-  const [activeColorIndex, setActiveColorIndex] = useState<number | null>(null); // To track the active color box
-  const colorPickerRef = useRef<HTMLInputElement | null>(null);
+  const [selectedColor, setSelectedColor] = useState("#FF0000");
 
   const applyColor = (color: string) => {
+    //setThemeColor(color);
     const hoverColor = darkenColor(color, 10);
     document.documentElement.style.setProperty("--main--color", color);
     document.documentElement.style.setProperty("--hover--color", hoverColor);
@@ -55,41 +56,10 @@ function ThemeSelector() {
   };
 
   const handleAddColor = () => {
-    // Add a new color box with the current selected color
-    setCustomColors((prevColors) => [...prevColors, selectedColor]);
-    
-    // Set the newly added color box as the active box
-    setActiveColorIndex(customColors.length); // The new box will be at the last index
-    
-    // Open the color picker
-    if (colorPickerRef.current) {
-      colorPickerRef.current.click();
+    if (!customColors.includes(selectedColor)) {
+      setCustomColors([...customColors, selectedColor]);
+      applyColor(selectedColor);
     }
-  };
-
-  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newColor = e.target.value;
-    setSelectedColor(newColor); // Update the selected color as the user chooses
-
-    // If there's an active box, update it with the new color
-    if (activeColorIndex !== null) {
-      const updatedColors = [...customColors];
-      updatedColors[activeColorIndex] = newColor; // Update the active box color
-      setCustomColors(updatedColors);
-    }
-  };
-
-  const handleColorPickerClose = () => {
-    // When the color picker is closed, update the color of the active box
-    if (activeColorIndex !== null) {
-      const updatedColors = [...customColors];
-      updatedColors[activeColorIndex] = selectedColor; // Update the active box color
-      setCustomColors(updatedColors);
-    }
-
-    // Apply the new color to the theme
-    applyColor(selectedColor);
-    setActiveColorIndex(null); // Reset the active color box after applying
   };
 
   return (
@@ -112,18 +82,15 @@ function ThemeSelector() {
         +
       </button>
 
-      {/* Hidden color picker */}
       <input
-        ref={colorPickerRef}
         type="color"
+        id="colorPicker"
         value={selectedColor}
-        onChange={handleColorChange}
-        onBlur={handleColorPickerClose} // When color picker is closed, finalize the box color
+        onChange={(e) => setSelectedColor(e.target.value)}
         className="color-picker-input"
-        style={{ display: "none" }} // Hide the color picker input
       />
     </div>
-  );
+  )
 }
 
-export default ThemeSelector;
+export default ThemeSelector
