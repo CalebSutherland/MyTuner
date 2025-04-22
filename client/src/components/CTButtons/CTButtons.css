@@ -1,0 +1,70 @@
+.tuning-layout-container {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.tuning-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center; 
+}
+
+.tuning-button {
+  margin: 15.2px 0;
+  border-radius: 32px;
+  border: 1px solid transparent;
+  width: 40px;
+  height: 40px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: white;
+  background-color: var(--main--red);
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tuning-button:hover {
+  background-color: var(--hover--red);
+}
+
+.is-target {
+  border: 2.4px solid white;
+}
+
+@media (max-width: 374px) {
+  .tuning-button {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 350px) {
+  .tuning-button {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.is-target {
+  border: 2.4px solid white;
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin: 39.2px 0;
+}
+
+.guitar-image-container {
+  width: 80%;
+}
+
+.guitar-image {
+  width: 100%;
+  max-width: 240px;
+}

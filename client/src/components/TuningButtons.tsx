@@ -64,7 +64,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningBut
   };
 
   if (!tuning) {
-    return null; // or return <div>No tuning selected</div>
+    return null;
   }
 
   const leftButtons = tuning.notes.slice(0, 3).reverse();
@@ -102,7 +102,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningBut
               target={target}
               detectedFrequency={detectedFreq}
               updateTarget={changeTarget}
-              playSound={playSound} // Pass playSound down
+              playSound={playSound}
             />
           ))}
         </div>

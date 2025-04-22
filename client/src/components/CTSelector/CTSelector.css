@@ -1,0 +1,64 @@
+.multi-note-selector-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.note-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  border-radius: 6px;
+  gap: 1em;
+}
+
+.note-btn {
+  flex: 1;
+  background-color: var(--main--red);
+  color: white;
+  padding: 0.6rem 0;
+  border-radius: 6px;
+  font-size: 1.3em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.note-btn:hover {
+  background-color: var(--hover--red);
+}
+
+.note-grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--main--red);
+  border-radius: 6px;
+}
+
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
+  width: 95%;
+  background-color: var(--main--red);
+  padding-top: clamp(7.5px, 2vw, 12px);
+  padding-bottom: clamp(7.5px, 2vw, 12px);
+}
+
+.note-grid-btn {
+  background-color: var(--main--red);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0.6rem;
+  border-radius: 0px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.note-grid-btn:hover {
+  background-color: var(--hover--red);
+}

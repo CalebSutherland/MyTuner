@@ -23,8 +23,8 @@ const SideMenu: React.FC<SideMenuProps> = ({ stopListening, onToggle, setDisplay
         <li onClick={() => (setDisplay("General"), onToggle(), stopListening())}>
           <MdConstruction className="menu-icon" /> General
         </li>
-        <li onClick={() => (setDisplay("Test"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> Coming Soon 2
+        <li onClick={() => (setDisplay("Custom"), onToggle(), stopListening())}>
+          <MdConstruction className="menu-icon" /> Custom Tuning
         </li>
         <li onClick={() => (setDisplay("Test"), onToggle(), stopListening())}>
           <MdConstruction className="menu-icon" /> Coming Soon 3

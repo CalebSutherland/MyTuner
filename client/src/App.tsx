@@ -3,6 +3,7 @@ import SideMenu from "./components/SideMenu/SideMenu";
 import MenuButton from "./components/MenuButton/MenuButton";
 import Tuner from "./components/Tuner/Tuner"
 import GeneralTuner from "./components/GeneralTuner/GeneralTuner";
+import CustomTuner from "./components/CustomTuner/CustomTuner";
 import useAudioProcessor from "./hooks/useAudioProcessor";
 import './App.css'
 
@@ -68,6 +69,18 @@ function App() {
 
           {display == "General" && (
             <GeneralTuner 
+              note={note}
+              frequency={frequency}
+              status={status}
+              isListening={isListening}
+              volume={volume}
+              startListening={startListening}
+              stopListening={stopListening}
+            />
+          )}
+
+          {display == "Custom" && (
+            <CustomTuner 
               note={note}
               frequency={frequency}
               status={status}
