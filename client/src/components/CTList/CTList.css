@@ -1,0 +1,41 @@
+.saved-tunings {
+  margin: 1rem 0;
+  background-color: var(--main--red);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 8px;
+}
+
+.saved-tunings ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.saved-tunings li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: solid 1px var(--main--red);
+}
+
+.ct-button {
+  background-color: transparent;
+  text-align: left;
+  color: white;
+  cursor: pointer;
+  width: 95%;
+  border-radius: 0px;
+}
+
+.delete-btn {
+  background-color: transparent;
+  color: white;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.saved-tunings li:hover {
+  background-color: var(--main--red);
+}
