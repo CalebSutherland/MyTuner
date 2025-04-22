@@ -1,0 +1,28 @@
+.color-swatches {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.color-swatches span {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-color-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
