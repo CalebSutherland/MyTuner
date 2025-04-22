@@ -57,16 +57,14 @@ function ThemeSelector() {
   const handleAddColor = () => {
     // Add a new color box with the current selected color
     setCustomColors((prevColors) => [...prevColors, selectedColor]);
-  
+    
     // Set the newly added color box as the active box
     setActiveColorIndex(customColors.length); // The new box will be at the last index
     
-    // Open the color picker with a slight delay
-    setTimeout(() => {
-      if (colorPickerRef.current) {
-        colorPickerRef.current.click(); // Trigger color picker
-      }
-    }, 10);
+    // Open the color picker
+    if (colorPickerRef.current) {
+      colorPickerRef.current.click();
+    }
   };
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
