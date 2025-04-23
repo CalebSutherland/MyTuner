@@ -56,46 +56,47 @@ function App() {
 
       {showMenu && <div className="overlay" onClick={toggleMenu}></div>}
 
-      <div className="color-section">
-        <ThemeSelector />
-      </div>
-
       <div className="App">
-          {display == "Home" && (
-            <Tuner
-              note={note}
-              frequency={frequency}
-              status={status}
-              isListening={isListening}
-              volume={volume}
-              startListening={startListening}
-              stopListening={stopListening}
-            />
-          )}
+        
+        <div className="color-section">
+          <ThemeSelector />
+        </div>
 
-          {display == "General" && (
-            <GeneralTuner 
-              note={note}
-              frequency={frequency}
-              status={status}
-              isListening={isListening}
-              volume={volume}
-              startListening={startListening}
-              stopListening={stopListening}
-            />
-          )}
+        {display == "Home" && (
+          <Tuner
+            note={note}
+            frequency={frequency}
+            status={status}
+            isListening={isListening}
+            volume={volume}
+            startListening={startListening}
+            stopListening={stopListening}
+          />
+        )}
 
-          {display == "Custom" && (
-            <CustomTuner 
-              note={note}
-              frequency={frequency}
-              status={status}
-              isListening={isListening}
-              volume={volume}
-              startListening={startListening}
-              stopListening={stopListening}
-            />
-          )}
+        {display == "General" && (
+          <GeneralTuner 
+            note={note}
+            frequency={frequency}
+            status={status}
+            isListening={isListening}
+            volume={volume}
+            startListening={startListening}
+            stopListening={stopListening}
+          />
+        )}
+
+        {display == "Custom" && (
+          <CustomTuner 
+            note={note}
+            frequency={frequency}
+            status={status}
+            isListening={isListening}
+            volume={volume}
+            startListening={startListening}
+            stopListening={stopListening}
+          />
+        )}
       </div>
     </>
   );

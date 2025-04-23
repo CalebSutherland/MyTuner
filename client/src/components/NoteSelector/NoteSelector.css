@@ -54,7 +54,7 @@
 
 .show-grid-btn {
   background-color: var(--main--color);
-  color: white;
+  color: var(--font--color);
   border: none;
   padding: 0;
   border-radius: .75em;
@@ -95,7 +95,7 @@
 
 .note-grid-btn {
   background-color: var(--main--color);
-  color: white;
+  color: var(--font--color);
   border: 1px solid var(--main--light);
   padding: 1rem 0.6rem;
   border-radius: 0px;

@@ -6,6 +6,10 @@
   border-radius: 8px;
 }
 
+.saved-tunings h3 {
+  color: var(--font--color);
+}
+
 .saved-tunings ul {
   list-style: none;
   padding: 0;
@@ -23,7 +27,7 @@
 .ct-button {
   background-color: transparent;
   text-align: left;
-  color: white;
+  color: var(--font--color);
   cursor: pointer;
   width: 95%;
   border-radius: 0px;
@@ -31,7 +35,7 @@
 
 .delete-btn {
   background-color: transparent;
-  color: white;
+  color: var(--font--color);
   padding-left: 1em;
   padding-right: 1em;
 }

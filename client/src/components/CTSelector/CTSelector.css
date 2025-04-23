@@ -17,7 +17,7 @@
 .note-btn {
   flex: 1;
   background-color: var(--main--color);
-  color: white;
+  color: var(--font--color);
   padding: 0.6rem 0;
   border-radius: 6px;
   font-size: 1.3em;
@@ -50,7 +50,7 @@
 
 .note-grid-btn {
   background-color: var(--main--color);
-  color: white;
+  color: var(--font--color);
   border: 1px solid var(--main--light);
   padding: 1rem 0.6rem;
   border-radius: 0px;

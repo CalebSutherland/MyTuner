@@ -9,7 +9,7 @@ Tuning Stats
 
 .stats-container {
   background: var(--main--color);
-  color: white;
+  color: var(--font--color);
   border-radius: 8px;
   padding: clamp(0.75em, 2vw, 1em);
   width: 95%;

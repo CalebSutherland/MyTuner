@@ -10,6 +10,7 @@
   --main--color: #700b0b;
   --hover--color: #620a0a;
   --main--light: rgba(255, 255, 255, 0.1);
+  --font--color: white;
   --main--green: #1c9738;
   --hover--green: #1b8132;
   --main--yellow: #f9f61f;
@@ -89,7 +90,9 @@ h1 {
 .color-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   margin: 1rem;
   gap: 0.5rem;
+  width: 100%;
+  max-width: 480px;
 }

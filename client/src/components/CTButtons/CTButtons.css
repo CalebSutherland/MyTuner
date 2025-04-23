@@ -18,7 +18,7 @@
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: white;
+  color: var(--font--color);
   background-color: var(--main--color);
   transition: background-color 0.3s ease-in-out;
   display: flex;
@@ -46,10 +46,6 @@
     width: 35px;
     height: 35px;
   }
-}
-
-.is-target {
-  border: 2.4px solid white;
 }
 
 .left-buttons,

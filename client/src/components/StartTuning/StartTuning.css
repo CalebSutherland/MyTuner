@@ -22,7 +22,7 @@ Start Button
   background-color: var(--main--color);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  color: white;
+  color: var(--font--color);
   width: 100%;
   max-width: 100px;
   height: 100%;

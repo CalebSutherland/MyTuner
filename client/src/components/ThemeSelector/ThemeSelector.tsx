@@ -1,96 +1,87 @@
 import React, { useState} from "react";
-import './ThemeSelector.css'
+import { useThemeUtils } from "../../hooks/useThemeUtils";
+import './ThemeSelector.css';
 
-function darkenColor(hex: string, percent: number): string {
-  const num = parseInt(hex.slice(1), 16);
-  const amt = Math.round(2.55 * percent);
-  const R = (num >> 16) - amt;
-  const G = ((num >> 8) & 0x00FF) - amt;
-  const B = (num & 0x0000FF) - amt;
-  return (
-    "#" +
-    (
-      0x1000000 +
-      (Math.max(0, R) << 16) +
-      (Math.max(0, G) << 8) +
-      Math.max(0, B)
-    )
-      .toString(16)
-      .slice(1)
-  );
-}
+type Theme = {
+  color: string;
+  fontColor: string;
+};
 
-function updateMainLight(hex: string) {
-  const num = parseInt(hex.slice(1), 16);
-  const R = (num >> 16) & 0xff;
-  const G = (num >> 8) & 0xff;
-  const B = num & 0xff;
+const ThemeSelector: React.FC = () => {
+  const [themes, setThemes] = useState<Theme[]>([
+    { color: "#700b0b", fontColor: "#ffffff" },
+    { color: "#3502C0", fontColor: "#ffffff" },
+    { color: "#B302C0", fontColor: "#ffffff" },
+  ]);
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [showCustomizer, setShowCustomizer] = useState(false);
+  const [newTheme, setNewTheme] = useState<Theme>({
+    color: "#0B8948",
+    fontColor: "#ffffff",
+  });
 
-  // Count how many components are 240 or higher
-  let brightCount = 0;
-  if (R >= 225) brightCount++;
-  if (G >= 225) brightCount++;
-  if (B >= 225) brightCount++;
+  const { darkenColor, updateMainLight } = useThemeUtils();
 
-  let lightValue = "rgba(255, 255, 255, 0.1)";
-  if (brightCount === 1) {
-    lightValue = "rgba(255, 255, 255, 0.3)";
-  } else if (brightCount >= 2) {
-    lightValue = "rgba(255, 255, 255, 0.5)";
-  }
-
-  document.documentElement.style.setProperty("--main--light", lightValue);
-}
-
-function ThemeSelector() {
-  //const [themeColor, setThemeColor] = useState("#700b0b");
-  const [customColors, setCustomColors] = useState<string[]>(["#700b0b", "#3502C0", "#B302C0"]);
-  const [selectedColor, setSelectedColor] = useState("#FF0000");
-
-  const applyColor = (color: string) => {
-    //setThemeColor(color);
-    const hoverColor = darkenColor(color, 10);
-    document.documentElement.style.setProperty("--main--color", color);
-    document.documentElement.style.setProperty("--hover--color", hoverColor);
-    updateMainLight(color);
+  const applyTheme = (theme: Theme) => {
+    setSelectedTheme(theme);
+    document.documentElement.style.setProperty("--main--color", theme.color);
+    document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
+    document.documentElement.style.setProperty("--font--color", theme.fontColor);
+    updateMainLight(theme.color);
   };
 
-  const handleAddColor = () => {
-    if (!customColors.includes(selectedColor)) {
-      setCustomColors([...customColors, selectedColor]);
-      applyColor(selectedColor);
-    }
+  const handleSaveTheme = () => {
+    const themeToAdd = {
+      color: newTheme.color,
+      fontColor: newTheme.fontColor,
+    };
+  
+    setThemes([...themes, themeToAdd]);
+    setShowCustomizer(false);
+    applyTheme(themeToAdd);
+    setNewTheme({ color: "#0B8948", fontColor: "#ffffff" });
   };
 
   return (
-    <div className="color-swatches">
-      <span>Colors:</span>
-      {customColors.map((color, idx) => (
-        <button
-          key={idx}
-          className="color-swatch"
-          style={{ backgroundColor: color }}
-          onClick={() => applyColor(color)}
-        />
-      ))}
+    <div className="theme-selector">
+      <div className="theme-list">
+        {themes.map((theme, idx) => (
+          <button
+            key={idx}
+            className="theme-preview"
+            style={{
+              backgroundColor: theme.color,
+              color: theme.fontColor,
+            }}
+            onClick={() => applyTheme(theme)}
+          />
+        ))}
+        <button className="add-theme-btn" onClick={() => setShowCustomizer(true)}>+</button>
+      </div>
+  
+      {showCustomizer && (
+        <div className="theme-customizer">
+          <label>Main Color</label>
+          <input
+            type="color"
+            value={newTheme.color}
+            onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
+          />
+  
+          <label>Font Color</label>
+          <input
+            type="color"
+            value={newTheme.fontColor}
+            onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
+          />
 
-      <button
-        className="add-color-btn"
-        onClick={handleAddColor}
-        style={{ backgroundColor: selectedColor }}
-      >
-        +
-      </button>
-
-      <input
-        type="color"
-        id="colorPicker"
-        value={selectedColor}
-        onChange={(e) => setSelectedColor(e.target.value)}
-        className="color-picker-input"
-      />
+          <label>Image</label>
+  
+          <button className="save-theme-btn" onClick={handleSaveTheme}>Save Theme</button>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default ThemeSelector
+export default ThemeSelector;

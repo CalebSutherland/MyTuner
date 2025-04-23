@@ -51,7 +51,7 @@
   gap: 12px;
   padding: 1rem;
   font-weight: 600;
-  color: white;
+  color: var(--font--color);
   border-bottom: 1px solid var(--main--light);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;

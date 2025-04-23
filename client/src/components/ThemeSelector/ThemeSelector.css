@@ -5,11 +5,6 @@
   flex-wrap: wrap;
 }
 
-.color-swatches span {
-  font-weight: bold;
-  margin-right: 0.5rem;
-}
-
 .color-swatch {
   width: 24px;
   height: 24px;
@@ -22,7 +17,69 @@
   padding: 0.25rem 0.5rem;
   font-size: 1.2rem;
   border-radius: 4px;
+  color: var(--font--color);
+  border: none;
+  cursor: pointer;
+  background-color: #4CAF50;
+}
+
+.theme-selector {
+  padding: 1rem;
+  width: 100%;
+}
+
+.theme-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.theme-preview {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--main--color);
+  padding: 0; 
+}
+
+.add-theme-btn {
+  font-size: 1.2rem;
+  padding: 0.25rem 0.6rem;
+  background-color: var(--main--color);
   color: white;
   border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.theme-customizer {
+  background-color: #413e3e;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.theme-customizer input[type="text"],
+.theme-customizer input[type="color"] {
+  padding: 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+}
+
+.save-theme-btn {
+  align-self: start;
+  padding: 0.4rem 0.75rem;
+  border: none;
+  background-color: #4CAF50;
+  color: var(--font--color);
+  border-radius: 4px;
+  font-weight: 500;
   cursor: pointer;
 }
