@@ -10,15 +10,17 @@ type Theme = {
 const ThemeSelector: React.FC = () => {
   const [themes, setThemes] = useState<Theme[]>([
     { color: "#700b0b", fontColor: "#ffffff" },
-    { color: "#3502C0", fontColor: "#ffffff" },
     { color: "#B302C0", fontColor: "#ffffff" },
+    { color: "#00FFFF", fontColor: "#000000" },
+    { color: "#FFFF00", fontColor: "#000000"},
   ]);
-  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>({ color: "#700b0b", fontColor: "#ffffff" });
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [newTheme, setNewTheme] = useState<Theme>({
     color: "#0B8948",
     fontColor: "#ffffff",
   });
+  const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
 
   const { darkenColor, updateMainLight } = useThemeUtils();
 
@@ -50,34 +52,71 @@ const ThemeSelector: React.FC = () => {
             key={idx}
             className="theme-preview"
             style={{
-              backgroundColor: theme.color,
-              color: theme.fontColor,
+              backgroundImage: `linear-gradient(135deg, ${theme.color} 70%, ${theme.fontColor} 70%)`,
+              border: `2px solid ${theme.color}`,
+              color: 'transparent',
             }}
             onClick={() => applyTheme(theme)}
           />
         ))}
-        <button className="add-theme-btn" onClick={() => setShowCustomizer(true)}>+</button>
+        <button 
+          className="add-theme-btn" 
+          onClick={() => setShowCustomizer(prev => !prev)}
+        >
+          {showCustomizer ? '×' : '+'}
+        </button>
       </div>
   
       {showCustomizer && (
         <div className="theme-customizer">
-          <label>Main Color</label>
-          <input
-            type="color"
-            value={newTheme.color}
-            onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
-          />
-  
-          <label>Font Color</label>
-          <input
-            type="color"
-            value={newTheme.fontColor}
-            onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
-          />
+            <div className="tab-row">
+              <button 
+                className={activeTab === 'color' ? 'tab active' : 'tab'}
+                onClick={() => setActiveTab('color')}
+              >
+                Main Color
+              </button>
+              <button 
+                className={activeTab === 'fontColor' ? 'tab active' : 'tab'}
+                onClick={() => setActiveTab('fontColor')}
+              >
+                Font Color
+              </button>
+              <button 
+                className={activeTab === 'image' ? 'tab active' : 'tab'}
+                onClick={() => setActiveTab('image')}
+              >
+                Image
+              </button>
+            </div>
+          
+            {activeTab === 'color' && (
+              <input
+                type="color"
+                value={selectedTheme?.color}
+                onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
+              />
+            )}
+          
+            {activeTab === 'fontColor' && (
+              <input
+                type="color"
+                value={selectedTheme?.fontColor}
+                onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
+              />
+            )}
+          
+            {activeTab === 'image' && (
+              <p style={{ color: 'white' }}>Image selection coming soon!</p>
+            )}
+          
+            <button 
+              className="save-theme-btn" 
+              onClick={handleSaveTheme}
+            >
+              Save Theme
+            </button>
 
-          <label>Image</label>
-  
-          <button className="save-theme-btn" onClick={handleSaveTheme}>Save Theme</button>
         </div>
       )}
     </div>

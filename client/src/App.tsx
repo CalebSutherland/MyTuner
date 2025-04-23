@@ -57,21 +57,23 @@ function App() {
       {showMenu && <div className="overlay" onClick={toggleMenu}></div>}
 
       <div className="App">
-        
-        <div className="color-section">
-          <ThemeSelector />
-        </div>
 
         {display == "Home" && (
-          <Tuner
-            note={note}
-            frequency={frequency}
-            status={status}
-            isListening={isListening}
-            volume={volume}
-            startListening={startListening}
-            stopListening={stopListening}
-          />
+          <>
+            <div className="color-section">
+              <ThemeSelector />
+            </div>
+
+            <Tuner
+              note={note}
+              frequency={frequency}
+              status={status}
+              isListening={isListening}
+              volume={volume}
+              startListening={startListening}
+              stopListening={stopListening}
+            />
+          </>
         )}
 
         {display == "General" && (
