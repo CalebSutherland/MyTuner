@@ -1,13 +1,3 @@
-.add-theme-btn {
-  font-size: 1.2rem;
-  padding: 0.25rem 0.6rem;
-  background-color: var(--main--color);
-  color: var(--font--color);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .theme-customizer {
   background-color: #413e3e;
   margin-top: 1rem;
@@ -31,7 +21,7 @@
   border: none;
   font-weight: 500;
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-bottom: 2px solid transparent;
@@ -44,15 +34,76 @@
 
 .tab.active {
   color: white;
+  cursor: auto;
 }
 
 .save-theme-btn {
   align-self: start;
   padding: 0.4rem 0.75rem;
   border: none;
-  background-color: var(--main--color);
-  color: var(--font--color);
   border-radius: 4px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+  margin: 0 0 0 1em;
+}
+
+.color-box {
+  width: 30px;
+  height: 30px;
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.color-box:hover {
+  transform: scale(1.1);
+}
+
+.add-color-btn {
+  width: 34px;
+  height: 34px;
+  background-color: transparent;
+  color: white;
+  font-size: 2rem;
+  padding: 0 0 0.2em 0;
+  border: 2px dashed white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 6px 0 0 12px;
+}
+
+.picker-label {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.save-theme-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  gap: 12px;
+  margin: 8px 8px 0;
+}
+
+.theme-preview[disabled] {
+  pointer-events: none;
 }
