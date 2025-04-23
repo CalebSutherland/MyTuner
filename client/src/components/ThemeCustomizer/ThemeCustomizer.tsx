@@ -12,6 +12,10 @@ type ThemeCustomizerProps = {
   activeTab: 'color' | 'fontColor' | 'image';
   setActiveTab: (tab: 'color' | 'fontColor' | 'image') => void;
   handleSaveTheme: () => void;
+  savedColors: string[];
+  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
+  savedFontColors: string[];
+  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
@@ -19,10 +23,13 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
   setNewTheme,
   activeTab,
   setActiveTab,
-  handleSaveTheme
+  handleSaveTheme,
+  savedColors,
+  setSavedColors,
+  savedFontColors,
+  setSavedFontColors
 }) => {
-  const [savedColors, setSavedColors] = useState<string[]>(['#FF5733', '#33FF57', '#3357FF']);
-  const [savedFontColors, setSavedFontColors] = useState<string[]>(['#FFFFFF', '#000000']);
+  
 
   return (
     <div className="theme-customizer">

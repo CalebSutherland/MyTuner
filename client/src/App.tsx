@@ -6,9 +6,16 @@ import Tuner from "./components/Tuner/Tuner"
 import GeneralTuner from "./components/GeneralTuner/GeneralTuner";
 import CustomTuner from "./components/CustomTuner/CustomTuner";
 import useAudioProcessor from "./hooks/useAudioProcessor";
+import { useThemeUtils } from "./hooks/useThemeUtils";
 import './App.css'
 
 const apiUrl = import.meta.env.VITE_API_URL
+
+type Theme = {
+  color: string;
+  fontColor: string;
+};
+
 
 function App() {
   const {
@@ -23,6 +30,26 @@ function App() {
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [display, setDisplay] = useState<string>("Home");
+
+  const [themes, setThemes] = useState<Theme[]>([
+    { color: "#700b0b", fontColor: "#ffffff" },
+    { color: "#B302C0", fontColor: "#ffffff" },
+    { color: "#00FFFF", fontColor: "#000000" },
+    { color: "#FFFF00", fontColor: "#000000"},
+  ]);
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0]);
+  const [savedColors, setSavedColors] = useState<string[]>(['#700b0b', '#B302C0', '#00FFFF', '#FFFF00']);
+  const [savedFontColors, setSavedFontColors] = useState<string[]>(['#FFFFFF', '#000000']);
+
+  const { darkenColor, updateMainLight } = useThemeUtils();
+
+  const applyTheme = (theme: Theme) => {
+    setSelectedTheme(theme);
+    document.documentElement.style.setProperty("--main--color", theme.color);
+    document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
+    document.documentElement.style.setProperty("--font--color", theme.fontColor);
+    updateMainLight(theme.color);
+  };
   
 
   const toggleMenu = () => setShowMenu(!showMenu);
@@ -61,7 +88,16 @@ function App() {
         {display == "Home" && (
           <>
             <div className="color-section">
-              <ThemeSelector />
+              <ThemeSelector
+                themes={themes}
+                setThemes={setThemes}
+                selectedTheme={selectedTheme}
+                applyTheme={applyTheme}
+                savedColors={savedColors}
+                setSavedColors={setSavedColors}
+                savedFontColors={savedFontColors}
+                setSavedFontColors={setSavedFontColors}
+              />
             </div>
 
             <Tuner

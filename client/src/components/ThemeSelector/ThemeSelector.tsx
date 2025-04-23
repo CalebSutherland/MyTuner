@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ThemeCustomizer from "../ThemeCustomizer/ThemeCustomizer";
-import { useThemeUtils } from "../../hooks/useThemeUtils";
 import './ThemeSelector.css';
 
 type Theme = {
@@ -8,30 +7,33 @@ type Theme = {
   fontColor: string;
 };
 
-const ThemeSelector: React.FC = () => {
-  const [themes, setThemes] = useState<Theme[]>([
-    { color: "#700b0b", fontColor: "#ffffff" },
-    { color: "#B302C0", fontColor: "#ffffff" },
-    { color: "#00FFFF", fontColor: "#000000" },
-    { color: "#FFFF00", fontColor: "#000000"},
-  ]);
-  const [selectedTheme, setSelectedTheme] = useState<Theme>({ color: "#700b0b", fontColor: "#ffffff" });
+type ThemeSelectorProps = {
+  themes: Theme[];
+  setThemes: React.Dispatch<React.SetStateAction<Theme[]>>;
+  selectedTheme: Theme;
+  applyTheme: (theme: Theme) => void;
+  savedColors: string[];
+  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
+  savedFontColors: string[];
+  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+const ThemeSelector: React.FC<ThemeSelectorProps> = ({
+  themes, 
+  setThemes, 
+  selectedTheme, 
+  applyTheme,
+  savedColors,
+  setSavedColors,
+  savedFontColors,
+  setSavedFontColors,
+}) => {
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [newTheme, setNewTheme] = useState<Theme>({
     color: "#0B8948",
     fontColor: "#ffffff",
   });
   const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
-
-  const { darkenColor, updateMainLight } = useThemeUtils();
-
-  const applyTheme = (theme: Theme) => {
-    setSelectedTheme(theme);
-    document.documentElement.style.setProperty("--main--color", theme.color);
-    document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
-    document.documentElement.style.setProperty("--font--color", theme.fontColor);
-    updateMainLight(theme.color);
-  };
 
   const handleSaveTheme = () => {
     const themeToAdd = {
@@ -84,6 +86,10 @@ const ThemeSelector: React.FC = () => {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           handleSaveTheme={handleSaveTheme}
+          savedColors={savedColors}
+          setSavedColors={setSavedColors}
+          savedFontColors={savedFontColors}
+          setSavedFontColors={setSavedFontColors}
         />
       )}
     </div>
