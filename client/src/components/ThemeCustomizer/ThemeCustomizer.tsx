@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEdit, FaCheck } from "react-icons/fa";
 import './ThemeCustomizer.css'
 
 type Theme = {
@@ -29,8 +30,16 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
   savedFontColors,
   setSavedFontColors
 }) => {
-  
+  const [isEditing, setIsEditing] = useState(false);
 
+  const handleDeleteColor = (index: number) => {
+    setSavedColors((prev) => prev.filter((_, i) => i !== index));
+  };
+  
+  const handleDeleteFontColor = (index: number) => {
+    setSavedFontColors((prev) => prev.filter((_, i) => i !== index));
+  };
+  
   return (
     <div className="theme-customizer">
       <div className="tab-row">
@@ -58,13 +67,30 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
         <>
           <div className="color-grid">
             {savedColors.map((color, index) => (
-              <div
-                key={index}
-                className="color-box"
-                style={{ backgroundColor: color }}
-                onClick={() => setNewTheme({ ...newTheme, color })}
-              />
+              <div key={index} className="color-box-wrapper">
+                <div
+                  className="color-box"
+                  style={{ backgroundColor: color }}
+                  onClick={() => !isEditing && setNewTheme({ ...newTheme, color })}
+                />
+                {isEditing && (
+                  <button
+                    className="delete-color-btn"
+                    onClick={() => handleDeleteColor(index)}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             ))}
+          </div>
+          <div className="color-picker-row">
+            <label className="picker-label">New Color:</label>
+            <input
+              type="color"
+              value={newTheme.color}
+              onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
+            />
             <button
               className="add-color-btn"
               onClick={() =>
@@ -75,14 +101,9 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             >
               +
             </button>
-          </div>
-          <div className="color-picker-row">
-            <label className="picker-label">New Color:</label>
-            <input
-              type="color"
-              value={newTheme.color}
-              onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
-            />
+            <button className="edit-mode-btn" onClick={() => setIsEditing((prev) => !prev)}>
+              {isEditing ? <FaCheck /> : <FaEdit />}
+            </button>
           </div>
         </>
       )}
@@ -91,13 +112,30 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
         <>
           <div className="color-grid">
             {savedFontColors.map((color, index) => (
-              <div
-                key={index}
-                className="color-box"
-                style={{ backgroundColor: color }}
-                onClick={() => setNewTheme({ ...newTheme, fontColor: color })}
-              />
+              <div key={index} className="color-box-wrapper">
+                <div
+                  className="color-box"
+                  style={{ backgroundColor: color }}
+                  onClick={() => !isEditing && setNewTheme({ ...newTheme, fontColor: color })}
+                />
+                {isEditing && (
+                  <button
+                    className="delete-color-btn"
+                    onClick={() => handleDeleteFontColor(index)}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             ))}
+          </div>
+          <div className="color-picker-row">
+            <label className="picker-label">New Color:</label>
+            <input
+              type="color"
+              value={newTheme.fontColor}
+              onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
+            />
             <button
               className="add-color-btn"
               onClick={() =>
@@ -108,14 +146,9 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             >
               +
             </button>
-          </div>
-          <div className="color-picker-row">
-            <label className="picker-label">New Color:</label>
-            <input
-              type="color"
-              value={newTheme.fontColor}
-              onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
-            />
+            <button className="edit-mode-btn" onClick={() => setIsEditing((prev) => !prev)}>
+              <FaEdit />
+            </button>
           </div>
         </>
       )}

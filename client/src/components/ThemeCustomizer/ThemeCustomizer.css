@@ -75,6 +75,7 @@
   color: white;
   font-size: 2rem;
   padding: 0 0 0.2em 0;
+  margin: 0 0 0 10px;
   border: 2px dashed white;
   border-radius: 0px;
   cursor: pointer;
@@ -106,4 +107,48 @@
 
 .theme-preview[disabled] {
   pointer-events: none;
+}
+
+.color-box-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-color-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff0000;
+  border-radius: 100%;
+  padding: 0 0 2px 1px;
+  color: white;
+  font-size: 1rem;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-mode-btn {
+  color: white;
+  font-size: 1.5em;
+  padding: 0;
+  background: transparent;
+  margin: 0 0 0 10px;
+}
+
+.delete-theme-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  cursor: pointer;
 }

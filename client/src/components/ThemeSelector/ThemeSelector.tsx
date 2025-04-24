@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ThemeCustomizer from "../ThemeCustomizer/ThemeCustomizer";
+import { FaEdit, FaCheck } from "react-icons/fa";
 import './ThemeSelector.css';
 
 type Theme = {
@@ -34,6 +35,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
     fontColor: "#ffffff",
   });
   const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleSaveTheme = () => {
     const themeToAdd = {
@@ -47,6 +49,10 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
     setNewTheme({ color: "#0B8948", fontColor: "#ffffff" });
   };
 
+  const handleDeleteTheme = (index: number) => {
+    setThemes((prev) => prev.filter((_, i) => i !== index));
+  };
+
   useEffect(() => {
     setNewTheme(selectedTheme);
   }, [selectedTheme]);
@@ -55,16 +61,25 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
     <div className="theme-selector">
       <div className="theme-list">
         {themes.map((theme, idx) => (
-          <button
-            key={idx}
-            className="theme-preview"
-            style={{
-              backgroundImage: `linear-gradient(135deg, ${theme.color} 70%, ${theme.fontColor} 70%)`,
-              border: `2px solid ${theme.color}`,
-              color: 'transparent',
-            }}
-            onClick={() => applyTheme(theme)}
-          />
+          <div key={idx} className="theme-box-wrapper">
+            <button
+              className="theme-preview"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${theme.color} 70%, ${theme.fontColor} 70%)`,
+                border: `2px solid ${theme.color}`,
+                color: 'transparent',
+              }}
+              onClick={() => !isEditing && applyTheme(theme)}
+            />
+            {isEditing && (
+              <button
+                className="delete-theme-btn"
+                onClick={() => handleDeleteTheme(idx)}
+              >
+                ×
+              </button>
+            )}
+          </div>
         ))}
         <button 
           className="add-theme-btn" 
@@ -76,6 +91,9 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           }}
         >
           {showCustomizer ? '×' : '+'}
+        </button>
+        <button className="edit-theme-btn" onClick={() => setIsEditing(prev => !prev)}>
+          {isEditing ? <FaCheck /> : <FaEdit />}
         </button>
       </div>
   
