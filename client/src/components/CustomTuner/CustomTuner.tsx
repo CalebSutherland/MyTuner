@@ -22,12 +22,28 @@ interface CustomTunerProps {
   startListening: () => void;
   stopListening: () => void;
   selectedTheme: Theme;
+  customTuning: (string | null)[];
+  setCustomTuning: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+  savedTunings: (string | null)[][];
+  setSavedTunings: React.Dispatch<React.SetStateAction<(string | null)[][]>>;
 }
 
-function CustomTuner({frequency, note, status, isListening, volume, startListening, stopListening, selectedTheme }:CustomTunerProps) {
+function CustomTuner({
+  frequency, 
+  note, 
+  status, 
+  isListening, 
+  volume, 
+  startListening, 
+  stopListening, 
+  selectedTheme,
+  customTuning,
+  setCustomTuning,
+  savedTunings,
+  setSavedTunings
+}:CustomTunerProps) {
+
   const [target, setTarget] = useState<number>(0);
-  const [customTuning, setCustomTuning] = useState<(string | null)[]>([null, null, null, null, null, null]);
-  const [savedTunings, setSavedTunings] = useState<(string | null)[][]>([]);
 
   const handleTuningChange = (tuning: (string | null)[]) => {
     setCustomTuning(tuning);

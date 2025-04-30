@@ -42,6 +42,9 @@ function App() {
   const [savedColors, setSavedColors] = useState<string[]>(['#700b0b', '#B302C0', '#00FFFF', '#FFFF00']);
   const [savedFontColors, setSavedFontColors] = useState<string[]>(['#FFFFFF', '#000000']);
 
+  const [customTuning, setCustomTuning] = useState<(string | null)[]>([null, null, null, null, null, null]);
+  const [savedTunings, setSavedTunings] = useState<(string | null)[][]>([]);
+
   const { darkenColor, updateMainLight } = useThemeUtils();
 
   const applyTheme = (theme: Theme) => {
@@ -136,6 +139,10 @@ function App() {
             startListening={startListening}
             stopListening={stopListening}
             selectedTheme={selectedTheme}
+            customTuning={customTuning}
+            setCustomTuning={setCustomTuning}
+            savedTunings={savedTunings}
+            setSavedTunings={setSavedTunings}
           />
         )}
       </div>

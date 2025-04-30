@@ -55,6 +55,15 @@ Tuning Visual
   right: 8px;
 }
 
+.note-display {
+  position: absolute;
+  bottom: 4px;
+  left: 16px;
+  font-size: 2.5rem;
+  font-weight: 500;
+  z-index: 101;
+}
+
 .recording-icon {
   position: absolute;
   right: 12px;
