@@ -1,7 +1,5 @@
-import React from 'react';
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Target from "./Target";
-import guitarImage from '../assets/guitar_3.png';
 
 type Tuning = {
   name: string;
@@ -27,46 +25,40 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq, selectedThe
   const currentPlaying = useRef<HTMLAudioElement | null>(null);
   const audioRefs = useRef<{ [note: string]: HTMLAudioElement }>({});
 
-  const playSound = async (
-    note: string,
-    audioRefs: React.RefObject<{ [note: string]: HTMLAudioElement }>,
-    getAudioUrl: (note: string) => Promise<string | null>
-  ) => { 
-    // Stop the currently playing sound (if any)
+  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
+
+  useEffect(() => {
+    const preloadAudio = async () => {
+      if (!tuning) return;
+      for (const note of tuning.notes) {
+        const translated = note.replace('♯', 'S');
+        const key = `../data/guitar_sounds/${translated}.mp3`;
+        if (audioFiles[key]) {
+          const url = await audioFiles[key]();
+          audioRefs.current[note] = new Audio(url);
+        }
+      }
+    };
+    preloadAudio();
+  }, [tuning]);
+
+  const playSound = (note: string) => {
     if (currentPlaying.current) {
       currentPlaying.current.pause();
       currentPlaying.current.currentTime = 0;
     }
 
-    if (audioRefs.current[note]) {
-      const audio = audioRefs.current[note];
+    const audio = audioRefs.current[note];
+    if (audio) {
       currentPlaying.current = audio;
       audio.currentTime = 0;
       audio.play();
 
       setTimeout(() => {
-        if (audio.currentTime > 0) {
-          audio.pause();
-          audio.currentTime = 0;
-          currentPlaying.current = null;
-        }
+        audio.pause();
+        audio.currentTime = 0;
+        currentPlaying.current = null;
       }, 2000);
-    } else {
-      const url = await getAudioUrl(note); // Get the URL from the Target component
-      if (url) {
-        const newAudio = new Audio(url);
-        audioRefs.current[note] = newAudio;
-        currentPlaying.current = newAudio;
-        newAudio.play();
-
-        setTimeout(() => {
-          if (newAudio.currentTime > 0) {
-            newAudio.pause();
-            newAudio.currentTime = 0;
-            currentPlaying.current = null;
-          }
-        }, 2000);
-      }
     }
   };
 

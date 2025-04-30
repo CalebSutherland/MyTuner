@@ -4,12 +4,12 @@ import "./CTSelector.css";
 
 const noteNames = Object.keys(notes);
 
-interface CustTuningButtonsProps {
+interface CTSelectorProps {
   tuning: (string | null)[];
   onTuningChange: (tuning: (string | null)[]) => void;
 }
 
-function CustTuningButtons( { onTuningChange, tuning }:CustTuningButtonsProps) {
+function CTSelector( { onTuningChange, tuning }:CTSelectorProps) {
   const [activeGridIndex, setActiveGridIndex] = useState<number | null>(null);
 
   const handleButtonClick = (index: number) => {
@@ -53,4 +53,4 @@ function CustTuningButtons( { onTuningChange, tuning }:CustTuningButtonsProps) {
   );
 }
 
-export default CustTuningButtons;
+export default CTSelector;

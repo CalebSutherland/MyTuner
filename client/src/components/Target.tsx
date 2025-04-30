@@ -7,31 +7,13 @@ interface TargetProps {
   updateTarget: (value: number) => void;
   detectedFrequency: number;
   target: number;
-  playSound: (
-    note: string, audioRefs: React.RefObject<Record<string, HTMLAudioElement>>,
-    getAudioUrl: (note: string) => Promise<null | string>
-  ) => void;
+  playSound: (note: string) => void;
 }
 
 function Target({ note, value, updateTarget, detectedFrequency, target, playSound }: TargetProps) {
   const [tuningStatus, setTuningStatus] = useState<string>("out");
   const inRangeSinceRef = useRef<number | null>(null);
   const lastDesiredStatusRef = useRef<string | null>(null);
-  const audioRefs = useRef<Record<string, HTMLAudioElement>>({}); // Initialize as an empty object
-
-  const audioFiles = import.meta.glob('../data/guitar_sounds/*.mp3', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
-
-  const getAudioUrl = async (note: string): Promise<null | string> => {
-    const translatedNote = note.replace('♯', 'S');
-    const audioFileKey = `../data/guitar_sounds/${translatedNote}.mp3`;
-
-    if (audioFiles[audioFileKey]) {
-      const audioModule = await audioFiles[audioFileKey]();
-      return audioModule; // Return the URL of the audio file
-    }
-    console.warn("Missing audio file:", audioFileKey);
-    return null;
-  };
 
   useEffect(() => {
       if (value !== target) return;
@@ -71,7 +53,7 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
       className={`tuning-button ${tuningStatus} ${value === target ? "is-target" : ""}`}
       onClick={() => {
         updateTarget(value);
-        playSound(note, audioRefs, getAudioUrl);
+        playSound(note);
       }}
     >
       {note}

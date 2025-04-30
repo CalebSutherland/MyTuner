@@ -48,25 +48,6 @@ function CustomTuner({frequency, note, status, isListening, volume, startListeni
 
   return (
     <>
-      <CTList
-        savedTunings={savedTunings}
-        loadTuning={loadTuning}
-        deleteTuning={deleteTuning}
-      />
-
-      <div className="save-btn-container">
-        <button onClick={saveCurrentTuning} className="start-button">
-          Save Tuning
-        </button>
-      </div>
-
-      <div className="cust-tun-btn-container">
-        <CTSelector
-          tuning={customTuning} 
-          onTuningChange={handleTuningChange}
-        />
-      </div>
-
       <StartTuning
         isListening={isListening}
         startListening={startListening}
@@ -84,6 +65,25 @@ function CustomTuner({frequency, note, status, isListening, volume, startListeni
         target={target}
         setTarget={setTarget}
         selectedTheme={selectedTheme}
+      />
+
+      <div className="cust-tun-btn-container">
+        <CTSelector
+          tuning={customTuning} 
+          onTuningChange={handleTuningChange}
+        />
+      </div>
+
+      <div className="save-btn-container">
+        <button onClick={saveCurrentTuning} className="start-button">
+          Save Tuning
+        </button>
+      </div>
+
+      <CTList
+        savedTunings={savedTunings}
+        loadTuning={loadTuning}
+        deleteTuning={deleteTuning}
       />
 
       <Stats 

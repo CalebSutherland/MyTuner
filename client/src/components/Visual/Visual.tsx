@@ -1,4 +1,5 @@
 import React, { useRef, useLayoutEffect, useState } from "react";
+import notes from '../../data/all_notes';
 
 interface VisualProps {
   target: number;
@@ -9,6 +10,11 @@ interface VisualProps {
 const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+
+  function getNoteName(freq: number): string | undefined {
+    return (Object.keys(notes) as (keyof typeof notes)[])
+      .find(note => notes[note] === freq);
+  }
 
   useLayoutEffect(() => {
     if (containerRef.current) {
@@ -93,6 +99,7 @@ const Visual: React.FC<VisualProps> = ({ target, targetDiffernce, volume }) => {
       </div>
       <div className="flat-icon">♭</div>
       <div className="sharp-icon">♯</div>
+      <div className="note-display">{getNoteName(target)}</div>
       <div className="recording-icon" 
         style={{ opacity: isAudioDetected ? 1 : 0.2, animation: isAudioDetected ? 'glow 1s infinite alternate' : 'none' }}>
       </div>

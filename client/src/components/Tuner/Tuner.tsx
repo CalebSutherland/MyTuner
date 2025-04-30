@@ -149,7 +149,7 @@ function Tuner({ frequency, note, status, isListening, volume, startListening, s
       <Visual 
         target={target} 
         targetDiffernce={frequency === 0 ? 0 : Number((frequency - target).toFixed(0))} 
-        volume={volume} 
+        volume={volume}
       />
 
       <AutoDetect 
