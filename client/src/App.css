@@ -65,16 +65,26 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.menu-button-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+.menu-button-container,
+.login-button-container {
   flex: 1;
-  padding: 0;
+  display: flex;
+  justify-content: flex-start;
 }
 
-.spacer {
-  flex: 1;
+.login-button-container {
+  justify-content: flex-end;
+}
+
+.login-button {
+  background-color: var(--main--color);
+  color: var(--font--color);
+  transition: background-color 0.3s ease-in-out;
+  margin-right: 10px;
+}
+
+.login-button:hover {
+  background-color: var(--hover--color);
 }
 
 .overlay {
