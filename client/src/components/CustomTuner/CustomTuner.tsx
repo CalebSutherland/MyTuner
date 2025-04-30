@@ -7,6 +7,12 @@ import Visual from "../Visual/Visual";
 import Stats from "../Stats/Stats";
 import "./CustomTuner.css";
 
+type Theme = {
+  color: string;
+  fontColor: string;
+  image: string;
+};
+
 interface CustomTunerProps {
   frequency: number;
   note: string | null;
@@ -15,9 +21,10 @@ interface CustomTunerProps {
   volume: number;
   startListening: () => void;
   stopListening: () => void;
+  selectedTheme: Theme;
 }
 
-function CustomTuner({frequency, note, status, isListening, volume, startListening, stopListening}:CustomTunerProps) {
+function CustomTuner({frequency, note, status, isListening, volume, startListening, stopListening, selectedTheme }:CustomTunerProps) {
   const [target, setTarget] = useState<number>(0);
   const [customTuning, setCustomTuning] = useState<(string | null)[]>([null, null, null, null, null, null]);
   const [savedTunings, setSavedTunings] = useState<(string | null)[][]>([]);
@@ -76,6 +83,7 @@ function CustomTuner({frequency, note, status, isListening, volume, startListeni
         tuning={customTuning}
         target={target}
         setTarget={setTarget}
+        selectedTheme={selectedTheme}
       />
 
       <Stats 

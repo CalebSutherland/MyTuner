@@ -14,6 +14,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 type Theme = {
   color: string;
   fontColor: string;
+  image: string;
 };
 
 
@@ -32,10 +33,10 @@ function App() {
   const [display, setDisplay] = useState<string>("Home");
 
   const [themes, setThemes] = useState<Theme[]>([
-    { color: "#700b0b", fontColor: "#ffffff" },
-    { color: "#B302C0", fontColor: "#ffffff" },
-    { color: "#00FFFF", fontColor: "#000000" },
-    { color: "#FFFF00", fontColor: "#000000"},
+    { color: "#700b0b", fontColor: "#ffffff", image: "/assets/guitar_3.png" },
+    { color: "#B302C0", fontColor: "#ffffff", image: "/assets/brown.png" },
+    { color: "#00FFFF", fontColor: "#000000", image: "/assets/martin-guitar-decal-gold.png" },
+    { color: "#FFFF00", fontColor: "#000000", image: "/assets/black-guitar2.png" },
   ]);
   const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0]);
   const [savedColors, setSavedColors] = useState<string[]>(['#700b0b', '#B302C0', '#00FFFF', '#FFFF00']);
@@ -108,6 +109,7 @@ function App() {
               volume={volume}
               startListening={startListening}
               stopListening={stopListening}
+              selectedTheme={selectedTheme}
             />
           </>
         )}
@@ -133,6 +135,7 @@ function App() {
             volume={volume}
             startListening={startListening}
             stopListening={stopListening}
+            selectedTheme={selectedTheme}
           />
         )}
       </div>

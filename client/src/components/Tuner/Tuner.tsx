@@ -12,6 +12,12 @@ import '../Stats/Stats.css';
 import '../AutoDetect/AutoDetect.css';
 import '../StartTuning/StartTuning.css';
 
+type Theme = {
+  color: string;
+  fontColor: string;
+  image: string;
+};
+
 interface TunerProps {
   frequency: number;
   note: string | null;
@@ -20,6 +26,7 @@ interface TunerProps {
   volume: number;
   startListening: () => void;
   stopListening: () => void;
+  selectedTheme: Theme;
 }
 
 type Tuning = {
@@ -32,7 +39,7 @@ type Tunings = {
   [category: string]: Tuning[];
 };
 
-function Tuner({ frequency, note, status, isListening, volume, startListening, stopListening}:TunerProps) {
+function Tuner({ frequency, note, status, isListening, volume, startListening, stopListening, selectedTheme }:TunerProps) {
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
   const [selectedTuning, setSelectedTuning] = useState<Tuning>(tunings["Standard"][0])
@@ -154,7 +161,8 @@ function Tuner({ frequency, note, status, isListening, volume, startListening, s
         tuning={selectedTuning} 
         changeTarget={setTarget} 
         detectedFreq={frequency} 
-        target={target} 
+        target={target}
+        selectedTheme={selectedTheme}
       />
 
       <Stats 

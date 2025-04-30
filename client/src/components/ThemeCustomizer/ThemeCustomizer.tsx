@@ -5,6 +5,7 @@ import './ThemeCustomizer.css'
 type Theme = {
   color: string;
   fontColor: string;
+  image: string;
 };
 
 type ThemeCustomizerProps = {
@@ -154,7 +155,17 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
       )}
 
       {activeTab === 'image' && (
-        <p style={{ color: 'white' }}>Image selection coming soon!</p>
+        <div className="image-grid">
+          {['guitar_3.png', 'brown.png', 'martin-guitar-decal-gold.png', 'black-guitar2.png'].map((imgName, index) => (
+            <img
+              key={index}
+              src={`/assets/${imgName}`}
+              alt={`Theme ${index}`}
+              className={`image-box ${newTheme.image === `/assets/${imgName}` ? 'selected' : ''}`}
+              onClick={() => setNewTheme({ ...newTheme, image: `/assets/${imgName}` })}
+            />
+          ))}
+        </div>
       )}
 
       <div className="save-theme-row">

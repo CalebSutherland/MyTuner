@@ -6,6 +6,7 @@ import './ThemeSelector.css';
 type Theme = {
   color: string;
   fontColor: string;
+  image: string;
 };
 
 type ThemeSelectorProps = {
@@ -33,6 +34,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const [newTheme, setNewTheme] = useState<Theme>({
     color: "#0B8948",
     fontColor: "#ffffff",
+    image: "assets/guitar_3.png",
   });
   const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
   const [isEditing, setIsEditing] = useState(false);
@@ -41,12 +43,13 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
     const themeToAdd = {
       color: newTheme.color,
       fontColor: newTheme.fontColor,
+      image: newTheme.image,
     };
   
     setThemes([...themes, themeToAdd]);
     setShowCustomizer(false);
     applyTheme(themeToAdd);
-    setNewTheme({ color: "#0B8948", fontColor: "#ffffff" });
+    setNewTheme({ color: "#0B8948", fontColor: "#ffffff", image: "assets/guitar_3.png" });
   };
 
   const handleDeleteTheme = (index: number) => {
