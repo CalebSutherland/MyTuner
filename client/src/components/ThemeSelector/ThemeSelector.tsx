@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from '../../contexts/ThemeContext';
 import ThemeCustomizer from "../ThemeCustomizer/ThemeCustomizer";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import './ThemeSelector.css';
@@ -10,10 +11,6 @@ type Theme = {
 };
 
 type ThemeSelectorProps = {
-  themes: Theme[];
-  setThemes: React.Dispatch<React.SetStateAction<Theme[]>>;
-  selectedTheme: Theme;
-  applyTheme: (theme: Theme) => void;
   savedColors: string[];
   setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
   savedFontColors: string[];
@@ -21,15 +18,13 @@ type ThemeSelectorProps = {
 };
 
 const ThemeSelector: React.FC<ThemeSelectorProps> = ({
-  themes, 
-  setThemes, 
-  selectedTheme, 
-  applyTheme,
   savedColors,
   setSavedColors,
   savedFontColors,
   setSavedFontColors,
 }) => {
+  const { themes, setThemes, selectedTheme, applyTheme } = useTheme();
+
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [newTheme, setNewTheme] = useState<Theme>({
     color: "#0B8948",

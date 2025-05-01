@@ -6,45 +6,23 @@ import ThemeSelector from "../components/ThemeSelector/ThemeSelector";
 import Tuner from "../components/Tuner/Tuner"
 import GeneralTuner from "../components/GeneralTuner/GeneralTuner";
 import CustomTuner from "../components/CustomTuner/CustomTuner";
-import { useThemeUtils } from "../hooks/useThemeUtils";
+import { useTheme } from '../contexts/ThemeContext';
 import '../App.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-type Theme = {
-  color: string;
-  fontColor: string;
-  image: string;
-};
-
 function Home() {
   const navigate = useNavigate();
+  const { selectedTheme } = useTheme();
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [display, setDisplay] = useState<string>("Home");
 
-  const [themes, setThemes] = useState<Theme[]>([
-    { color: "#700b0b", fontColor: "#ffffff", image: "/assets/guitar_3.png" },
-    { color: "#B302C0", fontColor: "#ffffff", image: "/assets/brown.png" },
-    { color: "#00FFFF", fontColor: "#000000", image: "/assets/martin-guitar-decal-gold.png" },
-    { color: "#FFFF00", fontColor: "#000000", image: "/assets/black-guitar2.png" },
-  ]);
-  const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0]);
   const [savedColors, setSavedColors] = useState<string[]>(['#700b0b', '#B302C0', '#00FFFF', '#FFFF00']);
   const [savedFontColors, setSavedFontColors] = useState<string[]>(['#FFFFFF', '#000000']);
 
   const [customTuning, setCustomTuning] = useState<(string | null)[]>([null, null, null, null, null, null]);
   const [savedTunings, setSavedTunings] = useState<(string | null)[][]>([]);
-
-  const { darkenColor, updateMainLight } = useThemeUtils();
-
-  const applyTheme = (theme: Theme) => {
-    setSelectedTheme(theme);
-    document.documentElement.style.setProperty("--main--color", theme.color);
-    document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
-    document.documentElement.style.setProperty("--font--color", theme.fontColor);
-    updateMainLight(theme.color);
-  };
 
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -86,10 +64,6 @@ function Home() {
           <>
             <div className="color-section">
               <ThemeSelector
-                themes={themes}
-                setThemes={setThemes}
-                selectedTheme={selectedTheme}
-                applyTheme={applyTheme}
                 savedColors={savedColors}
                 setSavedColors={setSavedColors}
                 savedFontColors={savedFontColors}
