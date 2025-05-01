@@ -1,36 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MenuButton from "../components/MenuButton/MenuButton";
 
 const AuthPage = () => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true); // toggle state
+  const [isLogin, setIsLogin] = useState(true);
 
   const handleSubmit = () => {
     // Replace with real auth/signup logic later
     navigate("/");
   };
 
-  const toggleMenu = () => setShowMenu(!showMenu);
-
   return (
     <>
-      <header className="app-header">
-        <div className="menu-button-container">
-          <MenuButton 
-            onToggle={toggleMenu} 
-            isOpen={showMenu} 
-          />
-        </div>
-        <h1>MyTuner</h1>
-        <div className="login-button-container">
-          <button
-            className="login-button"
-            onClick={() => navigate("/login")}>Log In</button>
-        </div>
-      </header>
-
       <div style={{ padding: "2rem", textAlign: "center" }}>
         <h2>{isLogin ? "Login" : "Create Account"}</h2>
 
