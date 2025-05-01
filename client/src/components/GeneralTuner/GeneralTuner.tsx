@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useAudio } from "../../contexts/AudioContext";
 import StartTuning from "../StartTuning/StartTuning";
 import Visual from "../Visual/Visual";
 import AutoDetect from "../AutoDetect/AutoDetect";
@@ -10,17 +11,18 @@ import '../StartTuning/StartTuning.css';
 import '../Visual/Visual.css';
 import '../Stats/Stats.css';
 
-interface GeneralTunerProps {
-  frequency: number;
-  note: string | null;
-  status: string;
-  isListening: boolean;
-  volume: number;
-  startListening: () => void;
-  stopListening: () => void;
-}
 
-function GeneralTuner({frequency, note, status, isListening, volume, startListening, stopListening}:GeneralTunerProps) {
+function GeneralTuner() {
+  const {
+    frequency,
+    note,
+    status,
+    isListening,
+    volume,
+    startListening,
+    stopListening,
+  } = useAudio();
+
   const [target, setTarget] = useState<number>(0);
   const [isAutoDetect, setIsAutoDetect] = useState<boolean>(false);
   const noteNames = Object.keys(notes);

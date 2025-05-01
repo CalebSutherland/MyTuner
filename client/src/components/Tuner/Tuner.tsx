@@ -5,7 +5,8 @@ import Visual from "../Visual/Visual"
 import Stats from "../Stats/Stats";
 import TuningDropdown from "../TuningDropdown";
 import AutoDetect from "../AutoDetect/AutoDetect";
-import tunings from "../../data/all_tunings"
+import tunings from "../../data/all_tunings";
+import { useAudio } from "../../contexts/AudioContext";
 import './Tuner.css';
 import '../Visual/Visual.css';
 import '../Stats/Stats.css';
@@ -19,13 +20,6 @@ type Theme = {
 };
 
 interface TunerProps {
-  frequency: number;
-  note: string | null;
-  status: string;
-  isListening: boolean;
-  volume: number;
-  startListening: () => void;
-  stopListening: () => void;
   selectedTheme: Theme;
 }
 
@@ -39,7 +33,17 @@ type Tunings = {
   [category: string]: Tuning[];
 };
 
-function Tuner({ frequency, note, status, isListening, volume, startListening, stopListening, selectedTheme }:TunerProps) {
+function Tuner({ selectedTheme }:TunerProps) {
+  const {
+    frequency,
+    note,
+    status,
+    isListening,
+    volume,
+    startListening,
+    stopListening,
+  } = useAudio();
+  
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
   const [selectedTuning, setSelectedTuning] = useState<Tuning>(tunings["Standard"][0])

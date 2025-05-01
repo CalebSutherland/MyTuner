@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAudio } from "../../contexts/AudioContext";
 import CTList from "../CTList/CTList";
 import CTSelector from "../CTSelector/CTSelector";
 import CTButtons from "../CTButtons/CTButtons";
@@ -14,13 +15,6 @@ type Theme = {
 };
 
 interface CustomTunerProps {
-  frequency: number;
-  note: string | null;
-  status: string;
-  isListening: boolean;
-  volume: number;
-  startListening: () => void;
-  stopListening: () => void;
   selectedTheme: Theme;
   customTuning: (string | null)[];
   setCustomTuning: React.Dispatch<React.SetStateAction<(string | null)[]>>;
@@ -29,19 +23,22 @@ interface CustomTunerProps {
 }
 
 function CustomTuner({
-  frequency, 
-  note, 
-  status, 
-  isListening, 
-  volume, 
-  startListening, 
-  stopListening, 
   selectedTheme,
   customTuning,
   setCustomTuning,
   savedTunings,
   setSavedTunings
 }:CustomTunerProps) {
+  
+  const {
+    frequency,
+    note,
+    status,
+    isListening,
+    volume,
+    startListening,
+    stopListening,
+  } = useAudio();
 
   const [target, setTarget] = useState<number>(0);
 

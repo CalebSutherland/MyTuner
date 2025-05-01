@@ -1,16 +1,17 @@
 import React from "react";
+import { useAudio } from "../../contexts/AudioContext";
 import "./SideMenu.css";
 import { FaHome, FaGithub} from "react-icons/fa"
 import { MdConstruction } from "react-icons/md";
 
 interface SideMenuProps {
-  stopListening: () => void;
   onToggle: () => void;
   setDisplay: (dislpay: string) => void;
   isOpen: boolean;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ stopListening, onToggle, setDisplay, isOpen }) => {
+const SideMenu: React.FC<SideMenuProps> = ({ onToggle, setDisplay, isOpen }) => {
+  const { stopListening } = useAudio();
   return (
     <div className={`side-menu ${isOpen ? "open" : ""}`}>
       <button className="close-button" onClick={onToggle}>

@@ -6,7 +6,6 @@ import ThemeSelector from "../components/ThemeSelector/ThemeSelector";
 import Tuner from "../components/Tuner/Tuner"
 import GeneralTuner from "../components/GeneralTuner/GeneralTuner";
 import CustomTuner from "../components/CustomTuner/CustomTuner";
-import useAudioProcessor from "../hooks/useAudioProcessor";
 import { useThemeUtils } from "../hooks/useThemeUtils";
 import '../App.css';
 
@@ -18,18 +17,7 @@ type Theme = {
   image: string;
 };
 
-
 function Home() {
-  const {
-    frequency,
-    note,
-    status,
-    isListening,
-    volume,
-    startListening,
-    stopListening,
-  } = useAudioProcessor();
-
   const navigate = useNavigate();
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -57,7 +45,6 @@ function Home() {
     document.documentElement.style.setProperty("--font--color", theme.fontColor);
     updateMainLight(theme.color);
   };
-  
 
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -81,12 +68,11 @@ function Home() {
         <div className="login-button-container">
           <button
             className="login-button"
-            onClick={() => navigate("/login")}>Login</button>
+            onClick={() => navigate("/login")}>Log In</button>
         </div>
       </header>
 
       <SideMenu
-        stopListening={stopListening}
         setDisplay={setDisplay}
         onToggle={toggleMenu} 
         isOpen={showMenu}
@@ -112,39 +98,18 @@ function Home() {
             </div>
 
             <Tuner
-              note={note}
-              frequency={frequency}
-              status={status}
-              isListening={isListening}
-              volume={volume}
-              startListening={startListening}
-              stopListening={stopListening}
               selectedTheme={selectedTheme}
             />
+
           </>
         )}
 
         {display == "General" && (
-          <GeneralTuner 
-            note={note}
-            frequency={frequency}
-            status={status}
-            isListening={isListening}
-            volume={volume}
-            startListening={startListening}
-            stopListening={stopListening}
-          />
+          <GeneralTuner />
         )}
 
         {display == "Custom" && (
           <CustomTuner 
-            note={note}
-            frequency={frequency}
-            status={status}
-            isListening={isListening}
-            volume={volume}
-            startListening={startListening}
-            stopListening={stopListening}
             selectedTheme={selectedTheme}
             customTuning={customTuning}
             setCustomTuning={setCustomTuning}
