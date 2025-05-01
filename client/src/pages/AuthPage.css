@@ -1,0 +1,44 @@
+.auth-card {
+  border-radius: 12px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.auth-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--main--color);
+  color: var(--font--color);
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: var(--hover--color);
+}
+
+.toggle-btn {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}

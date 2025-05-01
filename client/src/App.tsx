@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AudioProvider } from './contexts/AudioContext';
-import { ThemeProvider } from './contexts/ThemeContext'; // <-- import the provider
+import { ThemeProvider } from './contexts/ThemeContext';
 import Home from './pages/Home';
 import AuthPage from './pages/AuthPage';
 import GeneralPage from './pages/GeneralPage';

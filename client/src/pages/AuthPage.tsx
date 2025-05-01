@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './AuthPage.css';
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -11,30 +12,26 @@ const AuthPage = () => {
   };
 
   return (
-    <>
-      <div style={{ padding: "2rem", textAlign: "center" }}>
+    <div className="auth-container">
+      <div className="auth-card">
         <h2>{isLogin ? "Login" : "Create Account"}</h2>
 
-        <input type="text" placeholder="Username" /><br /><br />
-
-        <input type="password" placeholder="Password" /><br /><br />
-
+        <input type="text" placeholder="Username" className="auth-input" />
+        <input type="password" placeholder="Password" className="auth-input" />
+        
         {!isLogin && (
-          <>
-            <input type="password" placeholder="Confirm Password" /><br /><br />
-          </>
+          <input type="password" placeholder="Confirm Password" className="auth-input" />
         )}
 
-        <button onClick={handleSubmit}>
+        <button onClick={handleSubmit} className="submit-btn">
           {isLogin ? "Log In" : "Sign Up"}
         </button>
 
-        <br /><br />
-        <button onClick={() => setIsLogin(!isLogin)} style={{ fontSize: "0.9em" }}>
+        <button onClick={() => setIsLogin(!isLogin)} className="toggle-btn">
           {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
