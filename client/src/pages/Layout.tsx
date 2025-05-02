@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import SideMenu from "../components/SideMenu/SideMenu";
 import MenuButton from "../components/MenuButton/MenuButton";
 import '../App.css';
@@ -7,6 +9,10 @@ import '../App.css';
 function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const toggleDropdown = () => setShowDropdown(!showDropdown);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -20,12 +26,28 @@ function Layout() {
         </div>
         <h1>MyTuner</h1>
         <div className="login-button-container">
-          <button
-            className="login-button"
-            onClick={() => navigate(isLoginPage ? "/" : "/login")}
-          >
-            {isLoginPage ? "Back Home" : "Log In"}
-          </button>
+          {user ? (
+            <div className="user-dropdown">
+              <button className="login-button" onClick={toggleDropdown}>
+                <span className="username">{user.username}</span>
+                <span className="arrow">{showDropdown ? <FaAngleUp /> : <FaAngleDown />}</span>
+              </button>
+              {showDropdown && (
+                <div className="dropdown-menu">
+                  <button onClick={() => { logout(); navigate("/"); setShowDropdown(false); }}>
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              className="login-button no-user"
+              onClick={() => navigate(isLoginPage ? "/" : "/login")}
+            >
+              {isLoginPage ? "Back Home" : "Log In"}
+            </button>
+          )}
         </div>
       </header>
 

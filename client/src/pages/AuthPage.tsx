@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 import './AuthPage.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const AuthPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +47,7 @@ const AuthPage = () => {
 
         // If login is successful, store token
         if (isLogin) {
-          localStorage.setItem("token", data.token);
+          login(data.token, username);
           navigate("/"); // Redirect to home page after login
         } else {
           // Redirect to login page after successful sign-up

@@ -11,10 +11,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Example in-memory "database" for users
 const users = {};
 
-// Helper function to hash passwords
 const hashPassword = async (password) => {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds);
@@ -46,20 +44,15 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/signup', async (req, res) => {
   const { username, password, confirmPassword } = req.body;
 
-  // Check if passwords match
   if (password !== confirmPassword) {
     return res.status(400).json({ message: 'Passwords do not match' });
   }
 
-  // Check if user already exists
   if (users[username]) {
     return res.status(400).json({ message: 'User already exists' });
   }
 
-  // Hash the password
   const hashedPassword = await hashPassword(password);
-
-  // Store the new user
   users[username] = { password: hashedPassword };
 
   console.log('All users:', users);
