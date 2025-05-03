@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAuth } from '../../contexts/AuthContext';
 import ThemeCustomizer from "../ThemeCustomizer/ThemeCustomizer";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import './ThemeSelector.css';
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 type Theme = {
   color: string;
@@ -24,6 +27,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   setSavedFontColors,
 }) => {
   const { themes, setThemes, selectedTheme, applyTheme } = useTheme();
+  const { isLoggedIn, user } = useAuth();
 
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [newTheme, setNewTheme] = useState<Theme>({
@@ -34,7 +38,31 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSaveTheme = () => {
+  const handleApplyTheme = async (theme: Theme) => {
+    applyTheme(theme); // visually apply theme
+  
+    if (isLoggedIn && user) {
+      try {
+        const response = await fetch(`${apiUrl}/api/users/${user.username}/selected-theme`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(theme),
+        });
+  
+        if (!response.ok) {
+          const data = await response.json();
+          console.error("Error saving selected theme:", data.message);
+        }
+      } catch (error) {
+        console.error("Error saving selected theme:", error);
+      }
+    }
+  };
+
+  const handleSaveTheme = async () => {
     const themeToAdd = {
       color: newTheme.color,
       fontColor: newTheme.fontColor,
@@ -43,12 +71,57 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   
     setThemes([...themes, themeToAdd]);
     setShowCustomizer(false);
-    applyTheme(themeToAdd);
+    handleApplyTheme(themeToAdd);
     setNewTheme({ color: "#0B8948", fontColor: "#ffffff", image: "assets/guitar_3.png" });
+
+    if (isLoggedIn && user) {
+      try {
+        const response = await fetch(`${apiUrl}/api/users/${user.username}/themes`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(themeToAdd),
+        });
+        
+        if (response.ok) {
+          console.log("Theme saved successfully.");
+        } else {
+          const data = await response.json();
+          console.error("Error saving theme:", data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   };
 
-  const handleDeleteTheme = (index: number) => {
+  const handleDeleteTheme = async (index: number) => {
+    const themeToDelete = themes[index];
     setThemes((prev) => prev.filter((_, i) => i !== index));
+
+    if (isLoggedIn && user) {
+      try {
+        const response = await fetch(`${apiUrl}/api/users/${user.username}/themes`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify(themeToDelete),
+        });
+
+        if (response.ok) {
+          console.log("Theme deleted successfully.");
+        } else {
+          const data = await response.json();
+          console.error("Error deleting theme:", data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -67,7 +140,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                 border: `2px solid ${theme.color}`,
                 color: 'transparent',
               }}
-              onClick={() => !isEditing && applyTheme(theme)}
+              onClick={() => !isEditing && handleApplyTheme(theme)}
             />
             {isEditing && (
               <button

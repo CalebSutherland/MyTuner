@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from '../contexts/ThemeContext';
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import SideMenu from "../components/SideMenu/SideMenu";
 import MenuButton from "../components/MenuButton/MenuButton";
@@ -10,6 +11,7 @@ function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { resetToDefaultThemes } = useTheme();
 
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdown = () => setShowDropdown(!showDropdown);
@@ -34,7 +36,7 @@ function Layout() {
               </button>
               {showDropdown && (
                 <div className="dropdown-menu">
-                  <button onClick={() => { logout(); navigate("/"); setShowDropdown(false); }}>
+                  <button onClick={() => { logout(); navigate("/"); setShowDropdown(false); resetToDefaultThemes(); }}>
                     Sign Out
                   </button>
                 </div>
