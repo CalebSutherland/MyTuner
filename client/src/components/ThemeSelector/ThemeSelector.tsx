@@ -26,7 +26,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   savedFontColors,
   setSavedFontColors,
 }) => {
-  const { themes, setThemes, selectedTheme, applyTheme } = useTheme();
+  const { themes, setThemes, selectedTheme, applyTheme, resetToDefaultThemes } = useTheme();
   const { isLoggedIn, user } = useAuth();
 
   const [showCustomizer, setShowCustomizer] = useState(false);
@@ -69,7 +69,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
       image: newTheme.image,
     };
   
-    setThemes([...themes, themeToAdd]);
+    setThemes([...(themes ?? []), themeToAdd]);
     setShowCustomizer(false);
     handleApplyTheme(themeToAdd);
     setNewTheme({ color: "#0B8948", fontColor: "#ffffff", image: "assets/guitar_3.png" });
@@ -98,8 +98,13 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   };
 
   const handleDeleteTheme = async (index: number) => {
+    if (!themes) return;
     const themeToDelete = themes[index];
-    setThemes((prev) => prev.filter((_, i) => i !== index));
+
+    setThemes((prev) => {
+      if (!prev) return [];
+      return prev.filter((_, i) => i !== index);
+    });
 
     if (isLoggedIn && user) {
       try {
@@ -125,13 +130,15 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   };
 
   useEffect(() => {
-    setNewTheme(selectedTheme);
+    if (selectedTheme) {
+      setNewTheme(selectedTheme);
+    }
   }, [selectedTheme]);
 
   return (
     <div className="theme-selector">
       <div className="theme-list">
-        {themes.map((theme, idx) => (
+        {themes?.map((theme, idx) => (
           <div key={idx} className="theme-box-wrapper">
             <button
               className="theme-preview"

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useTheme } from '../contexts/ThemeContext';
 import Target from "./Target";
 
 type Tuning = {
@@ -18,10 +19,10 @@ type TuningButtonsProps = {
   target: number;
   changeTarget: (index: number) => void;
   detectedFreq: number;
-  selectedTheme: Theme;
 };
 
-function TuningButtons({ tuning, target, changeTarget, detectedFreq, selectedTheme }: TuningButtonsProps) {
+function TuningButtons({ tuning, target, changeTarget, detectedFreq }: TuningButtonsProps) {
+  const { selectedTheme } = useTheme();
   const currentPlaying = useRef<HTMLAudioElement | null>(null);
   const audioRefs = useRef<{ [note: string]: HTMLAudioElement }>({});
 
@@ -90,7 +91,7 @@ function TuningButtons({ tuning, target, changeTarget, detectedFreq, selectedThe
           })}
         </div>
         <div className="guitar-image-container">
-          <img src={selectedTheme.image} alt="Guitar" className="guitar-image" />
+          <img src={selectedTheme?.image} alt="Guitar" className="guitar-image" />
         </div>
         <div className="right-buttons">
           {rightButtons.map((note, index) => (

@@ -6,7 +6,7 @@ interface User {
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  user: User | null;
+  user: User | null | undefined;
   login: (token: string, username: string) => void;
   logout: () => void;
 }
@@ -14,15 +14,19 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUsername = localStorage.getItem("username");
+
     if (token && storedUsername) {
       setIsLoggedIn(true);
       setUser({ username: storedUsername });
+    } else {
+      setIsLoggedIn(false);
+      setUser(null);
     }
   }, []);
 

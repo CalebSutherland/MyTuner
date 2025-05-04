@@ -7,21 +7,12 @@ import TuningDropdown from "../TuningDropdown";
 import AutoDetect from "../AutoDetect/AutoDetect";
 import tunings from "../../data/all_tunings";
 import { useAudio } from "../../contexts/AudioContext";
+import { useTheme } from '../../contexts/ThemeContext';
 import './Tuner.css';
 import '../Visual/Visual.css';
 import '../Stats/Stats.css';
 import '../AutoDetect/AutoDetect.css';
 import '../StartTuning/StartTuning.css';
-
-type Theme = {
-  color: string;
-  fontColor: string;
-  image: string;
-};
-
-interface TunerProps {
-  selectedTheme: Theme;
-}
 
 type Tuning = {
   name: string;
@@ -33,7 +24,7 @@ type Tunings = {
   [category: string]: Tuning[];
 };
 
-function Tuner({ selectedTheme }:TunerProps) {
+function Tuner() {
   const {
     frequency,
     note,
@@ -43,6 +34,8 @@ function Tuner({ selectedTheme }:TunerProps) {
     startListening,
     stopListening,
   } = useAudio();
+
+  const { selectedTheme } = useTheme();
   
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
@@ -77,7 +70,6 @@ function Tuner({ selectedTheme }:TunerProps) {
     setIsAutoDetect(!isAutoDetect);
   };
 
-
   const detectClosestNote = (freq: number): number => {
     if (!selectedTuning) return 0;
 
@@ -94,7 +86,6 @@ function Tuner({ selectedTheme }:TunerProps) {
     return closestNote;
   };
 
-
   useEffect(() => {
     if (!isAutoDetect || frequency <= 0) return;
 
@@ -110,28 +101,6 @@ function Tuner({ selectedTheme }:TunerProps) {
     }
   }, [isAutoDetect, frequency, selectedTuning]);
 
-
-  const sendTuningData = async () => {
-    const data = {
-      tuningName: selectedTuning.name,
-    };
-  
-    try {
-      const res = await fetch(`${apiUrl}/api/log`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-  
-      const result = await res.json();
-      console.log("Backend response:", result.message);
-    } catch (err) {
-      console.error("Error sending data to backend:", err);
-    }
-  };
-
   return (
     <>
       <TuningDropdown
@@ -141,8 +110,6 @@ function Tuner({ selectedTheme }:TunerProps) {
         selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryChange}
       />
-
-      {/*<button onClick={sendTuningData}>Save Tuning</button>*/}
 
       <StartTuning
         isListening={isListening}
@@ -166,7 +133,6 @@ function Tuner({ selectedTheme }:TunerProps) {
         changeTarget={setTarget} 
         detectedFreq={frequency} 
         target={target}
-        selectedTheme={selectedTheme}
       />
 
       <Stats 

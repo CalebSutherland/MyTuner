@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ThemeSelector from "../components/ThemeSelector/ThemeSelector";
 import Tuner from "../components/Tuner/Tuner"
-import { useTheme } from '../contexts/ThemeContext';
 import '../App.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Home() {
-  const { selectedTheme } = useTheme();
   const [savedColors, setSavedColors] = useState<string[]>(['#700b0b', '#B302C0', '#00FFFF', '#FFFF00']);
   const [savedFontColors, setSavedFontColors] = useState<string[]>(['#FFFFFF', '#000000']);
 
@@ -28,9 +26,7 @@ function Home() {
           setSavedFontColors={setSavedFontColors}
         />
       </div>
-      <Tuner
-        selectedTheme={selectedTheme}
-      />
+      <Tuner />
     </>
   );
 }

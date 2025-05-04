@@ -7,14 +7,17 @@
 }
 
 :root {
-  --main--color: #700b0b;
-  --hover--color: #620a0a;
-  --main--light: rgba(255, 255, 255, 0.1);
-  --font--color: white;
   --main--green: #1c9738;
   --hover--green: #1b8132;
   --main--yellow: #f9f61f;
   --hover--yellow: #efeb1f;
+}
+
+[data-theme-loaded] {
+  --main--color: #700b0b;
+  --hover--color: #620a0a;
+  --main--light: rgba(255, 255, 255, 0.1);
+  --font--color: white;
 }
 
 body {

@@ -9,14 +9,14 @@ interface Theme {
 }
 
 interface ThemeContextType {
-  themes: Theme[];
-  setThemes: React.Dispatch<React.SetStateAction<Theme[]>>;
-  selectedTheme: Theme;
-  setSelectedTheme: React.Dispatch<React.SetStateAction<Theme>>;
-  savedColors: string[];
-  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  savedFontColors: string[];
-  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
+  themes: Theme[] | null;
+  setThemes: React.Dispatch<React.SetStateAction<Theme[] | null>>;
+  selectedTheme: Theme | null;
+  setSelectedTheme: React.Dispatch<React.SetStateAction<Theme | null>>;
+  savedColors: string[] | null;
+  setSavedColors: React.Dispatch<React.SetStateAction<string[] | null>>;
+  savedFontColors: string[] | null;
+  setSavedFontColors: React.Dispatch<React.SetStateAction<string[] | null>>;
   applyTheme: (theme: Theme) => void;
   resetToDefaultThemes: () => void;
 }
@@ -37,11 +37,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const { darkenColor, updateMainLight } = useThemeUtils();
   const { user } = useAuth();
-
-  const [themes, setThemes] = useState<Theme[]>(defaultThemes);
-  const [selectedTheme, setSelectedTheme] = useState<Theme>(defaultThemes[0]);
-  const [savedColors, setSavedColors] = useState<string[]>(defaultThemes.map(t => t.color));
-  const [savedFontColors, setSavedFontColors] = useState<string[]>(["#FFFFFF", "#000000"]);
+  
+  const [themes, setThemes] = useState<Theme[] | null>(null);
+  const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
+  const [savedColors, setSavedColors] = useState<string[] | null>(null);
+  const [savedFontColors, setSavedFontColors] = useState<string[] | null>(null);
+  const [isThemeLoading, setIsThemeLoading] = useState(true);
   
   const applyTheme = (theme: Theme) => {
     setSelectedTheme(theme);
@@ -49,6 +50,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
     document.documentElement.style.setProperty("--font--color", theme.fontColor);
     updateMainLight(theme.color);
+    document.documentElement.setAttribute("data-theme-loaded", "true");
   };
 
   const resetToDefaultThemes = () => {
@@ -60,23 +62,40 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    const fetchThemes = async () => {
-      if (!user) return;
+    if (user === undefined) return;
 
+    document.documentElement.removeAttribute("data-theme-loaded");
+    
+    const fetchThemes = async () => {
+      if (!user) {
+        setIsThemeLoading(false);
+        resetToDefaultThemes();
+        return;
+      }
+  
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/themes/${user.username}`);
         if (response.ok) {
           const data = await response.json();
           setThemes(data.themes || []);
           applyTheme(data.selectedTheme);
+        } else {
+          resetToDefaultThemes();
         }
       } catch (error) {
         console.error("Error loading user themes:", error);
+        resetToDefaultThemes();
+      } finally {
+        setIsThemeLoading(false);
       }
     };
-
+  
     fetchThemes();
   }, [user]);
+
+  if (isThemeLoading) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{
