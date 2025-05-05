@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { FaEdit, FaCheck } from "react-icons/fa";
 import './ThemeCustomizer.css'
 
@@ -14,10 +16,6 @@ type ThemeCustomizerProps = {
   activeTab: 'color' | 'fontColor' | 'image';
   setActiveTab: (tab: 'color' | 'fontColor' | 'image') => void;
   handleSaveTheme: () => void;
-  savedColors: string[];
-  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  savedFontColors: string[];
-  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
@@ -25,20 +23,63 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
   setNewTheme,
   activeTab,
   setActiveTab,
-  handleSaveTheme,
-  savedColors,
-  setSavedColors,
-  savedFontColors,
-  setSavedFontColors
+  handleSaveTheme
 }) => {
+  const { user } = useAuth();
+  const { savedColors, setSavedColors, savedFontColors, setSavedFontColors } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
 
+  const updateColors = async (mainColors: string[], fontColors: string[]) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user?.username}/colors`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mainColors,
+          fontColors,
+        }),
+      });
+  
+      if (!response.ok) {
+        console.error("Failed to save colors");
+      }
+    } catch (err) {
+      console.error("Error updating colors:", err);
+    }
+  };
+
   const handleDeleteColor = (index: number) => {
-    setSavedColors((prev) => prev.filter((_, i) => i !== index));
+    setSavedColors((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      updateColors(updated, savedFontColors);
+      return updated;
+    });
   };
   
   const handleDeleteFontColor = (index: number) => {
-    setSavedFontColors((prev) => prev.filter((_, i) => i !== index));
+    setSavedFontColors((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      updateColors(savedColors, updated);
+      return updated;
+    });
+  };
+
+  const handleAddColor = () => {
+    setSavedColors((prev) => {
+      if (prev.includes(newTheme.color)) return prev;
+      const updated = [...prev, newTheme.color];
+      updateColors(updated, savedFontColors);
+      return updated;
+    });
+  };
+
+  const handleAddFontColor = () => {
+    setSavedFontColors((prev) => {
+      if (prev.includes(newTheme.fontColor)) return prev;
+      const updated = [...prev, newTheme.fontColor];
+      updateColors(savedColors, updated);
+      return updated;
+    });
   };
   
   return (
@@ -94,11 +135,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             />
             <button
               className="add-color-btn"
-              onClick={() =>
-                setSavedColors((prev) =>
-                  prev.includes(newTheme.color) ? prev : [...prev, newTheme.color]
-                )
-              }
+              onClick={handleAddColor}
             >
               +
             </button>
@@ -139,11 +176,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             />
             <button
               className="add-color-btn"
-              onClick={() =>
-                setSavedFontColors((prev) =>
-                  prev.includes(newTheme.fontColor) ? prev : [...prev, newTheme.fontColor]
-                )
-              }
+              onClick={handleAddFontColor}
             >
               +
             </button>

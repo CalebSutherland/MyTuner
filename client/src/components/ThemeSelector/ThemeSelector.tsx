@@ -13,20 +13,8 @@ type Theme = {
   image: string;
 };
 
-type ThemeSelectorProps = {
-  savedColors: string[];
-  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
-  savedFontColors: string[];
-  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
-};
-
-const ThemeSelector: React.FC<ThemeSelectorProps> = ({
-  savedColors,
-  setSavedColors,
-  savedFontColors,
-  setSavedFontColors,
-}) => {
-  const { themes, setThemes, selectedTheme, applyTheme, resetToDefaultThemes } = useTheme();
+const ThemeSelector: React.FC = () => {
+  const { themes, setThemes, selectedTheme, applyTheme } = useTheme();
   const { isLoggedIn, user } = useAuth();
 
   const [showCustomizer, setShowCustomizer] = useState(false);
@@ -39,7 +27,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const [isEditing, setIsEditing] = useState(false);
 
   const handleApplyTheme = async (theme: Theme) => {
-    applyTheme(theme); // visually apply theme
+    applyTheme(theme);
   
     if (isLoggedIn && user) {
       try {
@@ -182,10 +170,6 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           handleSaveTheme={handleSaveTheme}
-          savedColors={savedColors}
-          setSavedColors={setSavedColors}
-          savedFontColors={savedFontColors}
-          setSavedFontColors={setSavedFontColors}
         />
       )}
     </div>

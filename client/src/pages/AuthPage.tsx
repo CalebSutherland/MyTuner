@@ -8,8 +8,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const { login, user } = useAuth(); // Access current user from context
-  const { setThemes, setSelectedTheme, applyTheme } = useTheme(); // Access theme functions
+  const { login, user } = useAuth();
+  const { setThemes, setSelectedTheme, applyTheme } = useTheme();
 
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
@@ -29,7 +29,7 @@ const AuthPage = () => {
       return;
     }
 
-    setErrorMessage(""); // Clear error message
+    setErrorMessage("");
 
     const url = isLogin ? `${apiUrl}/api/login` : `${apiUrl}/api/signup`;
     const payload = { username, password, confirmPassword };
@@ -49,14 +49,6 @@ const AuthPage = () => {
 
         if (isLogin) {
           login(data.token, username);
-
-          const themesResponse = await fetch(`${apiUrl}/api/themes/${username}`);
-          if (themesResponse.ok) {
-            const themesData = await themesResponse.json();
-            setThemes(themesData.themes); // Update themes in context
-            applyTheme(themesData.selectedTheme);
-          }
-
           navigate("/"); 
         } else {
           setIsLogin(true);

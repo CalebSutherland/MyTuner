@@ -13,10 +13,10 @@ interface ThemeContextType {
   setThemes: React.Dispatch<React.SetStateAction<Theme[] | null>>;
   selectedTheme: Theme | null;
   setSelectedTheme: React.Dispatch<React.SetStateAction<Theme | null>>;
-  savedColors: string[] | null;
-  setSavedColors: React.Dispatch<React.SetStateAction<string[] | null>>;
-  savedFontColors: string[] | null;
-  setSavedFontColors: React.Dispatch<React.SetStateAction<string[] | null>>;
+  savedColors: string[];
+  setSavedColors: React.Dispatch<React.SetStateAction<string[]>>;
+  savedFontColors: string[];
+  setSavedFontColors: React.Dispatch<React.SetStateAction<string[]>>;
   applyTheme: (theme: Theme) => void;
   resetToDefaultThemes: () => void;
 }
@@ -40,8 +40,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   
   const [themes, setThemes] = useState<Theme[] | null>(null);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
-  const [savedColors, setSavedColors] = useState<string[] | null>(null);
-  const [savedFontColors, setSavedFontColors] = useState<string[] | null>(null);
+  const [savedColors, setSavedColors] = useState<string[]>([]);
+  const [savedFontColors, setSavedFontColors] = useState<string[]>([]);
   const [isThemeLoading, setIsThemeLoading] = useState(true);
   
   const applyTheme = (theme: Theme) => {
@@ -66,7 +66,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
     document.documentElement.removeAttribute("data-theme-loaded");
     
-    const fetchThemes = async () => {
+    const fetchUserData = async () => {
       if (!user) {
         setIsThemeLoading(false);
         resetToDefaultThemes();
@@ -74,23 +74,31 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       }
   
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/themes/${user.username}`);
-        if (response.ok) {
-          const data = await response.json();
-          setThemes(data.themes || []);
-          applyTheme(data.selectedTheme);
+        const themeResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/themes/${user.username}`);
+        const colorResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user.username}/colors`);
+
+        if (themeResponse.ok) {
+          const themeData = await themeResponse.json();
+          setThemes(themeData.themes || []);
+          applyTheme(themeData.selectedTheme);
         } else {
           resetToDefaultThemes();
         }
+  
+        if (colorResponse.ok) {
+          const colorData = await colorResponse.json();
+          setSavedColors(colorData.mainColors || []);
+          setSavedFontColors(colorData.fontColors || []);
+        }
       } catch (error) {
-        console.error("Error loading user themes:", error);
+        console.error("Error loading user themes or colors:", error);
         resetToDefaultThemes();
       } finally {
         setIsThemeLoading(false);
       }
     };
   
-    fetchThemes();
+    fetchUserData();
   }, [user]);
 
   if (isThemeLoading) {

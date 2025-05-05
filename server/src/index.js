@@ -16,7 +16,9 @@ const users = {
   caleb: {
     password: 'hashed_pw_here',
     themes: [/* array of themes */],
-    selectedTheme: { color: "#...", fontColor: "#...", image: "/..." }
+    selectedTheme: { color: "#...", fontColor: "#...", image: "/..." },
+    mainColors: [/* array of colors */],
+    fontColors: [/* array of colors*/]
   }
 };
 
@@ -64,7 +66,9 @@ app.post('/api/signup', async (req, res) => {
   users[username] = {
     password: hashedPassword,
     themes: defaultThemes,
-    selectedTheme: defaultSelectedTheme
+    selectedTheme: defaultSelectedTheme,
+    mainColors: defaultThemes.map(theme => theme.color),
+    fontColors: ["#000000", "#FFFFFF"]
   };
 
   console.log('All users:', users);
@@ -117,6 +121,27 @@ app.patch('/api/users/:username/selected-theme', (req, res) => {
   user.selectedTheme = { color, fontColor, image };
   res.status(200).json({ message: 'Selected theme updated' });
   console.log("Theme Applied: ", user.selectedTheme);
+});
+
+app.get('/api/users/:username/colors', (req, res) => {
+  const user = users[req.params.username];
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  res.json({
+    mainColors: user.mainColors || [],
+    fontColors: user.fontColors || []
+  });
+});
+
+app.put('/api/users/:username/colors', (req, res) => {
+  const { mainColors, fontColors } = req.body;
+  const user = users[req.params.username];
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  if (mainColors) user.mainColors = mainColors;
+  if (fontColors) user.fontColors = fontColors;
+
+  res.status(200).json({ message: 'Colors updated' });
 });
 
 
