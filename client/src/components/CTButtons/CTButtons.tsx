@@ -1,21 +1,16 @@
 import React from 'react';
 import notes from '../../data/all_notes';
 import "./CTButtons.css";
-
-type Theme = {
-  color: string;
-  fontColor: string;
-  image: string;
-};
+import { useTheme } from '../../contexts/ThemeContext';
 
 type CTButtonsProps = {
   tuning: (string | null)[];
   target: number;
   setTarget: (freq: number) => void;
-  selectedTheme: Theme;
 };
 
-function CTButtons({ tuning, target, setTarget, selectedTheme }: CTButtonsProps) {
+function CTButtons({ tuning, target, setTarget }: CTButtonsProps) {
+  const { selectedTheme } = useTheme();
 
   const handleButtonClick = (note: string) => {
     if (note === "--") {
@@ -55,7 +50,7 @@ function CTButtons({ tuning, target, setTarget, selectedTheme }: CTButtonsProps)
           })}
         </div>
         <div className="guitar-image-container">
-          <img src={selectedTheme.image} alt="Guitar" className="guitar-image" />
+          <img src={selectedTheme!.image} alt="Guitar" className="guitar-image" />
         </div>
         <div className="right-buttons">
         {rightButtons.map((note, index) => {

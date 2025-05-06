@@ -18,7 +18,8 @@ const users = {
     themes: [/* array of themes */],
     selectedTheme: { color: "#...", fontColor: "#...", image: "/..." },
     mainColors: [/* array of colors */],
-    fontColors: [/* array of colors*/]
+    fontColors: [/* array of colors*/],
+    customTuning: [/* list of tunings */]
   }
 };
 
@@ -142,6 +143,26 @@ app.put('/api/users/:username/colors', (req, res) => {
   if (fontColors) user.fontColors = fontColors;
 
   res.status(200).json({ message: 'Colors updated' });
+});
+
+
+app.get('/api/users/:username/tunings', (req, res) => {
+  const user = users[req.params.username];
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  res.json({ customTunings: user.customTunings || [] });
+});
+
+app.put('/api/users/:username/tunings', (req, res) => {
+  const { customTunings } = req.body;
+  const user = users[req.params.username];
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  if (Array.isArray(customTunings)) {
+    user.customTunings = customTunings;
+  }
+
+  res.status(200).json({ message: 'Tunings updated' });
 });
 
 

@@ -8,14 +8,7 @@ import Visual from "../Visual/Visual";
 import Stats from "../Stats/Stats";
 import "./CustomTuner.css";
 
-type Theme = {
-  color: string;
-  fontColor: string;
-  image: string;
-};
-
 interface CustomTunerProps {
-  selectedTheme: Theme;
   customTuning: (string | null)[];
   setCustomTuning: React.Dispatch<React.SetStateAction<(string | null)[]>>;
   savedTunings: (string | null)[][];
@@ -23,7 +16,6 @@ interface CustomTunerProps {
 }
 
 function CustomTuner({
-  selectedTheme,
   customTuning,
   setCustomTuning,
   savedTunings,
@@ -77,7 +69,6 @@ function CustomTuner({
         tuning={customTuning}
         target={target}
         setTarget={setTarget}
-        selectedTheme={selectedTheme}
       />
 
       <div className="cust-tun-btn-container">

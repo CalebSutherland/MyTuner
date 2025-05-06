@@ -7,7 +7,6 @@ import TuningDropdown from "../TuningDropdown";
 import AutoDetect from "../AutoDetect/AutoDetect";
 import tunings from "../../data/all_tunings";
 import { useAudio } from "../../contexts/AudioContext";
-import { useTheme } from '../../contexts/ThemeContext';
 import './Tuner.css';
 import '../Visual/Visual.css';
 import '../Stats/Stats.css';
@@ -34,8 +33,6 @@ function Tuner() {
     startListening,
     stopListening,
   } = useAudio();
-
-  const { selectedTheme } = useTheme();
   
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
@@ -43,8 +40,6 @@ function Tuner() {
   const [isAutoDetect, setIsAutoDetect] = useState<boolean>(false);
   const lastDetectedNoteRef = useRef<number | null>(null);
   const debounceTimerRef = useRef<number | null>(null);
-
-  const apiUrl = import.meta.env.VITE_API_URL
 
   const handleTuningChange = (tuningName: string) => {
     const selectedTuningObject = (tunings as Tunings)[selectedCategory].find(
