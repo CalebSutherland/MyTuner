@@ -101,6 +101,10 @@ const AuthPage = () => {
         }}>
           <input
             type="text"
+            name="username"
+            autoComplete="username"
+            autoCapitalize="none"
+            autoCorrect="off"
             placeholder="Username"
             className="auth-input"
             value={username}
