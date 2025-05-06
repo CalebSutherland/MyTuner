@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { useAuth } from "./AuthContext";
 import { useThemeUtils } from "../hooks/useThemeUtils";
+import { PulseLoader } from "react-spinners";
 
 interface Theme {
   color: string;
@@ -102,7 +103,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, [user]);
 
   if (isThemeLoading) {
-    return null;
+    return <PulseLoader color={"white"} />;
   }
 
   return (
