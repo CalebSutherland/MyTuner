@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from "../contexts/ThemeContext";
+import { PulseLoader } from "react-spinners";
 import './AuthPage.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,6 +17,7 @@ const AuthPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   
   let selectedThemeIndex = null;
@@ -40,8 +42,6 @@ const AuthPage = () => {
       return;
     }
 
-    setErrorMessage("");
-
     const url = isLogin ? `${apiUrl}/api/login` : `${apiUrl}/api/signup`;
     const payload = isLogin 
       ? { username, password } 
@@ -54,6 +54,9 @@ const AuthPage = () => {
           main_colors: savedColors,
           font_colors: savedFontColors
         };
+
+    setLoading(true); // start loading
+    setErrorMessage("");
 
     try {
       const response = await fetch(url, {
@@ -82,6 +85,8 @@ const AuthPage = () => {
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,36 +95,47 @@ const AuthPage = () => {
       <div className="auth-card">
         <h2>{isLogin ? "Login" : "Create Account"}</h2>
 
-        <input
-          type="text"
-          placeholder="Username"
-          className="auth-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="auth-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        {!isLogin && (
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}>
+          <input
+            type="text"
+            placeholder="Username"
+            className="auth-input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Password"
             className="auth-input"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        )}
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {!isLogin && (
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="auth-input"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          )}
 
-        <button onClick={handleSubmit} className="submit-btn">
-          {isLogin ? "Log In" : "Sign Up"}
-        </button>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+          {loading ? (
+            <div style={{ marginTop: "1rem" }}>
+              <PulseLoader color="white" size={10} />
+            </div>
+          ) : (
+            <button type="submit" className="submit-btn">
+              {isLogin ? "Log In" : "Sign Up"}
+            </button>
+          )}
+        </form>
 
         <button onClick={() => setIsLogin(!isLogin)} className="toggle-btn">
           {isLogin
