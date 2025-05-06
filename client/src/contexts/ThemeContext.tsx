@@ -4,7 +4,7 @@ import { useThemeUtils } from "../hooks/useThemeUtils";
 
 interface Theme {
   color: string;
-  fontColor: string;
+  font_color: string;
   image: string;
 }
 
@@ -26,10 +26,10 @@ interface ThemeProviderProps {
 }
 
 const defaultThemes: Theme[] = [
-  { color: "#700b0b", fontColor: "#ffffff", image: "/assets/guitar_3.png" },
-  { color: "#B302C0", fontColor: "#ffffff", image: "/assets/brown.png" },
-  { color: "#00FFFF", fontColor: "#000000", image: "/assets/martin-guitar-decal-gold.png" },
-  { color: "#FFFF00", fontColor: "#000000", image: "/assets/black-guitar2.png" },
+  { color: "#700b0b", font_color: "#ffffff", image: "/assets/guitar_3.png" },
+  { color: "#B302C0", font_color: "#ffffff", image: "/assets/brown.png" },
+  { color: "#00FFFF", font_color: "#000000", image: "/assets/martin-guitar-decal-gold.png" },
+  { color: "#FFFF00", font_color: "#000000", image: "/assets/black-guitar2.png" },
 ];
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -48,7 +48,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     setSelectedTheme(theme);
     document.documentElement.style.setProperty("--main--color", theme.color);
     document.documentElement.style.setProperty("--hover--color", darkenColor(theme.color, 10));
-    document.documentElement.style.setProperty("--font--color", theme.fontColor);
+    document.documentElement.style.setProperty("--font--color", theme.font_color);
     updateMainLight(theme.color);
     document.documentElement.setAttribute("data-theme-loaded", "true");
   };
@@ -87,8 +87,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   
         if (colorResponse.ok) {
           const colorData = await colorResponse.json();
-          setSavedColors(colorData.mainColors || []);
-          setSavedFontColors(colorData.fontColors || []);
+          setSavedColors(colorData.main_colors || []);
+          setSavedFontColors(colorData.font_colors || []);
         }
       } catch (error) {
         console.error("Error loading user themes or colors:", error);

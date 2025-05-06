@@ -36,7 +36,7 @@ function Layout() {
               </button>
               {showDropdown && (
                 <div className="dropdown-menu">
-                  <button onClick={() => { logout(); navigate("/"); setShowDropdown(false); resetToDefaultThemes(); }}>
+                  <button onClick={() => { console.log("Signed out", user.username); logout(); navigate("/"); setShowDropdown(false); resetToDefaultThemes(); }}>
                     Sign Out
                   </button>
                 </div>

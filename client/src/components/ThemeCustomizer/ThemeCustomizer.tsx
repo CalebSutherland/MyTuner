@@ -6,15 +6,15 @@ import './ThemeCustomizer.css'
 
 type Theme = {
   color: string;
-  fontColor: string;
+  font_color: string;
   image: string;
 };
 
 type ThemeCustomizerProps = {
   newTheme: Theme;
   setNewTheme: (theme: Theme) => void;
-  activeTab: 'color' | 'fontColor' | 'image';
-  setActiveTab: (tab: 'color' | 'fontColor' | 'image') => void;
+  activeTab: 'color' | 'font_color' | 'image';
+  setActiveTab: (tab: 'color' | 'font_color' | 'image') => void;
   handleSaveTheme: () => void;
 };
 
@@ -29,14 +29,14 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
   const { savedColors, setSavedColors, savedFontColors, setSavedFontColors } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
 
-  const updateColors = async (mainColors: string[], fontColors: string[]) => {
+  const updateColors = async (main_colors: string[], font_colors: string[]) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user?.username}/colors`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          mainColors,
-          fontColors,
+          main_colors,
+          font_colors,
         }),
       });
   
@@ -75,8 +75,8 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
 
   const handleAddFontColor = () => {
     setSavedFontColors((prev) => {
-      if (prev.includes(newTheme.fontColor)) return prev;
-      const updated = [...prev, newTheme.fontColor];
+      if (prev.includes(newTheme.font_color)) return prev;
+      const updated = [...prev, newTheme.font_color];
       updateColors(savedColors, updated);
       return updated;
     });
@@ -92,8 +92,8 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
           Main Color
         </button>
         <button 
-          className={activeTab === 'fontColor' ? 'tab active' : 'tab'}
-          onClick={() => setActiveTab('fontColor')}
+          className={activeTab === 'font_color' ? 'tab active' : 'tab'}
+          onClick={() => setActiveTab('font_color')}
         >
           Font Color
         </button>
@@ -146,7 +146,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
         </>
       )}
 
-      {activeTab === 'fontColor' && (
+      {activeTab === 'font_color' && (
         <>
           <div className="color-grid">
             {savedFontColors.map((color, index) => (
@@ -154,7 +154,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
                 <div
                   className="color-box"
                   style={{ backgroundColor: color }}
-                  onClick={() => !isEditing && setNewTheme({ ...newTheme, fontColor: color })}
+                  onClick={() => !isEditing && setNewTheme({ ...newTheme, font_color: color })}
                 />
                 {isEditing && (
                   <button
@@ -171,8 +171,8 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             <label className="picker-label">New Color:</label>
             <input
               type="color"
-              value={newTheme.fontColor}
-              onChange={(e) => setNewTheme({ ...newTheme, fontColor: e.target.value })}
+              value={newTheme.font_color}
+              onChange={(e) => setNewTheme({ ...newTheme, font_color: e.target.value })}
             />
             <button
               className="add-color-btn"
@@ -181,7 +181,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
               +
             </button>
             <button className="edit-mode-btn" onClick={() => setIsEditing((prev) => !prev)}>
-              <FaEdit />
+              {isEditing ? <FaCheck /> : <FaEdit />}
             </button>
           </div>
         </>
@@ -206,7 +206,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
           className="save-theme-btn"
           style={{
             backgroundColor: newTheme.color,
-            color: newTheme.fontColor,
+            color: newTheme.font_color,
           }}
           onClick={() => {
             handleSaveTheme();
@@ -219,7 +219,7 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
         <button
           className="theme-preview"
           style={{
-            backgroundImage: `linear-gradient(135deg, ${newTheme.color} 70%, ${newTheme.fontColor} 70%)`,
+            backgroundImage: `linear-gradient(135deg, ${newTheme.color} 70%, ${newTheme.font_color} 70%)`,
             border: `2px solid ${newTheme.color}`,
             color: 'transparent',
           }}

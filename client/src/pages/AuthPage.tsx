@@ -1,21 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from "../contexts/ThemeContext";
 import './AuthPage.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const { login, user } = useAuth();
-  const { setThemes, setSelectedTheme, applyTheme } = useTheme();
+  const { login } = useAuth();
+  const { themes, selectedTheme, savedColors, savedFontColors } = useTheme();
 
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  
+  let selectedThemeIndex = null;
+  if (selectedTheme && Array.isArray(themes)) {
+    selectedThemeIndex = themes.findIndex(
+      theme =>
+        theme.color === selectedTheme.color &&
+        theme.font_color === selectedTheme.font_color &&
+        theme.image === selectedTheme.image
+    );
+  }
 
   const handleSubmit = async () => {
     if (!username || !password) {
@@ -32,7 +43,17 @@ const AuthPage = () => {
     setErrorMessage("");
 
     const url = isLogin ? `${apiUrl}/api/login` : `${apiUrl}/api/signup`;
-    const payload = { username, password, confirmPassword };
+    const payload = isLogin 
+      ? { username, password } 
+      : { 
+          username, 
+          password, 
+          confirmPassword,
+          themes,
+          selectedThemeIndex,
+          main_colors: savedColors,
+          font_colors: savedFontColors
+        };
 
     try {
       const response = await fetch(url, {
@@ -48,10 +69,11 @@ const AuthPage = () => {
         console.log(data.message);
 
         if (isLogin) {
-          login(data.token, username);
+          login(data.token, data.username);
           navigate("/"); 
         } else {
           setIsLogin(true);
+          setErrorMessage("Account created successfully!");
         }
       } else {
         const data = await response.json();

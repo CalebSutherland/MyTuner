@@ -9,7 +9,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 type Theme = {
   color: string;
-  fontColor: string;
+  font_color: string;
   image: string;
 };
 
@@ -20,10 +20,10 @@ const ThemeSelector: React.FC = () => {
   const [showCustomizer, setShowCustomizer] = useState(false);
   const [newTheme, setNewTheme] = useState<Theme>({
     color: "#0B8948",
-    fontColor: "#ffffff",
+    font_color: "#ffffff",
     image: "assets/guitar_3.png",
   });
-  const [activeTab, setActiveTab] = useState<'color' | 'fontColor' | 'image'>('color');
+  const [activeTab, setActiveTab] = useState<'color' | 'font_color' | 'image'>('color');
   const [isEditing, setIsEditing] = useState(false);
 
   const handleApplyTheme = async (theme: Theme) => {
@@ -53,14 +53,13 @@ const ThemeSelector: React.FC = () => {
   const handleSaveTheme = async () => {
     const themeToAdd = {
       color: newTheme.color,
-      fontColor: newTheme.fontColor,
+      font_color: newTheme.font_color,
       image: newTheme.image,
     };
   
     setThemes([...(themes ?? []), themeToAdd]);
     setShowCustomizer(false);
-    handleApplyTheme(themeToAdd);
-    setNewTheme({ color: "#0B8948", fontColor: "#ffffff", image: "assets/guitar_3.png" });
+    setNewTheme({ color: "#0B8948", font_color: "#ffffff", image: "assets/guitar_3.png" });
 
     if (isLoggedIn && user) {
       try {
@@ -83,10 +82,14 @@ const ThemeSelector: React.FC = () => {
         console.error('Error:', error);
       }
     }
+    handleApplyTheme(themeToAdd);
   };
 
   const handleDeleteTheme = async (index: number) => {
-    if (!themes) return;
+    if (!themes || themes.length <= 1) {
+      console.error("Cannot delete the last theme.");
+      return;
+    }
     const themeToDelete = themes[index];
 
     setThemes((prev) => {
@@ -131,7 +134,7 @@ const ThemeSelector: React.FC = () => {
             <button
               className="theme-preview"
               style={{
-                backgroundImage: `linear-gradient(135deg, ${theme.color} 70%, ${theme.fontColor} 70%)`,
+                backgroundImage: `linear-gradient(135deg, ${theme.color} 70%, ${theme.font_color} 70%)`,
                 border: `2px solid ${theme.color}`,
                 color: 'transparent',
               }}
