@@ -1,0 +1,53 @@
+.metronome-container {
+  padding: 1rem;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.metronome-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.metronome-slider {
+  accent-color: var(--main--color);
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.metronome-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--main--color);
+  color: var(--font--color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.metronome-button:hover {
+  background-color: var(--hover--color);
+}
+
+.metronome-dots {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(201, 201, 201);
+  transition: background-color 0.1s ease;
+}
+
+.dot.active {
+  background-color: var(--main--color);
+}

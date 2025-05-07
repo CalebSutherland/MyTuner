@@ -8,6 +8,7 @@ import AuthPage from './pages/AuthPage';
 import GeneralPage from './pages/GeneralPage';
 import CustomPage from './pages/CustomPage';
 import Layout from './pages/Layout';
+import MetronnomePage from './pages/MetronomePage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="general" element={<GeneralPage />} />
                 <Route path="custom" element={<CustomPage />} />
                 <Route path="login" element={<AuthPage />} />
+                <Route path="metronome" element={<MetronnomePage />} />
               </Route>
             </Routes>
           </Router>

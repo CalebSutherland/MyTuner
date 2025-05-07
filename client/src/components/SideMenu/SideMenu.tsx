@@ -22,14 +22,14 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
         <li onClick={() => (navigate("/"), onToggle(), stopListening())}>
           <FaHome className="menu-icon" /> Home 
         </li>
+        <li onClick={() => (navigate("metronome"), onToggle(), stopListening())}>
+          <MdConstruction className="menu-icon" /> Metronome
+        </li>
         <li onClick={() => (navigate("/general"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> General
+          <MdConstruction className="menu-icon" /> General Tuner
         </li>
         <li onClick={() => (navigate("/custom"), onToggle(), stopListening())}>
           <MdConstruction className="menu-icon" /> Custom Tuning
-        </li>
-        <li onClick={() => (navigate("/"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> Coming Soon 3
         </li>
         <li onClick={() => (navigate("/"), onToggle(), stopListening())}>
           <MdConstruction className="menu-icon" /> Coming Soon 4
