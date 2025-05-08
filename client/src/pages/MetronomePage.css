@@ -1,7 +1,6 @@
 .metronome-container {
-  padding: 1rem;
-  border-radius: 12px;
-  width: fit-content;
+  width: 100%;
+  max-width: 300px;
 }
 
 .metronome-label {
@@ -15,7 +14,52 @@
 .metronome-slider {
   accent-color: var(--main--color);
   width: 100%;
+  max-width: 250px;
+  margin-bottom: 20px;
+}
+
+.bpm-control {
+  text-align: center;
   margin-bottom: 1rem;
+}
+
+.bpm-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.bpm-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.bpm-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  width: 3ch;
+  display: inline-block;
+  text-align: center;
+}
+
+.bpm-button {
+  color: white;
+  font-size: 2.7rem;
+  background-color: transparent;
+  padding: 0;
+  text-align: center;
+}
+
+.bpm-button svg {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 .metronome-button {
@@ -41,8 +85,8 @@
 }
 
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   background-color: rgb(201, 201, 201);
   transition: background-color 0.1s ease;
@@ -50,4 +94,34 @@
 
 .dot.active {
   background-color: var(--main--color);
+}
+
+.time-sig {
+  margin-bottom: 25px;
+}
+
+.time-sig p {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.time-sig-select {
+  width: 100px;
+  height: 30px;
+  background-color: var(--main--color);
+  color: var(--font--color);
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.time-sig-select option {
+  background-color: var(--main--color);
+  color: var(--font--color);
+}
+
+.time-sig-select:hover {
+  background-color: var(--hover--color);
 }

@@ -5,7 +5,9 @@ export class Metronome {
   private isRunning = false;
   private intervalId: number | null = null;
   private currentBeat = 0;  // Track the current beat
-  private setCurrentBeat: (beat: number | null) => void; // Update the beat in the component
+  private setCurrentBeat: (beat: number | null) => void;
+  private beatsPerMeasure = 4;
+  private noteValue = 4;
 
   constructor(setCurrentBeat: (beat: number | null) => void) {
     this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -36,19 +38,26 @@ export class Metronome {
   private scheduler = () => {
     while (this.nextNoteTime < this.audioCtx.currentTime + 0.1) {
       this.scheduleClick(this.nextNoteTime);
-      
-      // Update the current beat, reset after the last beat (4)
+  
+      // Calculate duration until next note (e.g. eighth note spacing)
+      const secondsPerBeat = (60.0 / this.tempo) * (4 / this.noteValue);
+      const flashDuration = Math.max(secondsPerBeat * 1000 * 0.6, 50); // At least 50ms
+  
+      // Update the current beat
       this.setCurrentBeat(this.currentBeat);
       setTimeout(() => {
-        this.setCurrentBeat(null); // Reset beat after the flash
-      }, 200); // Flash for 200ms
-
-      // Increment beat and reset to 0 after 4 (since it's a 4-beat cycle)
-      this.currentBeat = (this.currentBeat + 1) % 4;
-
-      // Update the nextNoteTime based on the tempo
-      this.nextNoteTime += 60.0 / this.tempo;
+        this.setCurrentBeat(null); 
+      }, flashDuration);
+  
+      // Increment beat and time
+      this.currentBeat = (this.currentBeat + 1) % this.beatsPerMeasure;
+      this.nextNoteTime += secondsPerBeat;
     }
+  };
+
+  setTimeSignature(beats: number, noteValue: number) {
+    this.beatsPerMeasure = beats;
+    this.noteValue = noteValue;
   }
 
   start() {
