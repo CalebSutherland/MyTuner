@@ -7,9 +7,10 @@ This is a web application designed to help guitar players tune their instruments
 ## Features
 
 - Real-time pitch detection using the Web Audio API
-- Practice session logging and history tracking
-- Custom theme support (background, font color, etc.)
+- Custom theme support (background, font color, guitar image)
+- Built in metronome with different time signatures
 - Responsive design for desktop and mobile
+- Custom user defined tunings that can be saved and loaded
 
 ## Technologies Used
 
