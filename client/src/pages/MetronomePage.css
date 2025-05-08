@@ -125,3 +125,18 @@
 .time-sig-select:hover {
   background-color: var(--hover--color);
 }
+
+.tap-tempo-button {
+  background-color: transparent;
+  color: white;
+  font-size: 2.5rem;
+  padding: 0;
+  border: none;
+  margin: 10px 0;
+}
+
+.tap-tempo-button svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

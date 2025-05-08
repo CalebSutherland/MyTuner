@@ -8,31 +8,32 @@ export class Metronome {
   private setCurrentBeat: (beat: number | null) => void;
   private beatsPerMeasure = 4;
   private noteValue = 4;
+  private clickBuffer: AudioBuffer | null = null;
 
   constructor(setCurrentBeat: (beat: number | null) => void) {
     this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
     this.setCurrentBeat = setCurrentBeat;
+    this.loadClickSound();
+  }
+
+  private async loadClickSound() {
+    //Sound Effect by freesound_community from Pixabay
+    const response = await fetch('assets/sounds/metronome-85688.mp3');
+    const arrayBuffer = await response.arrayBuffer();
+    this.clickBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
   }
 
   private scheduleClick(time: number) {
-    const osc = this.audioCtx.createOscillator();
-    const envelope = this.audioCtx.createGain();
+    if (!this.clickBuffer) return;
 
-    // Set different pitch for the first beat
-    const frequency = this.currentBeat === 0 ? 1200 : 1000; // First beat (0) is higher
+    const source = this.audioCtx.createBufferSource();
+    source.buffer = this.clickBuffer;
 
-    osc.frequency.value = frequency;
+    // Adjust playback rate slightly to raise pitch on first beat
+    source.playbackRate.value = this.currentBeat === 0 ? 1.4 : 1.0;
 
-    // Gentle attack and decay to avoid popping
-    envelope.gain.setValueAtTime(0, time);
-    envelope.gain.linearRampToValueAtTime(0.3, time + 0.005); // attack
-    envelope.gain.linearRampToValueAtTime(0, time + 0.05);    // decay
-
-    osc.connect(envelope);
-    envelope.connect(this.audioCtx.destination);
-
-    osc.start(time);
-    osc.stop(time + 0.06); // slight increase to avoid cutoff
+    source.connect(this.audioCtx.destination);
+    source.start(time);
   }
 
   private scheduler = () => {
