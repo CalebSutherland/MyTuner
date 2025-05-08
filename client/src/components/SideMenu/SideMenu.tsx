@@ -2,8 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAudio } from "../../contexts/AudioContext";
 import "./SideMenu.css";
-import { FaHome, FaGithub} from "react-icons/fa"
-import { MdConstruction } from "react-icons/md";
+import { FaHome, FaGithub } from "react-icons/fa";
+import { PiMetronome } from "react-icons/pi";
+import { MdConstruction, MdDashboardCustomize, MdTune } from "react-icons/md";
 
 interface SideMenuProps {
   onToggle: () => void;
@@ -23,13 +24,13 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
           <FaHome className="menu-icon" /> Home 
         </li>
         <li onClick={() => (navigate("metronome"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> Metronome
+          <PiMetronome className="menu-icon" /> Metronome
         </li>
         <li onClick={() => (navigate("/general"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> General Tuner
+          <MdTune className="menu-icon" /> General Tuner
         </li>
         <li onClick={() => (navigate("/custom"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> Custom Tuning
+          <MdDashboardCustomize className="menu-icon" /> Custom Tuning
         </li>
         <li onClick={() => (navigate("/"), onToggle(), stopListening())}>
           <MdConstruction className="menu-icon" /> Coming Soon 4
