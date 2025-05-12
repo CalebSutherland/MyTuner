@@ -36,7 +36,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
 }
 
 .bpm-number {
@@ -66,6 +66,7 @@
   padding: 0.5rem 1rem;
   background-color: var(--main--color);
   color: var(--font--color);
+  height: clamp(28px, 5vw, 32px);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -108,7 +109,7 @@
 
 .time-sig-select {
   width: 100px;
-  height: 30px;
+   height: clamp(28px, 5vw, 32px);
   background-color: var(--main--color);
   color: var(--font--color);
   border-radius: 6px;
@@ -132,7 +133,7 @@
   font-size: 2.5rem;
   padding: 0;
   border: none;
-  margin: 10px 0;
+  margin: 10px 0 30px;
 }
 
 .tap-tempo-button svg {

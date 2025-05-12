@@ -130,16 +130,22 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             <label className="picker-label">New Color:</label>
             <input
               type="color"
+              title="Choose new main color to add"
               value={newTheme.color}
               onChange={(e) => setNewTheme({ ...newTheme, color: e.target.value })}
             />
             <button
               className="add-color-btn"
+              title="Add new main color"
               onClick={handleAddColor}
             >
               +
             </button>
-            <button className="edit-mode-btn" onClick={() => setIsEditing((prev) => !prev)}>
+            <button 
+              className="edit-mode-btn"
+              title="Edit main colors"
+              onClick={() => setIsEditing((prev) => !prev)}
+            >
               {isEditing ? <FaCheck /> : <FaEdit />}
             </button>
           </div>
@@ -171,16 +177,22 @@ const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
             <label className="picker-label">New Color:</label>
             <input
               type="color"
+              title="Choose new font color to add"
               value={newTheme.font_color}
               onChange={(e) => setNewTheme({ ...newTheme, font_color: e.target.value })}
             />
             <button
               className="add-color-btn"
+              title="Add new font color"
               onClick={handleAddFontColor}
             >
               +
             </button>
-            <button className="edit-mode-btn" onClick={() => setIsEditing((prev) => !prev)}>
+            <button 
+              className="edit-mode-btn"
+              title="Edit font colors"
+              onClick={() => setIsEditing((prev) => !prev)}
+            >
               {isEditing ? <FaCheck /> : <FaEdit />}
             </button>
           </div>

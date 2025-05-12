@@ -37,7 +37,7 @@ function Tuner() {
   const [target, setTarget] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>("Standard");
   const [selectedTuning, setSelectedTuning] = useState<Tuning>(tunings["Standard"][0])
-  const [isAutoDetect, setIsAutoDetect] = useState<boolean>(false);
+  const [isAutoDetect, setIsAutoDetect] = useState<boolean>(true);
   const lastDetectedNoteRef = useRef<number | null>(null);
   const debounceTimerRef = useRef<number | null>(null);
 

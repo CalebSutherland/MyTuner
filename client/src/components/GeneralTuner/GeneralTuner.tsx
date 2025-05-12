@@ -24,7 +24,7 @@ function GeneralTuner() {
   } = useAudio();
 
   const [target, setTarget] = useState<number>(0);
-  const [isAutoDetect, setIsAutoDetect] = useState<boolean>(false);
+  const [isAutoDetect, setIsAutoDetect] = useState<boolean>(true);
   const noteNames = Object.keys(notes);
   const [noteIndex, setNoteIndex] = useState<number>(noteNames.indexOf("E2"));
   const stableNoteRef = useRef<string | null>(null);

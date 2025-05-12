@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from '../contexts/ThemeContext';
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import SideMenu from "../components/SideMenu/SideMenu";
-import MenuButton from "../components/MenuButton/MenuButton";
 import '../App.css';
 
 function Layout() {
@@ -24,7 +23,12 @@ function Layout() {
     <>
       <header className="app-header">
         <div className="menu-button-container">
-          <MenuButton onToggle={toggleMenu} isOpen={showMenu} />
+          <button 
+            className={`menu-button ${showMenu ? "hidden" : ""}`}  
+            onClick={toggleMenu}
+          >
+            More Tools
+          </button>
         </div>
         <h1>MyTuner</h1>
         <div className="login-button-container">

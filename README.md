@@ -1,6 +1,6 @@
 # MyTuner
 
-This is a web application designed to help guitar players tune their instruments and track their practice sessions. It uses real-time pitch detection and offers customizable themes.
+This is a web application designed to help guitar players tune their instruments and help them practice for free. It uses real-time pitch detection and offers customizable themes and tunings.
 
 **Try it out here:** [https://my-tuner.vercel.app/](https://my-tuner.vercel.app/)
 

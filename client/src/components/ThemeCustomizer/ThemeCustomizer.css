@@ -68,6 +68,10 @@
   transform: scale(1.1);
 }
 
+input[type="color"]:hover {
+  cursor: pointer;
+}
+
 .add-color-btn {
   width: 34px;
   height: 34px;

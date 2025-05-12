@@ -51,6 +51,7 @@ function Target({ note, value, updateTarget, detectedFrequency, target, playSoun
   return (
     <button 
       className={`tuning-button ${tuningStatus} ${value === target ? "is-target" : ""}`}
+      title="Press to set target note"
       onClick={() => {
         updateTarget(value);
         playSound(note);

@@ -32,9 +32,6 @@ const SideMenu: React.FC<SideMenuProps> = ({ onToggle, isOpen }) => {
         <li onClick={() => (navigate("/custom"), onToggle(), stopListening())}>
           <MdDashboardCustomize className="menu-icon" /> Custom Tuning
         </li>
-        <li onClick={() => (navigate("/"), onToggle(), stopListening())}>
-          <MdConstruction className="menu-icon" /> Coming Soon 4
-        </li>
         <li>
           <a 
             href="https://github.com/CalebSutherland/MyTuner"

@@ -124,7 +124,11 @@ const MetronomePage: React.FC = () => {
           </button>
         </div>
         <div>
-          <button className="tap-tempo-button" onClick={handleTapTempo}>
+          <button 
+            className="tap-tempo-button"
+            title="Tap to set tempo"
+            onClick={handleTapTempo}
+          >
             <TbHandClick />
           </button>
         </div>

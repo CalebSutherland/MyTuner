@@ -129,6 +129,7 @@ const ThemeSelector: React.FC = () => {
   return (
     <div className="theme-selector">
       <div className="theme-list">
+        <p>Themes: </p>
         {themes?.map((theme, idx) => (
           <div key={idx} className="theme-box-wrapper">
             <button
@@ -151,7 +152,8 @@ const ThemeSelector: React.FC = () => {
           </div>
         ))}
         <button 
-          className="add-theme-btn" 
+          className="add-theme-btn"
+          title={showCustomizer ? 'Close customizer' : 'Add new theme'}
           onClick={() => {
             if (showCustomizer) {
               setActiveTab('color');
@@ -161,7 +163,11 @@ const ThemeSelector: React.FC = () => {
         >
           {showCustomizer ? '×' : '+'}
         </button>
-        <button className="edit-theme-btn" onClick={() => setIsEditing(prev => !prev)}>
+        <button 
+          className="edit-theme-btn"
+          title="Edit themes"
+          onClick={() => setIsEditing(prev => !prev)}
+        >
           {isEditing ? <FaCheck /> : <FaEdit />}
         </button>
       </div>
